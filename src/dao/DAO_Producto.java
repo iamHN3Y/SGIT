@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 interface I_DAO_Producto {
+
     OperacionResultado createProducto(Producto p, Usuario u, Stock s) throws SQLException;
 
     Producto readProducto(int id);
@@ -36,7 +37,8 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
      * @param p El objeto Producto que se va a crear.
      * @param u El Usuario que realiza la operación.
      * @param s El Stock asociado al producto.
-     * @return OperacionResultado que indica el resultado de la operación (EXITO, ERROR_BD o OTRO_ERROR).
+     * @return OperacionResultado que indica el resultado de la operación
+     * (EXITO, ERROR_BD o OTRO_ERROR).
      */
     @Override
     public OperacionResultado createProducto(Producto p, Usuario u, Stock s) {
@@ -50,12 +52,14 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
     }
 
     /**
-     * Método privado que realiza la creación real del Producto en la base de datos.
+     * Método privado que realiza la creación real del Producto en la base de
+     * datos.
      *
      * @param p El objeto Producto que se va a crear.
      * @param u El Usuario que realiza la operación.
      * @param s El Stock asociado al producto.
-     * @return OperacionResultado que indica el resultado de la operación (EXITO, ERROR_BD o OTRO_ERROR).
+     * @return OperacionResultado que indica el resultado de la operación
+     * (EXITO, ERROR_BD o OTRO_ERROR).
      * @throws SQLException Si ocurre un error de base de datos.
      */
     private OperacionResultado create(Producto p, Usuario u, Stock s) throws SQLException {
@@ -112,9 +116,11 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
     }
 
     /**
-     * Lee y devuelve una lista de productos desde la base de datos a través de una vista.
+     * Lee y devuelve una lista de productos desde la base de datos a través de
+     * una vista.
      *
-     * @return ArrayList de Productos que contiene los datos recuperados de la vista.
+     * @return ArrayList de Productos que contiene los datos recuperados de la
+     * vista.
      * @throws SQLException Si ocurre un error de base de datos.
      */
     private ArrayList<Producto> readProductos() throws SQLException {
@@ -145,7 +151,8 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
      * Lee y devuelve un producto específico de la base de datos según su ID.
      *
      * @param id El ID del producto que se desea leer.
-     * @return El Producto recuperado de la base de datos, o un objeto Producto vacío si no se encuentra.
+     * @return El Producto recuperado de la base de datos, o un objeto Producto
+     * vacío si no se encuentra.
      * @throws RuntimeException Si ocurre un error durante la operación.
      */
     @Override
@@ -171,8 +178,8 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
     }
 
     /**
-     * Genera un modelo de ComboBox por defecto (DefaultComboBoxModel) que contiene una lista de productos
-     * obtenidos de la base de datos.
+     * Genera un modelo de ComboBox por defecto (DefaultComboBoxModel) que
+     * contiene una lista de productos obtenidos de la base de datos.
      *
      * @return DefaultComboBoxModel que contiene la lista de productos.
      * @throws SQLException Si ocurre un error de base de datos.
@@ -187,8 +194,9 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
     }
 
     /**
-     * Genera un modelo de tabla por defecto (DefaultTableModel) que representa una tabla de productos
-     * con columnas para ID, Nombre, Descripción, Precio y Cantidad. Los datos se obtienen de la base de datos.
+     * Genera un modelo de tabla por defecto (DefaultTableModel) que representa
+     * una tabla de productos con columnas para ID, Nombre, Descripción, Precio
+     * y Cantidad. Los datos se obtienen de la base de datos.
      *
      * @return DefaultTableModel que representa la tabla de productos.
      * @throws SQLException Si ocurre un error de base de datos.
@@ -214,12 +222,14 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
     }
 
     /**
-     * Actualiza un producto en la base de datos con los nuevos datos proporcionados.
+     * Actualiza un producto en la base de datos con los nuevos datos
+     * proporcionados.
      *
      * @param p El objeto Producto con los nuevos datos.
      * @param u El Usuario que realiza la operación.
      * @param s El Stock asociado al producto.
-     * @return OperacionResultado que indica el resultado de la operación (EXITO, ERROR_BD o OTRO_ERROR).
+     * @return OperacionResultado que indica el resultado de la operación
+     * (EXITO, ERROR_BD o OTRO_ERROR).
      * @throws SQLException Si ocurre un error de base de datos.
      */
     @Override
@@ -234,12 +244,14 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
     }
 
     /**
-     * Método privado que realiza la actualización real del Producto en la base de datos.
+     * Método privado que realiza la actualización real del Producto en la base
+     * de datos.
      *
      * @param p El objeto Producto con los nuevos datos.
      * @param u El Usuario que realiza la operación.
      * @param s El Stock asociado al producto.
-     * @return OperacionResultado que indica el resultado de la operación (EXITO, ERROR_BD o OTRO_ERROR).
+     * @return OperacionResultado que indica el resultado de la operación
+     * (EXITO, ERROR_BD o OTRO_ERROR).
      */
     private OperacionResultado update(Producto p, Usuario u, Stock s) {
         try {
@@ -267,8 +279,9 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
      * Elimina un producto de la base de datos marcándolo como "borrado".
      *
      * @param id El ID del producto que se va a eliminar.
-     * @param u  El Usuario que realiza la operación.
-     * @return OperacionResultado que indica el resultado de la operación (EXITO, ERROR_BD o OTRO_ERROR).
+     * @param u El Usuario que realiza la operación.
+     * @return OperacionResultado que indica el resultado de la operación
+     * (EXITO, ERROR_BD o OTRO_ERROR).
      * @throws SQLException Si ocurre un error de base de datos.
      */
     @Override
@@ -283,12 +296,13 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
     }
 
     /**
-     * Método privado que realiza la eliminación real del Producto en la base de datos,
-     * marcándolo como "borrado".
+     * Método privado que realiza la eliminación real del Producto en la base de
+     * datos, marcándolo como "borrado".
      *
      * @param id El ID del producto que se va a eliminar.
-     * @param u  El Usuario que realiza la operación.
-     * @return OperacionResultado que indica el resultado de la operación (EXITO, ERROR_BD o OTRO_ERROR).
+     * @param u El Usuario que realiza la operación.
+     * @return OperacionResultado que indica el resultado de la operación
+     * (EXITO, ERROR_BD o OTRO_ERROR).
      */
     private OperacionResultado delete(int id, Usuario u) {
         try {

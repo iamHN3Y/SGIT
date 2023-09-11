@@ -7,12 +7,22 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 interface I_DAO_Stock {
+
     public boolean insertStock(Stock s) throws SQLException;
 
     public boolean updateStock(Stock s) throws SQLException;
 }
 
 public class DAO_Stock extends Conexion implements I_DAO_Stock {
+
+    /**
+     * Inserta un nuevo registro de Stock en la base de datos para un producto
+     * específico.
+     *
+     * @param s El objeto Stock que contiene los datos del nuevo registro.
+     * @return true si la inserción es exitosa, false en caso contrario.
+     * @throws SQLException Si ocurre un error de base de datos.
+     */
     @Override
     public boolean insertStock(Stock s) throws SQLException {
         try {
@@ -30,6 +40,14 @@ public class DAO_Stock extends Conexion implements I_DAO_Stock {
         return false;
     }
 
+    /**
+     * Actualiza la cantidad de Stock en la base de datos para un producto
+     * específico.
+     *
+     * @param s El objeto Stock con la nueva cantidad a actualizar.
+     * @return true si la actualización es exitosa, false en caso contrario.
+     * @throws SQLException Si ocurre un error de base de datos.
+     */
     @Override
     public boolean updateStock(Stock s) throws SQLException {
         try {
@@ -46,4 +64,5 @@ public class DAO_Stock extends Conexion implements I_DAO_Stock {
         }
         return false;
     }
+
 }
