@@ -28,6 +28,14 @@ interface I_DAO_Proveedor {
 
 public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
 
+    /**
+     * Crea un nuevo proveedor en la base de datos.
+     *
+     * @param p El objeto Proveedor que se va a crear.
+     * @param u El Usuario que realiza la operación.
+     * @return OperacionResultado que indica el resultado de la operación
+     * (EXITO, ERROR_BD o OTRO_ERROR).
+     */
     @Override
     public OperacionResultado createProveedor(Proveedor p, Usuario u) {
         OperacionResultado resultado = null;
@@ -39,6 +47,15 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
         return resultado;
     }
 
+    /**
+     * Método privado que realiza la creación real del Proveedor en la base de
+     * datos.
+     *
+     * @param p El objeto Proveedor que se va a crear.
+     * @param u El Usuario que realiza la operación.
+     * @return OperacionResultado que indica el resultado de la operación
+     * (EXITO, ERROR_BD o OTRO_ERROR).
+     */
     private OperacionResultado create(Proveedor p, Usuario u) {
         try {
             this.conectar();
@@ -49,7 +66,7 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
             ps.setString(3, p.getDireccion());
             ps.setBoolean(4, false);
             if (ps.execute()) {
-                new DAO_control_log().insertControl("Creo un proveedor", u);
+                new DAO_control_log().insertControl("Creó un proveedor", u);
                 return OperacionResultado.EXITO;
             }
         } catch (Exception e) {
@@ -58,6 +75,14 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
         return OperacionResultado.OTRO_ERROR;
     }
 
+    /**
+     * Lee y devuelve un proveedor desde la base de datos. Este método asume que
+     * hay solo un proveedor en la tabla.
+     *
+     * @return El objeto Proveedor con los datos del proveedor obtenidos de la
+     * base de datos.
+     * @throws RuntimeException Si ocurre un error durante la operación.
+     */
     @Override
     public Proveedor readProveedor() {
         Proveedor p = new Proveedor();
@@ -78,6 +103,13 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
         return p;
     }
 
+    /**
+     * Lee y devuelve una lista de proveedores desde la base de datos.
+     *
+     * @return ArrayList de Proveedores que contiene los datos recuperados de la
+     * base de datos.
+     * @throws SQLException Si ocurre un error de base de datos.
+     */
     private ArrayList<Proveedor> readProveedores() throws SQLException {
         ArrayList<Proveedor> proveedores = new ArrayList<>();
         try {
@@ -100,6 +132,13 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
         return proveedores;
     }
 
+    /**
+     * Genera un modelo de ComboBox por defecto (DefaultComboBoxModel) que
+     * contiene una lista de proveedores obtenidos de la base de datos.
+     *
+     * @return DefaultComboBoxModel que contiene la lista de proveedores.
+     * @throws SQLException Si ocurre un error de base de datos.
+     */
     @Override
     public DefaultComboBoxModel<Proveedor> listaProveedores() throws SQLException {
         DefaultComboBoxModel<Proveedor> modelo = new DefaultComboBoxModel<>();
@@ -109,13 +148,21 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
         return modelo;
     }
 
+    /**
+     * Genera un modelo de tabla por defecto (DefaultTableModel) que representa
+     * una tabla de proveedores con columnas para ID, Nombre, Teléfono y
+     * Dirección. Los datos se obtienen de la base de datos.
+     *
+     * @return DefaultTableModel que representa la tabla de proveedores.
+     * @throws SQLException Si ocurre un error de base de datos.
+     */
     @Override
     public DefaultTableModel tablaProveedores() throws SQLException {
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID");
         model.addColumn("Nombre");
-        model.addColumn("Telefono");
-        model.addColumn("Direccion");
+        model.addColumn("Teléfono");
+        model.addColumn("Dirección");
         for (Proveedor p : readProveedores()) {
             Object[] fila = new Object[4];
             fila[0] = p.getId();
@@ -127,6 +174,16 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
         return model;
     }
 
+    /**
+     * Actualiza un proveedor en la base de datos con los nuevos datos
+     * proporcionados.
+     *
+     * @param p El objeto Proveedor con los nuevos datos.
+     * @param u El Usuario que realiza la operación.
+     * @return OperacionResultado que indica el resultado de la operación
+     * (EXITO, ERROR_BD o OTRO_ERROR).
+     * @throws SQLException Si ocurre un error de base de datos.
+     */
     @Override
     public OperacionResultado updateProveedor(Proveedor p, Usuario u) throws SQLException {
         OperacionResultado resultado = null;
@@ -138,6 +195,15 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
         return resultado;
     }
 
+    /**
+     * Método privado que realiza la actualización real del Proveedor en la base
+     * de datos.
+     *
+     * @param p El objeto Proveedor con los nuevos datos.
+     * @param u El Usuario que realiza la operación.
+     * @return OperacionResultado que indica el resultado de la operación
+     * (EXITO, ERROR_BD o OTRO_ERROR).
+     */
     private OperacionResultado update(Proveedor p, Usuario u) {
         try {
             this.conectar();
@@ -148,7 +214,7 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
             ps.setString(3, p.getDireccion());
             ps.setInt(4, p.getId());
             if (ps.execute()) {
-                new DAO_control_log().insertControl("Actualizo un proveedor", u);
+                new DAO_control_log().insertControl("Actualizó un proveedor", u);
                 return OperacionResultado.EXITO;
             }
         } catch (Exception e) {
@@ -157,6 +223,15 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
         return OperacionResultado.OTRO_ERROR;
     }
 
+    /**
+     * Elimina un proveedor de la base de datos marcándolo como "borrado".
+     *
+     * @param id El ID del proveedor que se va a eliminar.
+     * @param u El Usuario que realiza la operación.
+     * @return OperacionResultado que indica el resultado de la operación
+     * (EXITO, ERROR_BD o OTRO_ERROR).
+     * @throws SQLException Si ocurre un error de base de datos.
+     */
     @Override
     public OperacionResultado deleteProveedor(int id, Usuario u) throws SQLException {
         OperacionResultado resultado = null;
@@ -168,6 +243,16 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
         return resultado;
     }
 
+    /**
+     * Método privado que realiza la eliminación real del Proveedor en la base
+     * de datos, marcándolo como "borrado".
+     *
+     * @param id El ID del proveedor que se va a eliminar.
+     * @param u El Usuario que realiza la operación.
+     * @return OperacionResultado que indica el resultado de la operación
+     * (EXITO, ERROR_BD o OTRO_ERROR).
+     * @throws SQLException Si ocurre un error de base de datos.
+     */
     private OperacionResultado delete(int id, Usuario u) throws SQLException {
         try {
             this.conectar();
@@ -176,14 +261,14 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
             ps.setBoolean(1, true);
             ps.setInt(2, id);
             if (ps.execute()) {
-                new DAO_control_log().insertControl("Elimino un proveedor", u);
+                new DAO_control_log().insertControl("Eliminó un proveedor", u);
                 return OperacionResultado.EXITO;
             }
         } catch (Exception e) {
+            // Puedes considerar agregar un registro de error aquí.
         } finally {
             this.cerrar();
         }
         return OperacionResultado.OTRO_ERROR;
     }
-
 }
