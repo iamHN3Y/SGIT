@@ -1,6 +1,7 @@
 package models;
 
 public class Proveedor {
+
     private int id; // Identificador único del proveedor
     private String nombre; // Nombre del proveedor
     private String telefono; // Número de teléfono del proveedor
@@ -19,6 +20,10 @@ public class Proveedor {
         this.nombre = nombre;
         this.telefono = telefono;
         this.direccion = direccion;
+    }
+    
+    //Constructor vacio para un proveedor
+    public Proveedor() {
     }
 
     // Métodos de acceso para el atributo id
