@@ -14,7 +14,7 @@ interface I_DAO_Proveedor {
 
     OperacionResultado createProveedor(Proveedor p, Usuario u) throws SQLException;
 
-    Proveedor readProveedor();
+    Proveedor readProveedor() throws SQLException;
 
     DefaultComboBoxModel<Proveedor> listaProveedores() throws SQLException;
 
@@ -81,10 +81,11 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
      *
      * @return El objeto Proveedor con los datos del proveedor obtenidos de la
      * base de datos.
+     * @throws java.sql.SQLException
      * @throws RuntimeException Si ocurre un error durante la operación.
      */
     @Override
-    public Proveedor readProveedor() {
+    public Proveedor readProveedor() throws SQLException {
         Proveedor p = new Proveedor();
         try {
             this.conectar();
@@ -99,6 +100,8 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            this.cerrar();
         }
         return p;
     }

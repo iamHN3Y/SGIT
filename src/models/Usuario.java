@@ -1,6 +1,7 @@
 package models;
 
 public class Usuario {
+
     private int id; // Identificador único del usuario
     private String nombre; // Nombre del usuario
     private String telefono; // Número de teléfono del usuario
@@ -84,4 +85,10 @@ public class Usuario {
     public void setTipo_admin(boolean tipo_admin) {
         this.tipo_admin = tipo_admin;
     }
+
+    @Override
+    public String toString() {
+        return getCuenta() + "-" + getNombre();
+    }
+
 }
