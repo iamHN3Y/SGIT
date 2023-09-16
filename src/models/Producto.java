@@ -1,13 +1,13 @@
 package models;
 
 public class Producto {
+
     private int id; // Identificador único del producto
     private String nombre; // Nombre del producto
     private String descripcion; // Descripción del producto
     private float precio; // Precio del producto
     private int stock;
     private boolean borrado; //estatus del producto
-
 
     // Constructor para un producto con todos los atributos
     public Producto(int id, String nombre, String descripcion, float precio, boolean borrado) {

@@ -21,7 +21,7 @@ public class Proveedor {
         this.telefono = telefono;
         this.direccion = direccion;
     }
-    
+
     //Constructor vacio para un proveedor
     public Proveedor() {
     }

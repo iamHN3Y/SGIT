@@ -1,6 +1,7 @@
 package models;
 
 public class Stock {
+
     private int id; // Identificador único del registro de stock
     private int id_producto; // Identificador del producto relacionado con el stock
     private int cantidad; // Cantidad de productos en stock

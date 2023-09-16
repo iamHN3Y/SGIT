@@ -1,6 +1,7 @@
 package models;
 
 public class Ventas {
+
     private int id; // Identificador único de la venta
     private int id_producto; // Identificador del producto vendido
     private int id_usuario; // Identificador del usuario que realizó la venta

@@ -268,7 +268,7 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
                 return OperacionResultado.EXITO;
             }
         } catch (Exception e) {
-            // Puedes considerar agregar un registro de error aquí.
+            return OperacionResultado.ERROR_BD;
         } finally {
             this.cerrar();
         }

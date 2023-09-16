@@ -1,6 +1,7 @@
 package models;
 
 public class control_log {
+
     private int id_usuario; // Identificador del usuario relacionado con la actividad
     private String actividad; // Descripción de la actividad registrada
 
@@ -28,4 +29,3 @@ public class control_log {
         this.actividad = actividad;
     }
 }
-

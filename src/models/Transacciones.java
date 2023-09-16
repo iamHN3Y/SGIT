@@ -1,6 +1,7 @@
 package models;
 
 public class Transacciones {
+
     private int id; // Identificador único de la transacción
     private int id_proveedor; // Identificador del proveedor relacionado con la transacción
     private int id_producto; // Identificador del producto relacionado con la transacción

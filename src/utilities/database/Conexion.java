@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexion {
+
     protected Connection conexion; // Almacena la conexión a la base de datos
 
     // Configuración de la conexión a la base de datos
@@ -44,4 +45,3 @@ public class Conexion {
         }
     }
 }
-

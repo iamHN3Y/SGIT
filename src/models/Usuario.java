@@ -8,6 +8,7 @@ public class Usuario {
     private String cuenta; // Nombre de cuenta del usuario
     private String contraseña; // Contraseña del usuario
     private boolean tipo_admin; // Indica si el usuario es administrador o no
+    private boolean borrado; //Indica si el usuario ha sido borrado o no
 
     // Constructor para un usuario con todos los atributos
     public Usuario(int id, String nombre, String telefono, String cuenta, String contraseña, boolean tipo_admin) {
@@ -84,6 +85,15 @@ public class Usuario {
 
     public void setTipo_admin(boolean tipo_admin) {
         this.tipo_admin = tipo_admin;
+    }
+
+    //metodos de acceso para el atributo borrado
+    public boolean isBorrado() {
+        return borrado;
+    }
+
+    public void setBorrado(boolean borrado) {
+        this.borrado = borrado;
     }
 
     @Override
