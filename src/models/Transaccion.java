@@ -1,6 +1,6 @@
 package models;
 
-public class Transacciones {
+public class Transaccion {
 
     private int id; // Identificador único de la transacción
     private int id_proveedor; // Identificador del proveedor relacionado con la transacción
@@ -8,7 +8,7 @@ public class Transacciones {
     private int cantidad; // Cantidad de productos en la transacción
 
     // Constructor para una transacción con todos los atributos
-    public Transacciones(int id, int id_proveedor, int id_producto, int cantidad) {
+    public Transaccion(int id, int id_proveedor, int id_producto, int cantidad) {
         this.id = id;
         this.id_proveedor = id_proveedor;
         this.id_producto = id_producto;
@@ -16,14 +16,14 @@ public class Transacciones {
     }
 
     // Constructor para una transacción sin el atributo id (posiblemente para crear nuevas transacciones)
-    public Transacciones(int id_proveedor, int id_producto, int cantidad) {
+    public Transaccion(int id_proveedor, int id_producto, int cantidad) {
         this.id_proveedor = id_proveedor;
         this.id_producto = id_producto;
         this.cantidad = cantidad;
     }
 
     // Constructor vacío
-    public Transacciones() {
+    public Transaccion() {
     }
 
     // Métodos de acceso para el atributo id
