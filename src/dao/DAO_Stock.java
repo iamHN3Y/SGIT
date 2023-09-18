@@ -64,5 +64,5 @@ public class DAO_Stock extends Conexion implements I_DAO_Stock {
         }
         return false;
     }
-
+    
 }

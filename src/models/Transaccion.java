@@ -6,20 +6,23 @@ public class Transaccion {
     private int id_proveedor; // Identificador del proveedor relacionado con la transacción
     private int id_producto; // Identificador del producto relacionado con la transacción
     private int cantidad; // Cantidad de productos en la transacción
+    private float total;
 
     // Constructor para una transacción con todos los atributos
-    public Transaccion(int id, int id_proveedor, int id_producto, int cantidad) {
+    public Transaccion(int id, int id_proveedor, int id_producto, int cantidad, float total) {
         this.id = id;
         this.id_proveedor = id_proveedor;
         this.id_producto = id_producto;
         this.cantidad = cantidad;
+        this.total = total;
     }
 
     // Constructor para una transacción sin el atributo id (posiblemente para crear nuevas transacciones)
-    public Transaccion(int id_proveedor, int id_producto, int cantidad) {
+    public Transaccion(int id_proveedor, int id_producto, int cantidad, float total) {
         this.id_proveedor = id_proveedor;
         this.id_producto = id_producto;
         this.cantidad = cantidad;
+        this.total = total;
     }
 
     // Constructor vacío
