@@ -13,6 +13,11 @@ public class Stock {
         this.cantidad = cantidad;
     }
 
+    public Stock(int id_producto, int cantidad) {
+        this.id_producto = id_producto;
+        this.cantidad = cantidad;
+    }
+
     // Constructor para un registro de stock sin el atributo id (posiblemente para crear nuevos registros de stock)
     public Stock(int cantidad) {
         this.cantidad = cantidad;

@@ -64,4 +64,13 @@ public class Transaccion {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
+
+    public float getTotal() {
+        return total;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
+    }
+
 }

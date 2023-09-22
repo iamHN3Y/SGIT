@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import models.Stock;
 import models.Transaccion;
 import models.Usuario;
 import utilities.OperacionResultado;
@@ -23,6 +24,17 @@ interface I_DAO_Transacciones {
 
 public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
 
+    /**
+     * Crea una lista de transacciones en la base de datos con los datos
+     * proporcionados.
+     *
+     * @param ts Un ArrayList de objetos Transaccion que contiene los datos de
+     * las transacciones.
+     * @param u El Usuario que realiza la operación.
+     * @return OperacionResultado que indica el resultado de la operación
+     * (EXITO, ERROR_BD o OTRO_ERROR).
+     * @throws SQLException Si ocurre un error de base de datos.
+     */
     @Override
     public OperacionResultado createTransaccion(ArrayList<Transaccion> ts, Usuario u) throws SQLException {
         OperacionResultado resultado = null;
@@ -34,13 +46,36 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
         return resultado;
     }
 
+    /**
+     * Método privado que realiza la creación real de las transacciones en la
+     * base de datos.
+     *
+     * @param ts Un ArrayList de objetos Transaccion que contiene los datos de
+     * las transacciones.
+     * @param u El Usuario que realiza la operación.
+     * @return OperacionResultado que indica el resultado de la operación
+     * (EXITO, ERROR_BD o OTRO_ERROR).
+     * @throws SQLException Si ocurre un error de base de datos.
+     */
     private OperacionResultado create(ArrayList<Transaccion> ts, Usuario u) throws SQLException {
         try {
             this.conectar();
             for (Transaccion t : ts) {
                 String query = "insert into transacciones(id_proveedor, id_producto, cantidad, total) values (?, ?, ?, ?)";
                 PreparedStatement ps = this.conexion.prepareStatement(query);
-                
+                ps.setInt(1, t.getId_proveedor());
+                ps.setInt(2, t.getId_producto());
+                ps.setInt(3, t.getCantidad());
+                ps.setFloat(4, t.getTotal());
+                if (ps.execute()) {
+                    Stock s = new DAO_Stock().searchStock(t.getId_producto());
+                    int stocktemp = s.getCantidad() + t.getCantidad();
+                    s.setCantidad(stocktemp);
+                    if (new DAO_Stock().updateStock(s)) {
+                        new DAO_control_log().insertControl("Creó una transacción", u);
+                        return OperacionResultado.EXITO;
+                    }
+                }
             }
         } catch (Exception e) {
             return OperacionResultado.ERROR_BD;
@@ -50,19 +85,142 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
         return OperacionResultado.OTRO_ERROR;
     }
 
+    /**
+     * Actualiza una transacción en la base de datos con los datos
+     * proporcionados.
+     *
+     * @param nt La nueva Transaccion con los datos actualizados.
+     * @param t La Transaccion original que se va a actualizar.
+     * @param u El Usuario que realiza la operación.
+     * @return OperacionResultado que indica el resultado de la operación
+     * (EXITO, ERROR_BD o OTRO_ERROR).
+     * @throws SQLException Si ocurre un error de base de datos.
+     */
     @Override
     public OperacionResultado updateTransaccion(Transaccion nt, Transaccion t, Usuario u) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        OperacionResultado resultado = null;
+        try {
+            resultado = update(nt, t, u);
+        } catch (Exception e) {
+        }
+        return resultado;
     }
 
+    /**
+     * Método privado que realiza la actualización real de una transacción en la
+     * base de datos.
+     *
+     * @param nt La nueva Transaccion con los datos actualizados.
+     * @param t La Transaccion original que se va a actualizar.
+     * @param u El Usuario que realiza la operación.
+     * @return OperacionResultado que indica el resultado de la operación
+     * (EXITO, ERROR_BD o OTRO_ERROR).
+     * @throws SQLException Si ocurre un error de base de datos.
+     */
+    private OperacionResultado update(Transaccion nt, Transaccion t, Usuario u) throws SQLException {
+        try {
+            this.conectar();
+            String query = "update transaccion set id_proveedor = ?, id_producto = ?, cantidad = ?, total = ? where id = ?;";
+            PreparedStatement ps = this.conexion.prepareStatement(query);
+            ps.setInt(1, nt.getId_proveedor());
+            ps.setInt(2, nt.getId_producto());
+            ps.setInt(3, nt.getCantidad());
+            ps.setFloat(4, nt.getTotal());
+            ps.setInt(5, nt.getId());
+            if (ps.execute()) {
+                int temp = nt.getCantidad() - t.getCantidad();
+                Stock s = new DAO_Stock().searchStock(nt.getId_producto());
+                int stocktemp = s.getCantidad() + temp;
+                s.setCantidad(stocktemp);
+                if (new DAO_Stock().updateStock(s)) {
+                    new DAO_control_log().insertControl("Actualizó una transacción", u);
+                    return OperacionResultado.EXITO;
+                }
+            }
+        } catch (Exception e) {
+            return OperacionResultado.ERROR_BD;
+        } finally {
+            this.cerrar();
+        }
+        return OperacionResultado.OTRO_ERROR;
+    }
+
+    /**
+     * Lee y recupera todas las transacciones almacenadas en la base de datos.
+     *
+     * @return Un ArrayList de objetos Transaccion que contiene todas las
+     * transacciones almacenadas.
+     * @throws SQLException Si ocurre un error de base de datos.
+     */
+    private ArrayList<Transaccion> readTransacciones() throws SQLException {
+        ArrayList<Transaccion> transacciones = new ArrayList<>();
+        try {
+            this.conectar();
+            String query = "select * from transacciones;";
+            PreparedStatement ps = this.conexion.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Transaccion t = new Transaccion();
+                t.setId(rs.getInt("id"));
+                t.setId_producto(rs.getInt("id_producto"));
+                t.setId_proveedor(rs.getInt("id_proveedor"));
+                t.setCantidad(rs.getInt("cantidad"));
+                t.setTotal(rs.getFloat("total"));
+                // Queda pendiente la fecha
+                transacciones.add(t);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            this.cerrar();
+        }
+        return transacciones;
+    }
+
+    /**
+     * Recupera una lista de transacciones desde la base de datos y la devuelve
+     * en forma de DefaultComboBoxModel.
+     *
+     * @return Un DefaultComboBoxModel que contiene las transacciones
+     * recuperadas desde la base de datos.
+     * @throws SQLException Si ocurre un error de base de datos.
+     */
     @Override
     public DefaultComboBoxModel<Transaccion> listaTransacciones() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        DefaultComboBoxModel<Transaccion> modelo = new DefaultComboBoxModel<>();
+        for (Transaccion t : readTransacciones()) {
+            modelo.addElement(t);
+        }
+        return modelo;
     }
 
+    /**
+     * Recupera una lista de transacciones desde la base de datos y la devuelve
+     * en forma de DefaultTableModel con columnas predefinidas ("ID", "ID
+     * Producto", "ID Proveedor", "Cantidad", "Total").
+     *
+     * @return Un DefaultTableModel que contiene las transacciones recuperadas
+     * desde la base de datos con columnas predefinidas.
+     * @throws SQLException Si ocurre un error de base de datos.
+     */
     @Override
     public DefaultTableModel tablaTransacciones() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        // Definir las columnas de la tabla
+        String[] columnas = {"ID", "ID Producto", "ID Proveedor", "Cantidad", "Total"};
+        // Crear un DefaultTableModel con las columnas
+        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0);
+        // Llenar el modelo con los datos de las transacciones
+        for (Transaccion t : readTransacciones()) {
+            Object[] fila = {
+                t.getId(),
+                t.getId_producto(),
+                t.getId_proveedor(),
+                t.getCantidad(),
+                t.getTotal()
+            };
+            modeloTabla.addRow(fila);
+        }
+        return modeloTabla;
     }
 
 }
