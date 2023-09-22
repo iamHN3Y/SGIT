@@ -102,6 +102,7 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
         try {
             resultado = update(nt, t, u);
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Checale we pq hubo un error-> " + e);
         }
         return resultado;
     }
@@ -128,9 +129,9 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
             ps.setFloat(4, nt.getTotal());
             ps.setInt(5, nt.getId());
             if (ps.execute()) {
-                int temp = nt.getCantidad() - t.getCantidad();
+                int dif = nt.getCantidad() - t.getCantidad();
                 Stock s = new DAO_Stock().searchStock(nt.getId_producto());
-                int stocktemp = s.getCantidad() + temp;
+                int stocktemp = s.getCantidad() + dif;
                 s.setCantidad(stocktemp);
                 if (new DAO_Stock().updateStock(s)) {
                     new DAO_control_log().insertControl("Actualizó una transacción", u);
