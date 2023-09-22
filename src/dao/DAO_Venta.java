@@ -42,7 +42,7 @@ public class DAO_Venta extends Conexion implements I_DAO_Venta {
         try {
             this.conectar();
             for (Venta v : vs) {
-                String query = "insert into ventas(id_producto, cantidad, total, id_usuario, borrado) values (?,?,?,?,?);";
+                String query = "insert into ventas(id_producto, cantidad, total, id_usuario, borrado, fecha_modificacion) values (?,?,?,?,?, NOW());";
                 PreparedStatement ps = this.conexion.prepareStatement(query);
                 ps.setInt(1, v.getId_producto());
                 ps.setInt(2, v.getCantidad());
@@ -78,7 +78,7 @@ public class DAO_Venta extends Conexion implements I_DAO_Venta {
     private OperacionResultado update(Venta nv, Venta v, Usuario u) throws SQLException {
         try {
             this.conectar();
-            String query = "update ventas set id_producto = ?, cantidad = ?, total = ?, id_usuario = ? where id = ?;";
+            String query = "update ventas set id_producto = ?, cantidad = ?, total = ?, id_usuario = ?, fecha_modificacion = NOW() where id = ?;";
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setInt(1, nv.getId_producto());
             ps.setInt(2, nv.getCantidad());

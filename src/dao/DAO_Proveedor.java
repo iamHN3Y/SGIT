@@ -11,19 +11,19 @@ import utilities.OperacionResultado;
 import utilities.database.Conexion;
 
 interface I_DAO_Proveedor {
-
+    
     OperacionResultado createProveedor(Proveedor p, Usuario u) throws SQLException;
-
-    Proveedor readProveedor() throws SQLException;
-
+    
+    Proveedor readProveedor(int id) throws SQLException;
+    
     DefaultComboBoxModel<Proveedor> listaProveedores() throws SQLException;
-
+    
     DefaultTableModel tablaProveedores() throws SQLException;
-
+    
     OperacionResultado updateProveedor(Proveedor p, Usuario u) throws SQLException;
-
+    
     OperacionResultado deleteProveedor(int id, Usuario u) throws SQLException;
-
+    
 }
 
 public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
@@ -59,7 +59,7 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
     private OperacionResultado create(Proveedor p, Usuario u) {
         try {
             this.conectar();
-            String query = "insert into proveedor(nombre, telefono, direccion, borrado) values (?, ?, ?, ?);";
+            String query = "insert into proveedor(nombre, telefono, direccion, borrado, fecha_modificacion) values (?, ?, ?, ?, NOW());";
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setString(1, p.getNombre());
             ps.setString(2, p.getTelefono());
@@ -74,23 +74,15 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
         }
         return OperacionResultado.OTRO_ERROR;
     }
-
-    /**
-     * Lee y devuelve un proveedor desde la base de datos. Este método asume que
-     * hay solo un proveedor en la tabla.
-     *
-     * @return El objeto Proveedor con los datos del proveedor obtenidos de la
-     * base de datos.
-     * @throws java.sql.SQLException
-     * @throws RuntimeException Si ocurre un error durante la operación.
-     */
+    
     @Override
-    public Proveedor readProveedor() throws SQLException {
+    public Proveedor readProveedor(int id) throws SQLException {
         Proveedor p = new Proveedor();
         try {
             this.conectar();
-            String query = "select * from proveedor;";
+            String query = "select * from proveedor where id = ?;";
             PreparedStatement ps = this.conexion.prepareStatement(query);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 p.setId(rs.getInt("id"));
@@ -116,8 +108,9 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
     private ArrayList<Proveedor> readProveedores() throws SQLException {
         ArrayList<Proveedor> proveedores = new ArrayList<>();
         try {
-            String query = "select * from proveedor;";
+            String query = "select * from proveedor where borrado = ?;";
             PreparedStatement ps = this.conexion.prepareStatement(query);
+            ps.setBoolean(1, false);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Proveedor p = new Proveedor();
@@ -210,7 +203,7 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
     private OperacionResultado update(Proveedor p, Usuario u) {
         try {
             this.conectar();
-            String query = "update proveedor set nombre = ?, telefono = ?, direccion = ? where id = ?;";
+            String query = "update proveedor set nombre = ?, telefono = ?, direccion = ?, fecha_modificacion = NOW() where id = ?;";
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setString(1, p.getNombre());
             ps.setString(2, p.getTelefono());

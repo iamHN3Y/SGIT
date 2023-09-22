@@ -1,0 +1,60 @@
+# Carpeta de compilación de NetBeans
+/build/
+
+# Carpeta de archivos temporales de NetBeans
+/nbproject/private/
+
+# Archivos generados por NetBeans
+/nbproject/Makefile-*.mk
+/nbproject/Package-*.bash
+/nbproject/Package-*.sh
+
+# Carpeta de configuración de NetBeans
+/nbproject/configurations.xml
+
+# Carpeta de bibliotecas de NetBeans
+/nbproject/workingdir/
+
+# Archivo de registro de errores de NetBeans
+/nbproject/nbbuild/build-impl.xml
+
+# Carpetas de salida de los archivos de NetBeans
+/nbproject/dist/
+/nbproject/nbbuild/
+/nbproject/coverage/
+
+# Archivos de NetBeans
+/nbproject/project.properties
+/nbproject/project.xml
+/nbproject/genfiles.properties
+/nbproject/build-impl.xml
+/nbproject/private/private.properties
+
+
+# Carpeta de archivos generados por IDEs diferentes a NetBeans (por ejemplo, IntelliJ IDEA o Eclipse)
+.idea/
+.classpath
+.project
+
+# Archivos de configuración de IntelliJ IDEA
+*.iml
+*.iws
+
+# Carpetas de archivos de dependencias de Eclipse
+/bin/
+/.settings/
+/.metadata/
+/.classpath
+/.project
+
+# Carpetas y archivos generados durante la ejecución
+/target/
+/out/
+*.class
+
+# Logs y archivos temporales
+*.log
+*.log.*
+*.tmp
+*.swp
+*.bak

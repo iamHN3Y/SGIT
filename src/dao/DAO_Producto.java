@@ -65,7 +65,7 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
     private OperacionResultado create(Producto p, Usuario u, Stock s) throws SQLException {
         try {
             this.conectar();
-            String query = "insert into producto(nombre, descripcion, precio, borrado) values (?,?,?,?);";
+            String query = "INSERT INTO producto(nombre, descripcion, precio, borrado, fecha_modificacion) VALUES (?, ?, ?, ?, NOW());";
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setString(1, p.getNombre());
             ps.setString(2, p.getDescripcion());
@@ -135,7 +135,7 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
                 p.setId(rs.getInt("id"));
                 p.setNombre(rs.getString("nombre"));
                 p.setDescripcion(rs.getString("descripcion"));
-                p.setPrecio(rs.getFloat("preciov"));
+                p.setPrecio(rs.getFloat("precio"));
                 p.setStock(rs.getInt("cantidad"));
                 productos.add(p);
             }
@@ -168,7 +168,7 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
                 p.setId(rs.getInt("id"));
                 p.setNombre(rs.getString("nombre"));
                 p.setDescripcion(rs.getString("descripcion"));
-                p.setPrecio(rs.getFloat("preciov"));
+                p.setPrecio(rs.getFloat("precio"));
                 p.setStock(rs.getInt("cantidad"));
             }
         } catch (Exception e) {
@@ -256,7 +256,7 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
     private OperacionResultado update(Producto p, Usuario u, Stock s) {
         try {
             this.conectar();
-            String query = "update producto set nombre = ?, descripcion = ?, precio = ? where id = ?;";
+            String query = "update producto set nombre = ?, descripcion = ?, precio = ?, fecha_modificacion = NOW() where id = ?;";
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setString(1, p.getNombre());
             ps.setString(2, p.getDescripcion());
