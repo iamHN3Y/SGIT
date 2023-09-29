@@ -2,9 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package gui.Usuario;
+package gui.producto;
 
-import gui.proveedor.dlgDeleteProveedor;
 import java.awt.Color;
 
 import java.awt.event.MouseEvent;
@@ -21,14 +20,14 @@ import models.Usuario;
  *
  * @author rosal
  */
-public class frmUsuariosMenu extends javax.swing.JFrame {
+public class frmProductosMenu extends javax.swing.JFrame {
 
     Usuario u;
 
     /**
      * Creates new form frmUsuarios
      */
-    public frmUsuariosMenu(Usuario u) {
+    public frmProductosMenu(Usuario u) {
         initComponents();
         this.u = u;
         setLocationRelativeTo(this);
@@ -67,7 +66,7 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
     void cargaTabla() {
         SwingUtilities.invokeLater(() -> {
             try {
-                jTable1.setModel(new dao.DAO_Usuario().tablaUsuarios());
+                jTable1.setModel(new dao.DAO_Producto().tablaProductos());
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex);
             }
@@ -96,7 +95,6 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setFont(new java.awt.Font("Yu Gothic UI Light", 0, 18)); // NOI18N
-        setPreferredSize(new java.awt.Dimension(750, 550));
 
         jPanelSide.setBackground(new java.awt.Color(255, 242, 216));
         jPanelSide.setPreferredSize(new java.awt.Dimension(90, 0));
@@ -170,7 +168,7 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
         jPanelContenedor.setBackground(new java.awt.Color(234, 215, 187));
 
         jLabel1.setFont(getFont());
-        jLabel1.setText("Menu Usuarios");
+        jLabel1.setText("Menu productos");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -186,7 +184,7 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jLabel3.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 14)); // NOI18N
-        jLabel3.setText("Usuarios activos en plataforma");
+        jLabel3.setText("productos activos en plataforma");
 
         javax.swing.GroupLayout jPanelContenedorLayout = new javax.swing.GroupLayout(jPanelContenedor);
         jPanelContenedor.setLayout(jPanelContenedorLayout);
@@ -222,32 +220,32 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
 
     private void jButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseEntered
         // TODO add your handling code here:
-        jLabel2.setText("Crear Usuarios");
+        jLabel2.setText("Crear Productos");
     }//GEN-LAST:event_jButton5MouseEntered
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        new dlgCreateUsuarios(this, rootPaneCheckingEnabled, u).setVisible(true);
+        new dlgCreateProductos(this, rootPaneCheckingEnabled, u).setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseEntered
         // TODO add your handling code here:
-        jLabel2.setText("Actualizar usuarios");
+        jLabel2.setText("Actualizar Productos");
     }//GEN-LAST:event_jButton6MouseEntered
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        new dlgUpdateUsuarios(this, rootPaneCheckingEnabled, u).setVisible(true);
+        new dlgUpdateProducto(this, rootPaneCheckingEnabled, u).setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
         // TODO add your handling code here:
-        jLabel2.setText("Eliminar usuarios");
+        jLabel2.setText("Eliminar Productos");
     }//GEN-LAST:event_jButton7MouseEntered
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        new dlgDeleteUsuarios(this, rootPaneCheckingEnabled, u).setVisible(true);
+        //new dlgDeleteProveedor(this, rootPaneCheckingEnabled, u).setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

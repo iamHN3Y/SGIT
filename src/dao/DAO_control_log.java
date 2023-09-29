@@ -23,7 +23,7 @@ public class DAO_control_log extends Conexion implements I_DAO_control_log {
     public void insertControl(String actividad, Usuario u) throws SQLException {
         try {
             this.conectar();
-            String query = "insert into control_log(id_usuario, actividad, fecha) values (?,?, N0W());";
+            String query = "insert into control_log(id_usuario, actividad) values (?,?);";
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setInt(1, u.getId());
             ps.setString(2, actividad);

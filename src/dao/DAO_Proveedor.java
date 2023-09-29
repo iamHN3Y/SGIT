@@ -68,10 +68,13 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
             ps.setString(2, p.getTelefono());
             ps.setString(3, p.getDireccion());
             ps.setBoolean(4, false);
-            if (ps.execute()) {
+
+            boolean resul = ps.execute();
+            if (resul != true) {
                 new DAO_control_log().insertControl("Creó un proveedor", u);
                 return true;
             }
+
         } catch (Exception e) {
             throw e;
         } finally {
@@ -117,6 +120,7 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
     private ArrayList<Proveedor> readProveedores() throws SQLException {
         ArrayList<Proveedor> proveedores = new ArrayList<>();
         try {
+            this.conectar();
             String query = "select * from proveedor where borrado = ?;";
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setBoolean(1, false);
@@ -130,7 +134,11 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
                 proveedores.add(p);
             }
         } catch (Exception e) {
-            throw e;
+            try {
+                throw e;
+            } catch (Exception ex) {
+                Logger.getLogger(DAO_Proveedor.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } finally {
             this.cerrar();
         }
@@ -217,7 +225,9 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
             ps.setString(2, p.getTelefono());
             ps.setString(3, p.getDireccion());
             ps.setInt(4, p.getId());
-            if (ps.execute()) {
+
+            boolean resul = ps.execute();
+            if (resul != true) {
                 new DAO_control_log().insertControl("Actualizó un proveedor", u);
                 return true;
             }
@@ -263,7 +273,8 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setBoolean(1, true);
             ps.setInt(2, id);
-            if (ps.execute()) {
+            boolean resul = ps.execute();
+            if (resul != true) {
                 new DAO_control_log().insertControl("Eliminó un proveedor", u);
                 return true;
             }

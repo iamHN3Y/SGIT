@@ -10,20 +10,18 @@ public class Producto {
     private boolean borrado; //estatus del producto
 
     // Constructor para un producto con todos los atributos
-    public Producto(int id, String nombre, String descripcion, float precio, boolean borrado) {
+    public Producto(int id, String nombre, String descripcion, float precio) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
-        this.borrado = borrado;
     }
 
     // Constructor para un producto sin el atributo id (posiblemente para crear nuevos productos)
-    public Producto(String nombre, String descripcion, float precio, boolean borrado) {
+    public Producto(String nombre, String descripcion, float precio) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
-        this.borrado = borrado;
     }
 
     // Constructor vacío

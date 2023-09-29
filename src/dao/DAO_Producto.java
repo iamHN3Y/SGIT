@@ -45,7 +45,7 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
         try {
             resultado = create(p, u, s);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Checale we pq hubo un error-> " + e);
+            //JOptionPane.showMessageDialog(null, "Checale we pq hubo un error-> " + e);
         }
         return resultado;
     }
@@ -64,14 +64,16 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
     private boolean create(Producto p, Usuario u, Stock s) throws SQLException, Exception {
         try {
             this.conectar();
-            String query = "INSERT INTO producto(nombre, descripcion, precio, borrado, fecha_modificacion) VALUES (?, ?, ?, ?, NOW());";
+            String query = "insert into producto(nombre, descripcion, precio, borrado, fecha_modificacion) values (?, ?, ?, ?, NOW());";
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setString(1, p.getNombre());
             ps.setString(2, p.getDescripcion());
             ps.setFloat(3, p.getPrecio());
             ps.setBoolean(4, false);
-            if (ps.execute()) {
-                s.setId_producto(searchID(p));
+
+            boolean resul = ps.execute();
+            s.setId_producto(searchID(p));
+            if (resul != true) {
                 if (new DAO_Stock().insertStock(s)) {
                     new DAO_control_log().insertControl("Creo un producto", u);
                     return true;
@@ -96,7 +98,7 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
         int id = 0;
         try {
             this.conectar();
-            String query = "select id from producto where nombre = ?, descripcion = ?, precio = ?;";
+            String query = "select id from producto where nombre = ? and descripcion = ? and precio = ?;";
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setString(1, p.getNombre());
             ps.setString(2, p.getDescripcion());
@@ -260,8 +262,10 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
             ps.setString(2, p.getDescripcion());
             ps.setFloat(3, p.getPrecio());
             ps.setInt(4, p.getId());
-            if (ps.execute()) {
-                s.setId_producto(p.getId());
+
+            boolean resul = ps.execute();
+            s.setId_producto(searchID(p));
+            if (resul != true) {
                 if (new DAO_Stock().updateStock(s)) {
                     new DAO_control_log().insertControl("Actualizo un producto", u);
                     return true;
@@ -308,7 +312,8 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setBoolean(1, true);
             ps.setInt(2, id);
-            if (ps.execute()) {
+            boolean resul = ps.execute();
+            if (resul != true) {
                 new DAO_control_log().insertControl("Elimino un producto", u);
                 return true;
             }

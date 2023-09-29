@@ -2,31 +2,34 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package gui.Usuario;
+package gui.proveedor;
 
 import dao.DAO_Usuario;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicButtonUI;
+import models.Proveedor;
 import models.Usuario;
 
 /**
  *
  * @author rosal
  */
-public class dlgDeleteUsuarios extends javax.swing.JDialog {
-
+public class dlgDeleteProveedor extends javax.swing.JDialog {
+    
     Usuario u;
 
     /**
      * Creates new form dlgCreateUsuarios
      */
-    public dlgDeleteUsuarios(java.awt.Frame parent, boolean modal, Usuario u) {
+    public dlgDeleteProveedor(java.awt.Frame parent, boolean modal, Usuario u) {
         super(parent, modal);
         initComponents();
         this.u = u;
@@ -38,21 +41,21 @@ public class dlgDeleteUsuarios extends javax.swing.JDialog {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                 }
-
+                
                 @Override
                 public void mousePressed(MouseEvent e) {
                 }
-
+                
                 @Override
                 public void mouseReleased(MouseEvent e) {
                 }
-
+                
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     btn.setBackground(new Color(188, 163, 127));
-
+                    
                 }
-
+                
                 @Override
                 public void mouseExited(MouseEvent e) {
                     btn.setBackground(new Color(234, 215, 187));
@@ -61,13 +64,13 @@ public class dlgDeleteUsuarios extends javax.swing.JDialog {
         }
         cargaCombobox();
     }
-
+    
     void cargaCombobox() {
         SwingUtilities.invokeLater(() -> {
             try {
-                jComboBox1.setModel(new dao.DAO_Usuario().listaUsuario());
+                jComboBox1.setModel(new dao.DAO_Proveedor().listaProveedores());
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Error: " + ex);
+                Logger.getLogger(dlgDeleteProveedor.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
@@ -93,7 +96,7 @@ public class dlgDeleteUsuarios extends javax.swing.JDialog {
         jPanelContenedor.setBackground(new java.awt.Color(234, 215, 187));
 
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 24)); // NOI18N
-        jLabel1.setText("Delete Usuarios");
+        jLabel1.setText("Delete Proveedor");
 
         jButtonGuardar.setFont(getFont());
         jButtonGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/controlar.png"))); // NOI18N
@@ -170,8 +173,8 @@ public class dlgDeleteUsuarios extends javax.swing.JDialog {
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
         int id = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getId();
-
-        if (new DAO_Usuario().deleteUsuario(id, u)) {
+        
+        if (new dao.DAO_Proveedor().deleteProveedor(id, u)) {
             JOptionPane.showMessageDialog(this, "Se elimino el usuario");
             limpiacajas();
             cargaCombobox();
@@ -194,7 +197,7 @@ public class dlgDeleteUsuarios extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonGuardar;
-    private javax.swing.JComboBox<Usuario> jComboBox1;
+    private javax.swing.JComboBox<Proveedor> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanelContenedor;
     // End of variables declaration//GEN-END:variables

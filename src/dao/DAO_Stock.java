@@ -33,7 +33,8 @@ public class DAO_Stock extends Conexion implements I_DAO_Stock {
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setInt(1, s.getId_producto());
             ps.setInt(2, s.getCantidad());
-            if (ps.execute()) {
+            boolean resul = ps.execute();
+            if (resul != true) {
                 return true;
             }
         } catch (Exception e) {
@@ -57,7 +58,8 @@ public class DAO_Stock extends Conexion implements I_DAO_Stock {
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setInt(1, s.getCantidad());
             ps.setInt(2, s.getId_producto());
-            if (ps.execute()) {
+            boolean resul = ps.execute();
+            if (resul != true) {
                 return true;
             }
         } catch (Exception e) {

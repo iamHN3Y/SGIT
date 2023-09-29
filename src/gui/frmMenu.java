@@ -5,6 +5,8 @@
 package gui;
 
 import gui.Usuario.frmUsuariosMenu;
+import gui.producto.frmProductosMenu;
+import gui.proveedor.frmProveedoresMenu;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -29,6 +31,12 @@ public class frmMenu extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         
         JButton[] btns = {jButton1, jButton2, jButton3, jButton4, jButton5};
+        if (u.isTipo_admin() == false) {
+            jButton1.setVisible(false);
+            jButton3.setVisible(false);
+            jButton5.setVisible(false);
+        }
+        
         for (JButton btn : btns) {
             btn.setUI(new BasicButtonUI());
             btn.addMouseListener(new MouseListener() {
@@ -86,7 +94,6 @@ public class frmMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 242, 216));
         setFont(new java.awt.Font("Yu Gothic UI Light", 0, 18)); // NOI18N
-        setPreferredSize(new java.awt.Dimension(750, 550));
 
         jPanelSide.setBackground(new java.awt.Color(255, 242, 216));
         jPanelSide.setPreferredSize(new java.awt.Dimension(90, 0));
@@ -106,6 +113,11 @@ public class frmMenu extends javax.swing.JFrame {
                 jButton5MouseEntered(evt);
             }
         });
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         jPanelSide.add(jButton5);
 
         jButton3.setBackground(getBackground());
@@ -123,6 +135,11 @@ public class frmMenu extends javax.swing.JFrame {
                 jButton3MouseEntered(evt);
             }
         });
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanelSide.add(jButton3);
 
         jButton4.setBackground(getBackground());
@@ -135,6 +152,11 @@ public class frmMenu extends javax.swing.JFrame {
         jButton4.setFocusPainted(false);
         jButton4.setFocusable(false);
         jButton4.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton4MouseEntered(evt);
+            }
+        });
         jPanelSide.add(jButton4);
 
         jButton2.setBackground(getBackground());
@@ -147,6 +169,11 @@ public class frmMenu extends javax.swing.JFrame {
         jButton2.setFocusPainted(false);
         jButton2.setFocusable(false);
         jButton2.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton2MouseEntered(evt);
+            }
+        });
         jPanelSide.add(jButton2);
 
         jButton1.setBackground(getBackground());
@@ -223,6 +250,26 @@ public class frmMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         jLabel2.setText("Usuarios");
     }//GEN-LAST:event_jButton1MouseEntered
+
+    private void jButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseEntered
+        // TODO add your handling code here:
+        jLabel2.setText("Transacciones");
+    }//GEN-LAST:event_jButton4MouseEntered
+
+    private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
+        // TODO add your handling code here:
+        jLabel2.setText("Ventas");
+    }//GEN-LAST:event_jButton2MouseEntered
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        new frmProveedoresMenu(u).setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        new frmProductosMenu(u).setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
-import models.Proveedor;
 
 interface I_DAO_Usuario {
 
@@ -105,14 +104,16 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
             ps.setString(4, n.getContraseña());
             ps.setBoolean(5, n.isTipo_admin());
             ps.setBoolean(6, false);
-            if (ps.execute()) {
-                new DAO_control_log().insertControl("Creó un usuario", u);
-                JOptionPane.showMessageDialog(null, "Creo un usuario");
+
+            boolean resul = ps.execute();
+            if (resul != true) {
+                new DAO_control_log().insertControl("Creo un usuario", u);
+                return true;
             }
         } catch (Exception e) {
             throw e;
         }
-        return true;
+        return false;
     }
 
     /**
@@ -156,7 +157,9 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
             ps.setString(4, n.getContraseña());
             ps.setBoolean(5, n.isTipo_admin());
             ps.setInt(6, n.getId());
-            if (ps.execute()) {
+
+            boolean resul = ps.execute();
+            if (resul != true) {
                 new DAO_control_log().insertControl("Actualizó un usuario", u);
                 return true;
             }
@@ -165,7 +168,7 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
         } finally {
             this.cerrar();
         }
-        return true;
+        return false;
     }
 
     /**
@@ -204,8 +207,10 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setBoolean(1, true);
             ps.setInt(2, id);
-            if (ps.execute()) {
-                //new DAO_control_log().insertControl("Eliminó un usuario", u);
+
+            boolean resul = ps.execute();
+            if (resul != true) {
+                new DAO_control_log().insertControl("Eliminó un usuario", u);
                 return true;
             }
         } catch (Exception e) {
