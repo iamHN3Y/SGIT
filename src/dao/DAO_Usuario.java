@@ -1,22 +1,24 @@
 package dao;
 
-import java.sql.*;
-import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
 import models.Usuario;
-import utilities.OperacionResultado;
+
 import utilities.database.Conexion;
+
+import javax.swing.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 interface I_DAO_Usuario {
 
     Usuario loginUsuario(String cuenta, String contrasenia) throws SQLException;
 
-    OperacionResultado createUsuario(Usuario n, Usuario u) throws SQLException;
+    boolean createUsuario(Usuario n, Usuario u) throws SQLException;
 
-    OperacionResultado updateUsuario(Usuario n, Usuario u) throws SQLException;
+    boolean updateUsuario(Usuario n, Usuario u) throws SQLException;
 
-    OperacionResultado deleteUsuario(int id, Usuario u) throws SQLException;
+    boolean deleteUsuario(int id, Usuario u) throws SQLException;
 
     DefaultComboBoxModel<Usuario> listaUsuario() throws SQLException;
 }
@@ -67,11 +69,10 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
      * @param u El Usuario que realiza la operación.
      * @return OperacionResultado que indica el resultado de la operación
      * (EXITO, ERROR_BD o OTRO_ERROR).
-     * @throws SQLException Si ocurre un error de base de datos.
      */
     @Override
-    public OperacionResultado createUsuario(Usuario n, Usuario u) throws SQLException {
-        OperacionResultado resultado = null;
+    public boolean createUsuario(Usuario n, Usuario u) {
+        boolean resultado = false;
         try {
             resultado = create(n, u);
         } catch (Exception e) {
@@ -89,7 +90,7 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
      * @return OperacionResultado que indica el resultado de la operación
      * (EXITO, ERROR_BD o OTRO_ERROR).
      */
-    private OperacionResultado create(Usuario n, Usuario u) {
+    private boolean create(Usuario n, Usuario u) throws Exception {
         try {
             this.conectar();
             String query = "insert into usuario(nombre, telefono, cuenta, contraseña, tipo_admin, borrado) values (?, ?, ?, ?, ?, ?);";
@@ -102,12 +103,12 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
             ps.setBoolean(6, false);
             if (ps.execute()) {
                 new DAO_control_log().insertControl("Creó un usuario", u);
-                return OperacionResultado.EXITO;
+                return true;
             }
         } catch (Exception e) {
-            return OperacionResultado.ERROR_BD;
+            throw e;
         }
-        return OperacionResultado.OTRO_ERROR;
+        return false;
     }
 
     /**
@@ -118,11 +119,10 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
      * @param u El Usuario que realiza la operación.
      * @return OperacionResultado que indica el resultado de la operación
      * (EXITO, ERROR_BD o OTRO_ERROR).
-     * @throws SQLException Si ocurre un error de base de datos.
      */
     @Override
-    public OperacionResultado updateUsuario(Usuario n, Usuario u) throws SQLException {
-        OperacionResultado resultado = null;
+    public boolean updateUsuario(Usuario n, Usuario u) {
+        boolean resultado = false;
         try {
             resultado = update(n, u);
         } catch (Exception e) {
@@ -141,7 +141,7 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
      * (EXITO, ERROR_BD o OTRO_ERROR).
      * @throws SQLException Si ocurre un error de base de datos.
      */
-    private OperacionResultado update(Usuario n, Usuario u) throws SQLException {
+    private boolean update(Usuario n, Usuario u) throws SQLException, Exception {
         try {
             this.conectar();
             String query = "update usuario set nombre = ?, telefono = ?, cuenta = ?, contraseña = ?, tipo_admin = ? where id = ?;";
@@ -154,14 +154,14 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
             ps.setInt(6, n.getId());
             if (ps.execute()) {
                 new DAO_control_log().insertControl("Actualizó un usuario", u);
-                return OperacionResultado.EXITO;
+                return true;
             }
         } catch (Exception e) {
-            return OperacionResultado.ERROR_BD;
+            throw e;
         } finally {
             this.cerrar();
         }
-        return OperacionResultado.OTRO_ERROR;
+        return false;
     }
 
     /**
@@ -171,11 +171,10 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
      * @param u El Usuario que realiza la operación.
      * @return OperacionResultado que indica el resultado de la operación
      * (EXITO, ERROR_BD o OTRO_ERROR).
-     * @throws SQLException Si ocurre un error de base de datos.
      */
     @Override
-    public OperacionResultado deleteUsuario(int id, Usuario u) throws SQLException {
-        OperacionResultado resultado = null;
+    public boolean deleteUsuario(int id, Usuario u) {
+        boolean resultado = false;
         try {
             resultado = delete(id, u);
         } catch (Exception e) {
@@ -194,7 +193,7 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
      * (EXITO, ERROR_BD o OTRO_ERROR).
      * @throws SQLException Si ocurre un error de base de datos.
      */
-    private OperacionResultado delete(int id, Usuario u) throws SQLException {
+    private boolean delete(int id, Usuario u) throws SQLException, Exception {
         try {
             this.conectar();
             String query = "update usuario set borrado = ? where id = ?;";
@@ -202,15 +201,15 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
             ps.setBoolean(1, true);
             ps.setInt(2, id);
             if (ps.execute()) {
-                new DAO_control_log().insertControl("Eliminó un usuario", u);
-                return OperacionResultado.EXITO;
+                //new DAO_control_log().insertControl("Eliminó un usuario", u);
+                return true;
             }
         } catch (Exception e) {
-            return OperacionResultado.ERROR_BD;
+            throw e;
         } finally {
             this.cerrar();
         }
-        return OperacionResultado.OTRO_ERROR;
+        return false;
     }
 
     /**

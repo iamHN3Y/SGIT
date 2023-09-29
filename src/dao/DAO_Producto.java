@@ -3,7 +3,6 @@ package dao;
 import models.Producto;
 import models.Stock;
 import models.Usuario;
-import utilities.OperacionResultado;
 import utilities.database.Conexion;
 
 import javax.swing.*;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
 
 interface I_DAO_Producto {
 
-    OperacionResultado createProducto(Producto p, Usuario u, Stock s) throws SQLException;
+    boolean createProducto(Producto p, Usuario u, Stock s) throws SQLException;
 
     Producto readProducto(int id);
 
@@ -23,9 +22,9 @@ interface I_DAO_Producto {
 
     DefaultTableModel tablaProductos() throws SQLException;
 
-    OperacionResultado updateProducto(Producto p, Usuario u, Stock s) throws SQLException;
+    boolean updateProducto(Producto p, Usuario u, Stock s) throws SQLException;
 
-    OperacionResultado deleteProducto(int id, Usuario u) throws SQLException;
+    boolean deleteProducto(int id, Usuario u) throws SQLException;
 
 }
 
@@ -41,8 +40,8 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
      * (EXITO, ERROR_BD o OTRO_ERROR).
      */
     @Override
-    public OperacionResultado createProducto(Producto p, Usuario u, Stock s) {
-        OperacionResultado resultado = null;
+    public boolean createProducto(Producto p, Usuario u, Stock s) {
+        boolean resultado = false;
         try {
             resultado = create(p, u, s);
         } catch (Exception e) {
@@ -62,7 +61,7 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
      * (EXITO, ERROR_BD o OTRO_ERROR).
      * @throws SQLException Si ocurre un error de base de datos.
      */
-    private OperacionResultado create(Producto p, Usuario u, Stock s) throws SQLException {
+    private boolean create(Producto p, Usuario u, Stock s) throws SQLException, Exception {
         try {
             this.conectar();
             String query = "INSERT INTO producto(nombre, descripcion, precio, borrado, fecha_modificacion) VALUES (?, ?, ?, ?, NOW());";
@@ -75,15 +74,15 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
                 s.setId_producto(searchID(p));
                 if (new DAO_Stock().insertStock(s)) {
                     new DAO_control_log().insertControl("Creo un producto", u);
-                    return OperacionResultado.EXITO;
+                    return true;
                 }
             }
         } catch (Exception e) {
-            return OperacionResultado.ERROR_BD;
+            throw e;
         } finally {
             this.cerrar();
         }
-        return OperacionResultado.OTRO_ERROR;
+        return false;
     }
 
     /**
@@ -153,7 +152,7 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
      * @param id El ID del producto que se desea leer.
      * @return El Producto recuperado de la base de datos, o un objeto Producto
      * vacío si no se encuentra.
-     * @throws RuntimeException Si ocurre un error durante la operación.
+     * @throws RuntimeException Sí ocurre un error durante la operación.
      */
     @Override
     public Producto readProducto(int id) {
@@ -230,11 +229,10 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
      * @param s El Stock asociado al producto.
      * @return OperacionResultado que indica el resultado de la operación
      * (EXITO, ERROR_BD o OTRO_ERROR).
-     * @throws SQLException Si ocurre un error de base de datos.
      */
     @Override
-    public OperacionResultado updateProducto(Producto p, Usuario u, Stock s) throws SQLException {
-        OperacionResultado resultado = null;
+    public boolean updateProducto(Producto p, Usuario u, Stock s) {
+        boolean resultado = false;
         try {
             resultado = update(p, u, s);
         } catch (Exception e) {
@@ -253,7 +251,7 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
      * @return OperacionResultado que indica el resultado de la operación
      * (EXITO, ERROR_BD o OTRO_ERROR).
      */
-    private OperacionResultado update(Producto p, Usuario u, Stock s) {
+    private boolean update(Producto p, Usuario u, Stock s) throws Exception {
         try {
             this.conectar();
             String query = "update producto set nombre = ?, descripcion = ?, precio = ?, fecha_modificacion = NOW() where id = ?;";
@@ -266,13 +264,13 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
                 s.setId_producto(p.getId());
                 if (new DAO_Stock().updateStock(s)) {
                     new DAO_control_log().insertControl("Actualizo un producto", u);
-                    return OperacionResultado.EXITO;
+                    return true;
                 }
             }
         } catch (Exception e) {
-            return OperacionResultado.ERROR_BD;
+            throw e;
         }
-        return OperacionResultado.OTRO_ERROR;
+        return false;
     }
 
     /**
@@ -282,11 +280,10 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
      * @param u El Usuario que realiza la operación.
      * @return OperacionResultado que indica el resultado de la operación
      * (EXITO, ERROR_BD o OTRO_ERROR).
-     * @throws SQLException Si ocurre un error de base de datos.
      */
     @Override
-    public OperacionResultado deleteProducto(int id, Usuario u) throws SQLException {
-        OperacionResultado resultado = null;
+    public boolean deleteProducto(int id, Usuario u) {
+        boolean resultado = false;
         try {
             resultado = delete(id, u);
         } catch (Exception e) {
@@ -304,7 +301,7 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
      * @return OperacionResultado que indica el resultado de la operación
      * (EXITO, ERROR_BD o OTRO_ERROR).
      */
-    private OperacionResultado delete(int id, Usuario u) {
+    private boolean delete(int id, Usuario u) throws Exception {
         try {
             this.conectar();
             String query = "update producto set borrado = ? where id = ?";
@@ -313,11 +310,11 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
             ps.setInt(2, id);
             if (ps.execute()) {
                 new DAO_control_log().insertControl("Elimino un producto", u);
-                return OperacionResultado.EXITO;
+                return true;
             }
         } catch (Exception e) {
-            return OperacionResultado.ERROR_BD;
+            throw e;
         }
-        return OperacionResultado.OTRO_ERROR;
+        return false;
     }
 }

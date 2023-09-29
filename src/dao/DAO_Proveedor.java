@@ -1,29 +1,32 @@
 package dao;
 
-import java.sql.*;
-import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import models.Proveedor;
 import models.Usuario;
-import utilities.OperacionResultado;
 import utilities.database.Conexion;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 interface I_DAO_Proveedor {
-    
-    OperacionResultado createProveedor(Proveedor p, Usuario u) throws SQLException;
-    
+
+    boolean createProveedor(Proveedor p, Usuario u) throws SQLException;
+
     Proveedor readProveedor(int id) throws SQLException;
-    
+
     DefaultComboBoxModel<Proveedor> listaProveedores() throws SQLException;
-    
+
     DefaultTableModel tablaProveedores() throws SQLException;
-    
-    OperacionResultado updateProveedor(Proveedor p, Usuario u) throws SQLException;
-    
-    OperacionResultado deleteProveedor(int id, Usuario u) throws SQLException;
-    
+
+    boolean updateProveedor(Proveedor p, Usuario u) throws SQLException;
+
+    boolean deleteProveedor(int id, Usuario u) throws SQLException;
+
 }
 
 public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
@@ -37,8 +40,8 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
      * (EXITO, ERROR_BD o OTRO_ERROR).
      */
     @Override
-    public OperacionResultado createProveedor(Proveedor p, Usuario u) {
-        OperacionResultado resultado = null;
+    public boolean createProveedor(Proveedor p, Usuario u) {
+        boolean resultado = false;
         try {
             resultado = create(p, u);
         } catch (Exception e) {
@@ -56,7 +59,7 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
      * @return OperacionResultado que indica el resultado de la operación
      * (EXITO, ERROR_BD o OTRO_ERROR).
      */
-    private OperacionResultado create(Proveedor p, Usuario u) {
+    private boolean create(Proveedor p, Usuario u) throws Exception {
         try {
             this.conectar();
             String query = "insert into proveedor(nombre, telefono, direccion, borrado, fecha_modificacion) values (?, ?, ?, ?, NOW());";
@@ -67,14 +70,16 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
             ps.setBoolean(4, false);
             if (ps.execute()) {
                 new DAO_control_log().insertControl("Creó un proveedor", u);
-                return OperacionResultado.EXITO;
+                return true;
             }
         } catch (Exception e) {
-            return OperacionResultado.ERROR_BD;
+            throw e;
+        } finally {
+            this.cerrar();
         }
-        return OperacionResultado.OTRO_ERROR;
+        return false;
     }
-    
+
     @Override
     public Proveedor readProveedor(int id) throws SQLException {
         Proveedor p = new Proveedor();
@@ -91,7 +96,11 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
                 p.setDireccion(rs.getString("direccion"));
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            try {
+                throw e;
+            } catch (Exception ex) {
+                Logger.getLogger(DAO_Proveedor.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } finally {
             this.cerrar();
         }
@@ -121,7 +130,7 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
                 proveedores.add(p);
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw e;
         } finally {
             this.cerrar();
         }
@@ -178,11 +187,10 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
      * @param u El Usuario que realiza la operación.
      * @return OperacionResultado que indica el resultado de la operación
      * (EXITO, ERROR_BD o OTRO_ERROR).
-     * @throws SQLException Si ocurre un error de base de datos.
      */
     @Override
-    public OperacionResultado updateProveedor(Proveedor p, Usuario u) throws SQLException {
-        OperacionResultado resultado = null;
+    public boolean updateProveedor(Proveedor p, Usuario u) {
+        boolean resultado = false;
         try {
             resultado = update(p, u);
         } catch (Exception e) {
@@ -200,7 +208,7 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
      * @return OperacionResultado que indica el resultado de la operación
      * (EXITO, ERROR_BD o OTRO_ERROR).
      */
-    private OperacionResultado update(Proveedor p, Usuario u) {
+    private boolean update(Proveedor p, Usuario u) throws Exception {
         try {
             this.conectar();
             String query = "update proveedor set nombre = ?, telefono = ?, direccion = ?, fecha_modificacion = NOW() where id = ?;";
@@ -211,12 +219,12 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
             ps.setInt(4, p.getId());
             if (ps.execute()) {
                 new DAO_control_log().insertControl("Actualizó un proveedor", u);
-                return OperacionResultado.EXITO;
+                return true;
             }
         } catch (Exception e) {
-            return OperacionResultado.ERROR_BD;
+            throw e;
         }
-        return OperacionResultado.OTRO_ERROR;
+        return false;
     }
 
     /**
@@ -226,11 +234,10 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
      * @param u El Usuario que realiza la operación.
      * @return OperacionResultado que indica el resultado de la operación
      * (EXITO, ERROR_BD o OTRO_ERROR).
-     * @throws SQLException Si ocurre un error de base de datos.
      */
     @Override
-    public OperacionResultado deleteProveedor(int id, Usuario u) throws SQLException {
-        OperacionResultado resultado = null;
+    public boolean deleteProveedor(int id, Usuario u) {
+        boolean resultado = false;
         try {
             resultado = delete(id, u);
         } catch (Exception e) {
@@ -249,7 +256,7 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
      * (EXITO, ERROR_BD o OTRO_ERROR).
      * @throws SQLException Si ocurre un error de base de datos.
      */
-    private OperacionResultado delete(int id, Usuario u) throws SQLException {
+    private boolean delete(int id, Usuario u) throws SQLException, Exception {
         try {
             this.conectar();
             String query = "update proveedor set borrado = ? where id = ?;";
@@ -258,13 +265,13 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
             ps.setInt(2, id);
             if (ps.execute()) {
                 new DAO_control_log().insertControl("Eliminó un proveedor", u);
-                return OperacionResultado.EXITO;
+                return true;
             }
         } catch (Exception e) {
-            return OperacionResultado.ERROR_BD;
+            throw e;
         } finally {
             this.cerrar();
         }
-        return OperacionResultado.OTRO_ERROR;
+        return false;
     }
 }

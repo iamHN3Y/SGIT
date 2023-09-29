@@ -17,8 +17,7 @@ public class DAO_control_log extends Conexion implements I_DAO_control_log {
      * Inserta un registro de control en la base de datos.
      *
      * @param actividad La actividad a registrar.
-     * @param u El usuario asociado a la actividad.
-     * @throws java.sql.SQLException
+     * @param u         El usuario asociado a la actividad.
      */
     @Override
     public void insertControl(String actividad, Usuario u) throws SQLException {

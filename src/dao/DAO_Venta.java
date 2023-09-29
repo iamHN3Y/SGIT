@@ -1,23 +1,25 @@
 package dao;
 
-import java.sql.*;
-import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import models.Stock;
 import models.Usuario;
 import models.Venta;
-import utilities.OperacionResultado;
+
 import utilities.database.Conexion;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 interface I_DAO_Venta {
 
-    OperacionResultado createVenta(ArrayList<Venta> vs, Usuario u) throws SQLException;
+    boolean createVenta(ArrayList<Venta> vs, Usuario u) throws SQLException;
 
-    OperacionResultado updateVenta(Venta nv, Venta v, Usuario u) throws SQLException;
+    boolean updateVenta(Venta nv, Venta v, Usuario u) throws SQLException;
 
-    OperacionResultado deleteVenta(Venta v, Usuario u) throws SQLException;
+    boolean deleteVenta(Venta v, Usuario u) throws SQLException;
 
     DefaultComboBoxModel<Venta> listaVentas() throws SQLException;
 
@@ -28,8 +30,8 @@ interface I_DAO_Venta {
 public class DAO_Venta extends Conexion implements I_DAO_Venta {
 
     @Override
-    public OperacionResultado createVenta(ArrayList<Venta> vs, Usuario u) throws SQLException {
-        OperacionResultado resultado = null;
+    public boolean createVenta(ArrayList<Venta> vs, Usuario u) {
+        boolean resultado = false;
         try {
             resultado = create(vs, u);
         } catch (Exception e) {
@@ -38,7 +40,7 @@ public class DAO_Venta extends Conexion implements I_DAO_Venta {
         return resultado;
     }
 
-    private OperacionResultado create(ArrayList<Venta> vs, Usuario u) {
+    private boolean create(ArrayList<Venta> vs, Usuario u) throws Exception {
         try {
             this.conectar();
             for (Venta v : vs) {
@@ -55,27 +57,28 @@ public class DAO_Venta extends Conexion implements I_DAO_Venta {
                     s.setCantidad(stocktemp);
                     if (new DAO_Stock().updateStock(s)) {
                         new DAO_control_log().insertControl("Hizo una venta", u);
-                        return OperacionResultado.EXITO;
+                        return true;
                     }
                 }
             }
         } catch (Exception e) {
-            return OperacionResultado.ERROR_BD;
+            throw e;
         }
-        return OperacionResultado.OTRO_ERROR;
+        return false;
     }
 
     @Override
-    public OperacionResultado updateVenta(Venta nv, Venta v, Usuario u) throws SQLException {
-        OperacionResultado resultado = null;
+    public boolean updateVenta(Venta nv, Venta v, Usuario u) {
+        boolean resultado = false;
         try {
             resultado = update(nv, v, u);
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Checale we pq hubo un error-> " + e);
         }
         return resultado;
     }
 
-    private OperacionResultado update(Venta nv, Venta v, Usuario u) throws SQLException {
+    private boolean update(Venta nv, Venta v, Usuario u) throws SQLException, Exception {
         try {
             this.conectar();
             String query = "update ventas set id_producto = ?, cantidad = ?, total = ?, id_usuario = ?, fecha_modificacion = NOW() where id = ?;";
@@ -92,20 +95,20 @@ public class DAO_Venta extends Conexion implements I_DAO_Venta {
                 s.setCantidad(stocktemp);
                 if (new DAO_Stock().updateStock(s)) {
                     new DAO_control_log().insertControl("Actualizó una venta", u);
-                    return OperacionResultado.EXITO;
+                    return true;
                 }
             }
         } catch (Exception e) {
-            return OperacionResultado.ERROR_BD;
+            throw e;
         } finally {
             this.cerrar();
         }
-        return OperacionResultado.OTRO_ERROR;
+        return false;
     }
 
     @Override
-    public OperacionResultado deleteVenta(Venta v, Usuario u) throws SQLException {
-        OperacionResultado resultado = null;
+    public boolean deleteVenta(Venta v, Usuario u) {
+        boolean resultado = false;
         try {
             resultado = delete(v, u);
         } catch (Exception e) {
@@ -114,7 +117,7 @@ public class DAO_Venta extends Conexion implements I_DAO_Venta {
         return resultado;
     }
 
-    private OperacionResultado delete(Venta v, Usuario u) throws SQLException {
+    private boolean delete(Venta v, Usuario u) throws SQLException, Exception {
         try {
             this.conectar();
             String query = "update ventas set borrado = ? where id = ?;";
@@ -127,15 +130,15 @@ public class DAO_Venta extends Conexion implements I_DAO_Venta {
                 s.setCantidad(stocktemp);
                 if (new DAO_Stock().updateStock(s)) {
                     new DAO_control_log().insertControl("Elimino un producto", u);
-                    return OperacionResultado.EXITO;
+                    return true;
                 }
             }
         } catch (Exception e) {
-            return OperacionResultado.ERROR_BD;
+            throw e;
         } finally {
             this.cerrar();
         }
-        return OperacionResultado.OTRO_ERROR;
+        return false;
     }
 
     private ArrayList<Venta> readVentas() throws SQLException {

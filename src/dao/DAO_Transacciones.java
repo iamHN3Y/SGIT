@@ -1,21 +1,23 @@
 package dao;
 
-import java.sql.*;
-import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import models.Stock;
 import models.Transaccion;
 import models.Usuario;
-import utilities.OperacionResultado;
+
 import utilities.database.Conexion;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 interface I_DAO_Transacciones {
 
-    OperacionResultado createTransaccion(ArrayList<Transaccion> ts, Usuario u) throws SQLException;
+    boolean createTransaccion(ArrayList<Transaccion> ts, Usuario u) throws SQLException;
 
-    OperacionResultado updateTransaccion(Transaccion nt, Transaccion t, Usuario u) throws SQLException;
+    boolean updateTransaccion(Transaccion nt, Transaccion t, Usuario u) throws SQLException;
 
     DefaultComboBoxModel<Transaccion> listaTransacciones() throws SQLException;
 
@@ -33,11 +35,10 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
      * @param u El Usuario que realiza la operación.
      * @return OperacionResultado que indica el resultado de la operación
      * (EXITO, ERROR_BD o OTRO_ERROR).
-     * @throws SQLException Si ocurre un error de base de datos.
      */
     @Override
-    public OperacionResultado createTransaccion(ArrayList<Transaccion> ts, Usuario u) throws SQLException {
-        OperacionResultado resultado = null;
+    public boolean createTransaccion(ArrayList<Transaccion> ts, Usuario u) {
+        boolean resultado = false;
         try {
             resultado = create(ts, u);
         } catch (Exception e) {
@@ -57,7 +58,7 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
      * (EXITO, ERROR_BD o OTRO_ERROR).
      * @throws SQLException Si ocurre un error de base de datos.
      */
-    private OperacionResultado create(ArrayList<Transaccion> ts, Usuario u) throws SQLException {
+    private boolean create(ArrayList<Transaccion> ts, Usuario u) throws SQLException, Exception {
         try {
             this.conectar();
             for (Transaccion t : ts) {
@@ -73,16 +74,16 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
                     s.setCantidad(stocktemp);
                     if (new DAO_Stock().updateStock(s)) {
                         new DAO_control_log().insertControl("Creó una transacción", u);
-                        return OperacionResultado.EXITO;
+                        return true;
                     }
                 }
             }
         } catch (Exception e) {
-            return OperacionResultado.ERROR_BD;
+            throw e;
         } finally {
             this.cerrar();
         }
-        return OperacionResultado.OTRO_ERROR;
+        return false;
     }
 
     /**
@@ -94,11 +95,10 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
      * @param u El Usuario que realiza la operación.
      * @return OperacionResultado que indica el resultado de la operación
      * (EXITO, ERROR_BD o OTRO_ERROR).
-     * @throws SQLException Si ocurre un error de base de datos.
      */
     @Override
-    public OperacionResultado updateTransaccion(Transaccion nt, Transaccion t, Usuario u) throws SQLException {
-        OperacionResultado resultado = null;
+    public boolean updateTransaccion(Transaccion nt, Transaccion t, Usuario u) {
+        boolean resultado = false;
         try {
             resultado = update(nt, t, u);
         } catch (Exception e) {
@@ -118,7 +118,7 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
      * (EXITO, ERROR_BD o OTRO_ERROR).
      * @throws SQLException Si ocurre un error de base de datos.
      */
-    private OperacionResultado update(Transaccion nt, Transaccion t, Usuario u) throws SQLException {
+    private boolean update(Transaccion nt, Transaccion t, Usuario u) throws SQLException, Exception {
         try {
             this.conectar();
             String query = "update transaccion set id_proveedor = ?, id_producto = ?, cantidad = ?, total = ? where id = ?;";
@@ -135,15 +135,15 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
                 s.setCantidad(stocktemp);
                 if (new DAO_Stock().updateStock(s)) {
                     new DAO_control_log().insertControl("Actualizó una transacción", u);
-                    return OperacionResultado.EXITO;
+                    return true;
                 }
             }
         } catch (Exception e) {
-            return OperacionResultado.ERROR_BD;
+            throw e;
         } finally {
             this.cerrar();
         }
-        return OperacionResultado.OTRO_ERROR;
+        return false;
     }
 
     /**
