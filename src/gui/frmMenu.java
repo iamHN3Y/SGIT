@@ -4,6 +4,12 @@
  */
 package gui;
 
+import gui.Usuario.frmUsuariosMenu;
+import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.JButton;
+import javax.swing.plaf.basic.BasicButtonUI;
 import models.Usuario;
 
 /**
@@ -11,7 +17,7 @@ import models.Usuario;
  * @author rosal
  */
 public class frmMenu extends javax.swing.JFrame {
-
+    
     Usuario u;
 
     /**
@@ -20,10 +26,42 @@ public class frmMenu extends javax.swing.JFrame {
     public frmMenu(Usuario u) {
         initComponents();
         this.u = u;
-    }
-
-    private frmMenu() {
+        setLocationRelativeTo(null);
         
+        JButton[] btns = {jButton1, jButton2, jButton3, jButton4, jButton5};
+        for (JButton btn : btns) {
+            btn.setUI(new BasicButtonUI());
+            btn.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    
+                }
+                
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    
+                }
+                
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    
+                }
+                
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    btn.setBackground(new Color(188, 163, 127));
+                    
+                }
+                
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    btn.setBackground(new Color(255, 242, 216));
+                    jLabel2.setText("           ");
+                }
+            });
+        }
+        
+        jLabel1.setText("Bienvenido " + u.getNombre());
     }
 
     /**
@@ -35,57 +73,166 @@ public class frmMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jPanelSide = new javax.swing.JPanel();
+        jButton5 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jPanelContenedor = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 242, 216));
+        setFont(new java.awt.Font("Yu Gothic UI Light", 0, 18)); // NOI18N
+        setPreferredSize(new java.awt.Dimension(750, 550));
+
+        jPanelSide.setBackground(new java.awt.Color(255, 242, 216));
+        jPanelSide.setPreferredSize(new java.awt.Dimension(90, 0));
+
+        jButton5.setBackground(getBackground());
+        jButton5.setFont(getFont());
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/cesta-de-la-compra.png"))); // NOI18N
+        jButton5.setToolTipText("Menu Productos");
+        jButton5.setBorder(null);
+        jButton5.setBorderPainted(false);
+        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButton5.setFocusPainted(false);
+        jButton5.setFocusable(false);
+        jButton5.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton5MouseEntered(evt);
+            }
+        });
+        jPanelSide.add(jButton5);
+
+        jButton3.setBackground(getBackground());
+        jButton3.setFont(getFont());
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/proovedores.png"))); // NOI18N
+        jButton3.setToolTipText("Menu Proveedores");
+        jButton3.setBorder(null);
+        jButton3.setBorderPainted(false);
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButton3.setFocusPainted(false);
+        jButton3.setFocusable(false);
+        jButton3.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton3MouseEntered(evt);
+            }
+        });
+        jPanelSide.add(jButton3);
+
+        jButton4.setBackground(getBackground());
+        jButton4.setFont(getFont());
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/lado-del-camion.png"))); // NOI18N
+        jButton4.setToolTipText("Menu Transacciones");
+        jButton4.setBorder(null);
+        jButton4.setBorderPainted(false);
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButton4.setFocusPainted(false);
+        jButton4.setFocusable(false);
+        jButton4.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanelSide.add(jButton4);
+
+        jButton2.setBackground(getBackground());
+        jButton2.setFont(getFont());
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/carrito-de-compras.png"))); // NOI18N
+        jButton2.setToolTipText("Menu ventas");
+        jButton2.setBorder(null);
+        jButton2.setBorderPainted(false);
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButton2.setFocusPainted(false);
+        jButton2.setFocusable(false);
+        jButton2.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanelSide.add(jButton2);
+
+        jButton1.setBackground(getBackground());
+        jButton1.setFont(getFont());
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/usuarios-alt.png"))); // NOI18N
+        jButton1.setToolTipText("Menu usuarios");
+        jButton1.setBorder(null);
+        jButton1.setBorderPainted(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButton1.setFocusPainted(false);
+        jButton1.setFocusable(false);
+        jButton1.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton1MouseEntered(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanelSide.add(jButton1);
+
+        jLabel2.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
+        jLabel2.setText("           ");
+        jPanelSide.add(jLabel2);
+
+        getContentPane().add(jPanelSide, java.awt.BorderLayout.WEST);
+
+        jPanelContenedor.setBackground(new java.awt.Color(234, 215, 187));
+
+        jLabel1.setFont(getFont());
+        jLabel1.setText("jLabel1");
+
+        javax.swing.GroupLayout jPanelContenedorLayout = new javax.swing.GroupLayout(jPanelContenedor);
+        jPanelContenedor.setLayout(jPanelContenedorLayout);
+        jPanelContenedorLayout.setHorizontalGroup(
+            jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(554, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        jPanelContenedorLayout.setVerticalGroup(
+            jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(380, Short.MAX_VALUE))
         );
+
+        getContentPane().add(jPanelContenedor, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseEntered
+        // TODO add your handling code here:
+        jLabel2.setText("Productos");
+    }//GEN-LAST:event_jButton5MouseEntered
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new frmMenu().setVisible(true);
-            }
-        });
-    }
+    private void jButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseEntered
+        // TODO add your handling code here:
+        jLabel2.setText("Proveedores");
+    }//GEN-LAST:event_jButton3MouseEntered
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        new frmUsuariosMenu(u).setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
+        // TODO add your handling code here:
+        jLabel2.setText("Usuarios");
+    }//GEN-LAST:event_jButton1MouseEntered
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanelContenedor;
+    private javax.swing.JPanel jPanelSide;
     // End of variables declaration//GEN-END:variables
 }

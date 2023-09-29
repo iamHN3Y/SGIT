@@ -17,13 +17,13 @@ public class DAO_control_log extends Conexion implements I_DAO_control_log {
      * Inserta un registro de control en la base de datos.
      *
      * @param actividad La actividad a registrar.
-     * @param u         El usuario asociado a la actividad.
+     * @param u El usuario asociado a la actividad.
      */
     @Override
     public void insertControl(String actividad, Usuario u) throws SQLException {
         try {
             this.conectar();
-            String query = "insert into control_log(id_usuario, actividad) values (?,?);";
+            String query = "insert into control_log(id_usuario, actividad, fecha) values (?,?, N0W());";
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setInt(1, u.getId());
             ps.setString(2, actividad);

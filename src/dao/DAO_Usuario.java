@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import models.Proveedor;
 
 interface I_DAO_Usuario {
 
@@ -21,6 +23,8 @@ interface I_DAO_Usuario {
     boolean deleteUsuario(int id, Usuario u) throws SQLException;
 
     DefaultComboBoxModel<Usuario> listaUsuario() throws SQLException;
+
+    DefaultTableModel tablaUsuarios() throws SQLException;
 }
 
 public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
@@ -103,12 +107,12 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
             ps.setBoolean(6, false);
             if (ps.execute()) {
                 new DAO_control_log().insertControl("Creó un usuario", u);
-                return true;
+                JOptionPane.showMessageDialog(null, "Creo un usuario");
             }
         } catch (Exception e) {
             throw e;
         }
-        return false;
+        return true;
     }
 
     /**
@@ -161,7 +165,7 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
         } finally {
             this.cerrar();
         }
-        return false;
+        return true;
     }
 
     /**
@@ -228,6 +232,33 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
         return modelo;
     }
 
+    @Override
+    public DefaultTableModel tablaUsuarios() throws SQLException {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("Nombre");
+        model.addColumn("Teléfono");
+        model.addColumn("Cuenta");
+        model.addColumn("Contraseña");
+        model.addColumn("Administrador");
+
+        for (Usuario u : readUsuarios()) {
+            Object[] fila = new Object[6];
+            fila[0] = u.getId();
+            fila[1] = u.getNombre();
+            fila[2] = u.getTelefono();
+            fila[3] = u.getCuenta();
+            fila[4] = u.getContraseña();
+            if (u.isTipo_admin()) {
+                fila[5] = "Administrador";
+            } else {
+                fila[5] = "";
+            }
+            model.addRow(fila);
+        }
+        return model;
+    }
+
     /**
      * Método privado que obtiene una lista de todos los usuarios activos en el
      * sistema desde la base de datos.
@@ -249,7 +280,7 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
                 u.setNombre(rs.getString("nombre"));
                 u.setTelefono(rs.getString("telefono"));
                 u.setCuenta(rs.getString("cuenta"));
-                u.setContraseña(rs.getString("contrasenia"));
+                u.setContraseña(rs.getString("contraseña"));
                 u.setTipo_admin(rs.getBoolean("tipo_admin"));
                 usuarios.add(u);
             }
