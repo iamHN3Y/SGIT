@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicButtonUI;
 import models.Usuario;
@@ -30,9 +31,9 @@ public class frmLogin extends javax.swing.JFrame implements Runnable {
     public frmLogin() {
         initComponents();
         setLocationRelativeTo(null);
-        txtfCuenta.setText("2062382696");
-        jPasswordContrasenia.setText("2062382696");
-        JButton[] btns = {bttEntrar, bttSalir};
+        txtfCuenta.setText("1644600728");
+        jPasswordContrasenia.setText("1644600728");
+        JButton[] btns = {bttEntrar};
         for (JButton btn : btns) {
             btn.setUI(new BasicButtonUI());
             btn.addMouseListener(new MouseListener() {
@@ -79,7 +80,6 @@ public class frmLogin extends javax.swing.JFrame implements Runnable {
         txtfCuenta = new javax.swing.JTextField();
         bttEntrar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        bttSalir = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jPasswordContrasenia = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
@@ -97,7 +97,7 @@ public class frmLogin extends javax.swing.JFrame implements Runnable {
 
         txtfCuenta.setFont(getFont());
 
-        bttEntrar.setBackground(getBackground());
+        bttEntrar.setBackground(new java.awt.Color(255, 242, 216));
         bttEntrar.setFont(getFont());
         bttEntrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/ingresar.png"))); // NOI18N
         bttEntrar.setToolTipText("Ingresar");
@@ -120,28 +120,6 @@ public class frmLogin extends javax.swing.JFrame implements Runnable {
         });
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/clave.png"))); // NOI18N
-
-        bttSalir.setBackground(getBackground());
-        bttSalir.setFont(getFont());
-        bttSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/salida.png"))); // NOI18N
-        bttSalir.setToolTipText("Salir");
-        bttSalir.setBorder(null);
-        bttSalir.setBorderPainted(false);
-        bttSalir.setFocusPainted(false);
-        bttSalir.setFocusable(false);
-        bttSalir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                bttSalirMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                bttSalirMouseExited(evt);
-            }
-        });
-        bttSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bttSalirActionPerformed(evt);
-            }
-        });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/usuario-del-portapapeles.png"))); // NOI18N
 
@@ -168,19 +146,25 @@ public class frmLogin extends javax.swing.JFrame implements Runnable {
                         .addComponent(jLabel4)))
                 .addContainerGap(144, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(bttSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                    .addComponent(bttEntrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtfCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                    .addComponent(jPasswordContrasenia))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(bttEntrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtfCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                        .addComponent(jPasswordContrasenia))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(99, 99, 99))
         );
         jPanel1Layout.setVerticalGroup(
@@ -195,17 +179,15 @@ public class frmLogin extends javax.swing.JFrame implements Runnable {
                     .addComponent(jLabel3)
                     .addComponent(txtfCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jPasswordContrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPasswordContrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addGap(28, 28, 28)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bttEntrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(bttEntrar)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bttSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(111, Short.MAX_VALUE))
         );
 
@@ -220,11 +202,6 @@ public class frmLogin extends javax.swing.JFrame implements Runnable {
         hilo.start();
     }//GEN-LAST:event_bttEntrarActionPerformed
 
-    private void bttSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttSalirActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_bttSalirActionPerformed
-
     private void bttEntrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttEntrarMouseEntered
         // TODO add your handling code here:
         jLabel5.setText("Entrar");
@@ -234,16 +211,6 @@ public class frmLogin extends javax.swing.JFrame implements Runnable {
         // TODO add your handling code here:
         jLabel5.setText("");
     }//GEN-LAST:event_bttEntrarMouseExited
-
-    private void bttSalirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttSalirMouseEntered
-        // TODO add your handling code here:
-        jLabel6.setText("Salir");
-    }//GEN-LAST:event_bttSalirMouseEntered
-
-    private void bttSalirMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttSalirMouseExited
-        // TODO add your handling code here:
-        jLabel6.setText("");
-    }//GEN-LAST:event_bttSalirMouseExited
 
     /**
      * @param args the command line arguments
@@ -282,7 +249,6 @@ public class frmLogin extends javax.swing.JFrame implements Runnable {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bttEntrar;
-    private javax.swing.JButton bttSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -301,8 +267,12 @@ public class frmLogin extends javax.swing.JFrame implements Runnable {
         try {
             Usuario u = daoU.loginUsuario(cuenta, contrasenia);
             if (u != null) {
-                new frmMenu(u).setVisible(true);
+                frmMenu menu = new frmMenu(u);
+                menu.setVisible(true);
+                menu.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Datos incorrectos, verifique sus credenciales");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error: ->" + ex);

@@ -99,6 +99,7 @@ public class frmProveedoresMenu extends javax.swing.JFrame {
         jPanelSide.setBackground(new java.awt.Color(255, 242, 216));
         jPanelSide.setPreferredSize(new java.awt.Dimension(90, 0));
 
+        jButton5.setBackground(new java.awt.Color(255, 242, 216));
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/agregar-usuario.png"))); // NOI18N
         jButton5.setToolTipText("Crear");
         jButton5.setBorder(null);
@@ -119,6 +120,7 @@ public class frmProveedoresMenu extends javax.swing.JFrame {
         });
         jPanelSide.add(jButton5);
 
+        jButton6.setBackground(new java.awt.Color(255, 242, 216));
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/actualizar.png"))); // NOI18N
         jButton6.setToolTipText("Crear");
         jButton6.setBorder(null);
@@ -139,6 +141,7 @@ public class frmProveedoresMenu extends javax.swing.JFrame {
         });
         jPanelSide.add(jButton6);
 
+        jButton7.setBackground(new java.awt.Color(255, 242, 216));
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/basura.png"))); // NOI18N
         jButton7.setToolTipText("Crear");
         jButton7.setBorder(null);
@@ -225,7 +228,7 @@ public class frmProveedoresMenu extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        new dlgCreateProovedores(this, rootPaneCheckingEnabled, u).setVisible(true);
+        new dlgCreateProovedores(this, rootPaneCheckingEnabled, u, this).setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseEntered
@@ -235,7 +238,7 @@ public class frmProveedoresMenu extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        new dlgUpdateProveedor(this, rootPaneCheckingEnabled, u).setVisible(true);
+        new dlgUpdateProveedor(this, rootPaneCheckingEnabled, u, this).setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
@@ -245,7 +248,7 @@ public class frmProveedoresMenu extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        new dlgDeleteProveedor(this, rootPaneCheckingEnabled, u).setVisible(true);
+        new dlgDeleteProveedor(this, rootPaneCheckingEnabled, u, this).setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

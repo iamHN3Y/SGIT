@@ -19,17 +19,19 @@ import models.Usuario;
  *
  * @author rosal
  */
-public class dlgCreateProductos extends javax.swing.JDialog {
-    
+public class dlgCreateProducto extends javax.swing.JDialog {
+
     Usuario u;
+    frmProductosMenu parentFrame;
 
     /**
      * Creates new form dlgCreateUsuarios
      */
-    public dlgCreateProductos(java.awt.Frame parent, boolean modal, Usuario u) {
+    public dlgCreateProducto(java.awt.Frame parent, boolean modal, Usuario u, frmProductosMenu parentFrame) {
         super(parent, modal);
         initComponents();
         this.u = u;
+        this.parentFrame = parentFrame;
         setLocationRelativeTo(this);
         JButton[] btns = {jButtonCancelar, jButtonGuardar};
         for (JButton btn : btns) {
@@ -38,21 +40,21 @@ public class dlgCreateProductos extends javax.swing.JDialog {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                 }
-                
+
                 @Override
                 public void mousePressed(MouseEvent e) {
                 }
-                
+
                 @Override
                 public void mouseReleased(MouseEvent e) {
                 }
-                
+
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     btn.setBackground(new Color(188, 163, 127));
-                    
+
                 }
-                
+
                 @Override
                 public void mouseExited(MouseEvent e) {
                     btn.setBackground(new Color(234, 215, 187));
@@ -149,11 +151,14 @@ public class dlgCreateProductos extends javax.swing.JDialog {
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelContenedorLayout.createSequentialGroup()
                         .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
-                        .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34))
+                            .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                                .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())
                     .addGroup(jPanelContenedorLayout.createSequentialGroup()
                         .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -167,7 +172,7 @@ public class dlgCreateProductos extends javax.swing.JDialog {
                                 .addComponent(jTextFieldPrecio)
                                 .addComponent(jTextFieldNombre, javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 136, Short.MAX_VALUE))))
         );
         jPanelContenedorLayout.setVerticalGroup(
             jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,13 +213,13 @@ public class dlgCreateProductos extends javax.swing.JDialog {
         String descripcion = jTextAreaDescripcion.getText();
         String precio = jTextFieldPrecio.getText();
         int stock = (int) jSpinnerStock.getValue();
-        
+
         Producto p = new Producto(nombre, descripcion, Float.parseFloat(precio));
         Stock s = new Stock(stock);
         if (new dao.DAO_Producto().createProducto(p, u, s)) {
             JOptionPane.showMessageDialog(this, "Se creo el producto");
             limpiacajas();
-            
+            parentFrame.cargaTabla();
         }
     }//GEN-LAST:event_jButtonGuardarActionPerformed
     private void limpiacajas() {

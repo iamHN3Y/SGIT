@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 interface I_DAO_Transacciones {
 
@@ -68,7 +70,8 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
                 ps.setInt(2, t.getId_producto());
                 ps.setInt(3, t.getCantidad());
                 ps.setFloat(4, t.getTotal());
-                if (ps.execute()) {
+                boolean resul = ps.execute();
+                if (resul != true) {
                     Stock s = new DAO_Stock().searchStock(t.getId_producto());
                     int stocktemp = s.getCantidad() + t.getCantidad();
                     s.setCantidad(stocktemp);
@@ -121,14 +124,15 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
     private boolean update(Transaccion nt, Transaccion t, Usuario u) throws SQLException, Exception {
         try {
             this.conectar();
-            String query = "update transaccion set id_proveedor = ?, id_producto = ?, cantidad = ?, total = ? where id = ?;";
+            String query = "update transaccion set id_proveedor = ?, id_producto = ?, cantidad = ?, total = ?, fecha = NOW() where id = ?;";
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setInt(1, nt.getId_proveedor());
             ps.setInt(2, nt.getId_producto());
             ps.setInt(3, nt.getCantidad());
             ps.setFloat(4, nt.getTotal());
             ps.setInt(5, nt.getId());
-            if (ps.execute()) {
+            boolean resul = ps.execute();
+            if (resul != true) {
                 int dif = nt.getCantidad() - t.getCantidad();
                 Stock s = new DAO_Stock().searchStock(nt.getId_producto());
                 int stocktemp = s.getCantidad() + dif;
@@ -153,24 +157,26 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
      * transacciones almacenadas.
      * @throws SQLException Si ocurre un error de base de datos.
      */
-    private ArrayList<Transaccion> readTransacciones() throws SQLException {
+    private ArrayList<Transaccion> readTransacciones() throws Exception {
         ArrayList<Transaccion> transacciones = new ArrayList<>();
         try {
             this.conectar();
-            String query = "select * from transacciones;";
+            String query = "SELECT * FROM vista_listtransaccion;";
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Transaccion t = new Transaccion();
-                t.setId(rs.getInt("id"));
+                t.setId(rs.getInt("id_transaccion")); // Cambio en el nombre de la columna
+                t.setProveedor(rs.getString("nombre_proveedor"));
+                t.setProducto(rs.getString("nombre_producto"));
                 t.setId_producto(rs.getInt("id_producto"));
                 t.setId_proveedor(rs.getInt("id_proveedor"));
                 t.setCantidad(rs.getInt("cantidad"));
+                t.setFecha(String.valueOf(rs.getTimestamp("fecha"))); // Agregado para obtener la fecha
                 t.setTotal(rs.getFloat("total"));
-                // Queda pendiente la fecha
                 transacciones.add(t);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             this.cerrar();
@@ -189,8 +195,12 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
     @Override
     public DefaultComboBoxModel<Transaccion> listaTransacciones() throws SQLException {
         DefaultComboBoxModel<Transaccion> modelo = new DefaultComboBoxModel<>();
-        for (Transaccion t : readTransacciones()) {
-            modelo.addElement(t);
+        try {
+            for (Transaccion t : readTransacciones()) {
+                modelo.addElement(t);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(DAO_Transacciones.class.getName()).log(Level.SEVERE, null, ex);
         }
         return modelo;
     }
@@ -206,20 +216,29 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
      */
     @Override
     public DefaultTableModel tablaTransacciones() throws SQLException {
-        // Definir las columnas de la tabla
-        String[] columnas = {"ID", "ID Producto", "ID Proveedor", "Cantidad", "Total"};
+        // Definir las columnas de la tabla (incluyendo nombres de producto, proveedor y fecha)
+        String[] columnas = {"ID", "Proveedor", "Producto", "Cantidad", "Total", "Fecha", "id_producto", "id_proveedor"};
         // Crear un DefaultTableModel con las columnas
         DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0);
-        // Llenar el modelo con los datos de las transacciones
-        for (Transaccion t : readTransacciones()) {
-            Object[] fila = {
-                t.getId(),
-                t.getId_producto(),
-                t.getId_proveedor(),
-                t.getCantidad(),
-                t.getTotal()
-            };
-            modeloTabla.addRow(fila);
+        try {
+            // Llenar el modelo con los datos de las transacciones
+            for (Transaccion t : readTransacciones()) {
+                Object[] fila = {
+                    t.getId(),
+                    t.getProveedor(), // Agregar el nombre del proveedor
+                    t.getProducto(), // Agregar el nombre del producto
+                    t.getCantidad(),
+                    t.getTotal(),
+                    t.getFecha(), // Agregar la fecha
+                    t.getId_producto(),
+                    t.getId_proveedor()
+
+                };
+
+                modeloTabla.addRow(fila);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(DAO_Transacciones.class.getName()).log(Level.SEVERE, null, ex);
         }
         return modeloTabla;
     }

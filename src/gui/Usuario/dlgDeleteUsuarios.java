@@ -22,14 +22,16 @@ import models.Usuario;
 public class dlgDeleteUsuarios extends javax.swing.JDialog {
 
     Usuario u;
+    frmUsuariosMenu parentFrame;
 
     /**
      * Creates new form dlgCreateUsuarios
      */
-    public dlgDeleteUsuarios(java.awt.Frame parent, boolean modal, Usuario u) {
+    public dlgDeleteUsuarios(java.awt.Frame parent, boolean modal, Usuario u, frmUsuariosMenu parentFrame) {
         super(parent, modal);
         initComponents();
         this.u = u;
+        this.parentFrame = parentFrame;
         setLocationRelativeTo(this);
         JButton[] btns = {jButtonCancelar, jButtonGuardar};
         for (JButton btn : btns) {
@@ -95,6 +97,7 @@ public class dlgDeleteUsuarios extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 24)); // NOI18N
         jLabel1.setText("Delete Usuarios");
 
+        jButtonGuardar.setBackground(new java.awt.Color(234, 215, 187));
         jButtonGuardar.setFont(getFont());
         jButtonGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/controlar.png"))); // NOI18N
         jButtonGuardar.setToolTipText("Ingresar");
@@ -108,6 +111,7 @@ public class dlgDeleteUsuarios extends javax.swing.JDialog {
             }
         });
 
+        jButtonCancelar.setBackground(new java.awt.Color(234, 215, 187));
         jButtonCancelar.setFont(getFont());
         jButtonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/cruz.png"))); // NOI18N
         jButtonCancelar.setToolTipText("Ingresar");
@@ -169,12 +173,13 @@ public class dlgDeleteUsuarios extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        int id = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getId();
+        int id = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getCuenta();
 
         if (new DAO_Usuario().deleteUsuario(id, u)) {
             JOptionPane.showMessageDialog(this, "Se elimino el usuario");
             limpiacajas();
             cargaCombobox();
+            parentFrame.cargaTabla();
         }
     }//GEN-LAST:event_jButtonGuardarActionPerformed
     private void limpiacajas() {

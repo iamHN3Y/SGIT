@@ -3,10 +3,13 @@ package models;
 public class Transaccion {
 
     private int id; // Identificador único de la transacción
-    private int id_proveedor; // Identificador del proveedor relacionado con la transacción
-    private int id_producto; // Identificador del producto relacionado con la transacción
+    private String proveedor;
+    private String producto;
     private int cantidad; // Cantidad de productos en la transacción
     private float total;
+    private int id_proveedor; // Identificador del proveedor relacionado con la transacción
+    private int id_producto; // Identificador del producto relacionado con la transacción
+    private String fecha;
 
     // Constructor para una transacción con todos los atributos
     public Transaccion(int id, int id_proveedor, int id_producto, int cantidad, float total) {
@@ -71,6 +74,35 @@ public class Transaccion {
 
     public void setTotal(float total) {
         this.total = total;
+    }
+
+    public String getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(String proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public String getProducto() {
+        return producto;
+    }
+
+    public void setProducto(String producto) {
+        this.producto = producto;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaccion hecha a las  - " + getFecha();
     }
 
 }

@@ -18,8 +18,6 @@ import javax.swing.plaf.basic.BasicButtonUI;
 import models.Producto;
 import models.Stock;
 import models.Usuario;
-import utilities.Encriptador;
-import utilities.StringToNumberConverter;
 
 /**
  *
@@ -28,14 +26,16 @@ import utilities.StringToNumberConverter;
 public class dlgUpdateProducto extends javax.swing.JDialog {
 
     Usuario u;
+    frmProductosMenu parentFrame;
 
     /**
      * Creates new form dlgCreateUsuarios
      */
-    public dlgUpdateProducto(java.awt.Frame parent, boolean modal, Usuario u) {
+    public dlgUpdateProducto(java.awt.Frame parent, boolean modal, Usuario u, frmProductosMenu parentFrame) {
         super(parent, modal);
         initComponents();
         this.u = u;
+        this.parentFrame = parentFrame;
         setLocationRelativeTo(this);
         JButton[] btns = {jButtonCancelar, jButtonGuardar};
         for (JButton btn : btns) {
@@ -265,6 +265,7 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Se actualizo el Producto");
             limpiacajas();
             cargaCombobox();
+            parentFrame.cargaTabla();
         }
     }//GEN-LAST:event_jButtonGuardarActionPerformed
     private void limpiacajas() {

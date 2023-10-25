@@ -2,17 +2,15 @@ package models;
 
 public class Usuario {
 
-    private int id; // Identificador único del usuario
+    private int cuenta; // Nombre de cuenta del usuario
     private String nombre; // Nombre del usuario
     private String telefono; // Número de teléfono del usuario
-    private String cuenta; // Nombre de cuenta del usuario
     private String contraseña; // Contraseña del usuario
     private boolean tipo_admin; // Indica si el usuario es administrador o no
     private boolean borrado; //Indica si el usuario ha sido borrado o no
 
     // Constructor para un usuario con todos los atributos
-    public Usuario(int id, String nombre, String telefono, String cuenta, String contraseña, boolean tipo_admin) {
-        this.id = id;
+    public Usuario(int cuenta, String nombre, String telefono, String contraseña, boolean tipo_admin) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.cuenta = cuenta;
@@ -21,25 +19,15 @@ public class Usuario {
     }
 
     // Constructor para un usuario sin el atributo id (posiblemente para crear nuevos usuarios)
-    public Usuario(String nombre, String telefono, String cuenta, String contraseña, boolean tipo_admin) {
+    public Usuario(String nombre, String telefono, String contraseña, boolean tipo_admin) {
         this.nombre = nombre;
         this.telefono = telefono;
-        this.cuenta = cuenta;
         this.contraseña = contraseña;
         this.tipo_admin = tipo_admin;
     }
 
     // Constructor vacío
     public Usuario() {
-    }
-
-    // Métodos de acceso para el atributo id
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     // Métodos de acceso para el atributo nombre
@@ -61,11 +49,11 @@ public class Usuario {
     }
 
     // Métodos de acceso para el atributo cuenta
-    public String getCuenta() {
+    public int getCuenta() {
         return cuenta;
     }
 
-    public void setCuenta(String cuenta) {
+    public void setCuenta(int cuenta) {
         this.cuenta = cuenta;
     }
 

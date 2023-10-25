@@ -4,7 +4,6 @@
  */
 package gui.proveedor;
 
-import dao.DAO_Usuario;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -17,8 +16,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicButtonUI;
 import models.Proveedor;
 import models.Usuario;
-import utilities.Encriptador;
-import utilities.StringToNumberConverter;
 
 /**
  *
@@ -27,14 +24,16 @@ import utilities.StringToNumberConverter;
 public class dlgUpdateProveedor extends javax.swing.JDialog {
 
     Usuario u;
+    frmProveedoresMenu parentFrame;
 
     /**
      * Creates new form dlgCreateUsuarios
      */
-    public dlgUpdateProveedor(java.awt.Frame parent, boolean modal, Usuario u) {
+    public dlgUpdateProveedor(java.awt.Frame parent, boolean modal, Usuario u, frmProveedoresMenu parentFrame) {
         super(parent, modal);
         initComponents();
         this.u = u;
+        this.parentFrame = parentFrame;
         setLocationRelativeTo(this);
         JButton[] btns = {jButtonCancelar, jButtonGuardar};
         for (JButton btn : btns) {
@@ -239,6 +238,7 @@ public class dlgUpdateProveedor extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Se actualizo el proveedor");
             limpiacajas();
             cargaCombobox();
+            parentFrame.cargaTabla();
         }
     }//GEN-LAST:event_jButtonGuardarActionPerformed
     private void limpiacajas() {

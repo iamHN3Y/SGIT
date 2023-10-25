@@ -4,7 +4,6 @@
  */
 package gui.proveedor;
 
-import dao.DAO_Usuario;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -23,16 +22,18 @@ import models.Usuario;
  * @author rosal
  */
 public class dlgDeleteProveedor extends javax.swing.JDialog {
-    
+
     Usuario u;
+    frmProveedoresMenu parentFrame;
 
     /**
      * Creates new form dlgCreateUsuarios
      */
-    public dlgDeleteProveedor(java.awt.Frame parent, boolean modal, Usuario u) {
+    public dlgDeleteProveedor(java.awt.Frame parent, boolean modal, Usuario u, frmProveedoresMenu parentFrame) {
         super(parent, modal);
         initComponents();
         this.u = u;
+        this.parentFrame = parentFrame;
         setLocationRelativeTo(this);
         JButton[] btns = {jButtonCancelar, jButtonGuardar};
         for (JButton btn : btns) {
@@ -41,21 +42,21 @@ public class dlgDeleteProveedor extends javax.swing.JDialog {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                 }
-                
+
                 @Override
                 public void mousePressed(MouseEvent e) {
                 }
-                
+
                 @Override
                 public void mouseReleased(MouseEvent e) {
                 }
-                
+
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     btn.setBackground(new Color(188, 163, 127));
-                    
+
                 }
-                
+
                 @Override
                 public void mouseExited(MouseEvent e) {
                     btn.setBackground(new Color(234, 215, 187));
@@ -64,7 +65,7 @@ public class dlgDeleteProveedor extends javax.swing.JDialog {
         }
         cargaCombobox();
     }
-    
+
     void cargaCombobox() {
         SwingUtilities.invokeLater(() -> {
             try {
@@ -173,11 +174,12 @@ public class dlgDeleteProveedor extends javax.swing.JDialog {
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
         int id = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getId();
-        
+
         if (new dao.DAO_Proveedor().deleteProveedor(id, u)) {
             JOptionPane.showMessageDialog(this, "Se elimino el usuario");
             limpiacajas();
             cargaCombobox();
+            parentFrame.cargaTabla();
         }
     }//GEN-LAST:event_jButtonGuardarActionPerformed
     private void limpiacajas() {

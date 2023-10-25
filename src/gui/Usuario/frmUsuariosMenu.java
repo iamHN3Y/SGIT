@@ -4,7 +4,6 @@
  */
 package gui.Usuario;
 
-import gui.proveedor.dlgDeleteProveedor;
 import java.awt.Color;
 
 import java.awt.event.MouseEvent;
@@ -12,6 +11,7 @@ import java.awt.event.MouseListener;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicButtonUI;
@@ -95,12 +95,14 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setFont(new java.awt.Font("Yu Gothic UI Light", 0, 18)); // NOI18N
         setPreferredSize(new java.awt.Dimension(750, 550));
 
         jPanelSide.setBackground(new java.awt.Color(255, 242, 216));
         jPanelSide.setPreferredSize(new java.awt.Dimension(90, 0));
 
+        jButton5.setBackground(new java.awt.Color(255, 242, 216));
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/agregar-usuario.png"))); // NOI18N
         jButton5.setToolTipText("Crear");
         jButton5.setBorder(null);
@@ -121,6 +123,7 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
         });
         jPanelSide.add(jButton5);
 
+        jButton6.setBackground(new java.awt.Color(255, 242, 216));
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/actualizar.png"))); // NOI18N
         jButton6.setToolTipText("Crear");
         jButton6.setBorder(null);
@@ -141,6 +144,7 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
         });
         jPanelSide.add(jButton6);
 
+        jButton7.setBackground(new java.awt.Color(255, 242, 216));
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/basura.png"))); // NOI18N
         jButton7.setToolTipText("Crear");
         jButton7.setBorder(null);
@@ -227,7 +231,7 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        new dlgCreateUsuarios(this, rootPaneCheckingEnabled, u).setVisible(true);
+        new dlgCreateUsuarios(this, rootPaneCheckingEnabled, u, this).setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseEntered
@@ -237,7 +241,7 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        new dlgUpdateUsuarios(this, rootPaneCheckingEnabled, u).setVisible(true);
+        new dlgUpdateUsuarios(this, rootPaneCheckingEnabled, u, this).setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
@@ -247,7 +251,7 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        new dlgDeleteUsuarios(this, rootPaneCheckingEnabled, u).setVisible(true);
+        new dlgDeleteUsuarios(this, rootPaneCheckingEnabled, u, this).setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

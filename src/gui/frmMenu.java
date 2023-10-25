@@ -7,10 +7,12 @@ package gui;
 import gui.Usuario.frmUsuariosMenu;
 import gui.producto.frmProductosMenu;
 import gui.proveedor.frmProveedoresMenu;
+import gui.transacciones.frmTransaccionesMenu;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.plaf.basic.BasicButtonUI;
 import models.Usuario;
 
@@ -19,7 +21,7 @@ import models.Usuario;
  * @author rosal
  */
 public class frmMenu extends javax.swing.JFrame {
-    
+
     Usuario u;
 
     /**
@@ -29,38 +31,38 @@ public class frmMenu extends javax.swing.JFrame {
         initComponents();
         this.u = u;
         setLocationRelativeTo(null);
-        
+
         JButton[] btns = {jButton1, jButton2, jButton3, jButton4, jButton5};
         if (u.isTipo_admin() == false) {
             jButton1.setVisible(false);
             jButton3.setVisible(false);
             jButton5.setVisible(false);
         }
-        
+
         for (JButton btn : btns) {
             btn.setUI(new BasicButtonUI());
             btn.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    
+
                 }
-                
+
                 @Override
                 public void mousePressed(MouseEvent e) {
-                    
+
                 }
-                
+
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    
+
                 }
-                
+
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     btn.setBackground(new Color(188, 163, 127));
-                    
+
                 }
-                
+
                 @Override
                 public void mouseExited(MouseEvent e) {
                     btn.setBackground(new Color(255, 242, 216));
@@ -68,7 +70,7 @@ public class frmMenu extends javax.swing.JFrame {
                 }
             });
         }
-        
+
         jLabel1.setText("Bienvenido " + u.getNombre());
     }
 
@@ -157,6 +159,11 @@ public class frmMenu extends javax.swing.JFrame {
                 jButton4MouseEntered(evt);
             }
         });
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         jPanelSide.add(jButton4);
 
         jButton2.setBackground(getBackground());
@@ -243,7 +250,9 @@ public class frmMenu extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        new frmUsuariosMenu(u).setVisible(true);
+        frmUsuariosMenu usuario = new frmUsuariosMenu(u);
+        usuario.setVisible(true);
+        usuario.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
@@ -263,13 +272,24 @@ public class frmMenu extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        new frmProveedoresMenu(u).setVisible(true);
+        frmProveedoresMenu proveedor = new frmProveedoresMenu(u);
+        proveedor.setVisible(true);
+        proveedor.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        new frmProductosMenu(u).setVisible(true);
+        frmProductosMenu productos = new frmProductosMenu(u);
+        productos.setVisible(true);
+        productos.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        frmTransaccionesMenu transacciones = new frmTransaccionesMenu(u);
+        transacciones.setVisible(true);
+        transacciones.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

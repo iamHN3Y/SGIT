@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package gui.producto;
+package gui.transacciones;
 
 import java.awt.Color;
 
@@ -12,22 +12,28 @@ import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicButtonUI;
+import javax.swing.table.DefaultTableModel;
+import models.Transaccion;
 import models.Usuario;
 
 /**
  *
  * @author rosal
  */
-public class frmProductosMenu extends javax.swing.JFrame {
+public class frmTransaccionesMenu extends javax.swing.JFrame {
 
     Usuario u;
+    Transaccion t;
 
     /**
      * Creates new form frmUsuarios
      */
-    public frmProductosMenu(Usuario u) {
+    public frmTransaccionesMenu(Usuario u) {
         initComponents();
         this.u = u;
         setLocationRelativeTo(this);
@@ -66,11 +72,36 @@ public class frmProductosMenu extends javax.swing.JFrame {
     void cargaTabla() {
         SwingUtilities.invokeLater(() -> {
             try {
-                jTable1.setModel(new dao.DAO_Producto().tablaProductos());
+                jTable1.setModel(new dao.DAO_Transacciones().tablaTransacciones());
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex);
             }
         });
+        ListSelectionModel selectionModel = jTable1.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
+    public Transaccion obtenerTransaccionSeleccionada() {
+        int filaSeleccionada = jTable1.getSelectedRow();
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+
+        if (filaSeleccionada != -1) {
+            Transaccion transaccion = new Transaccion();
+
+            transaccion.setId((int) modelo.getValueAt(filaSeleccionada, 0));
+            transaccion.setProveedor((String) modelo.getValueAt(filaSeleccionada, 1));
+            transaccion.setProducto((String) modelo.getValueAt(filaSeleccionada, 2));
+            transaccion.setCantidad((int) modelo.getValueAt(filaSeleccionada, 3));
+            transaccion.setTotal((float) modelo.getValueAt(filaSeleccionada, 4));
+            transaccion.setFecha((String) modelo.getValueAt(filaSeleccionada, 5));
+            transaccion.setId_producto((int) modelo.getValueAt(filaSeleccionada, 6));
+            transaccion.setId_proveedor((int) modelo.getValueAt(filaSeleccionada, 7));
+            return transaccion;
+        } else {
+            // No se ha seleccionado ninguna fila
+            return null;
+        }
+
     }
 
     /**
@@ -92,6 +123,7 @@ public class frmProductosMenu extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setFont(new java.awt.Font("Yu Gothic UI Light", 0, 18)); // NOI18N
@@ -171,7 +203,7 @@ public class frmProductosMenu extends javax.swing.JFrame {
         jPanelContenedor.setBackground(new java.awt.Color(234, 215, 187));
 
         jLabel1.setFont(getFont());
-        jLabel1.setText("Menu productos");
+        jLabel1.setText("Menu Transacciones");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -184,10 +216,18 @@ public class frmProductosMenu extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setCellSelectionEnabled(true);
         jScrollPane1.setViewportView(jTable1);
 
         jLabel3.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 14)); // NOI18N
-        jLabel3.setText("productos activos en plataforma");
+        jLabel3.setText("Transacciones registradas en plataforma");
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelContenedorLayout = new javax.swing.GroupLayout(jPanelContenedor);
         jPanelContenedor.setLayout(jPanelContenedorLayout);
@@ -196,24 +236,35 @@ public class frmProductosMenu extends javax.swing.JFrame {
             .addGroup(jPanelContenedorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
                     .addGroup(jPanelContenedorLayout.createSequentialGroup()
                         .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+                            .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(72, 72, 72))))
         );
         jPanelContenedorLayout.setVerticalGroup(
             jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelContenedorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jButton1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         getContentPane().add(jPanelContenedor, java.awt.BorderLayout.CENTER);
@@ -223,35 +274,42 @@ public class frmProductosMenu extends javax.swing.JFrame {
 
     private void jButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseEntered
         // TODO add your handling code here:
-        jLabel2.setText("Crear Productos");
+        jLabel2.setText("Crear Transacciones");
     }//GEN-LAST:event_jButton5MouseEntered
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        new dlgCreateProducto(this, rootPaneCheckingEnabled, u, this).setVisible(true);
+        new dlgCreateTransacciones(this, rootPaneCheckingEnabled, u, this).setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseEntered
         // TODO add your handling code here:
-        jLabel2.setText("Actualizar Productos");
+        jLabel2.setText("Actualizar Transacciones");
     }//GEN-LAST:event_jButton6MouseEntered
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        new dlgUpdateProducto(this, rootPaneCheckingEnabled, u, this).setVisible(true);
+        //new dlgUpdateUsuarios(this, rootPaneCheckingEnabled, u, this).setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
         // TODO add your handling code here:
-        jLabel2.setText("Eliminar Productos");
+        jLabel2.setText("Eliminar Transacciones");
     }//GEN-LAST:event_jButton7MouseEntered
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        new dlgDeleteProductos(this, rootPaneCheckingEnabled, u, this).setVisible(true);
+        //new dlgDeleteUsuarios(this, rootPaneCheckingEnabled, u, this).setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        t = obtenerTransaccionSeleccionada();
+        System.out.println(t);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;

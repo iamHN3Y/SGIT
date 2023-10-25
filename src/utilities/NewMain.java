@@ -18,16 +18,13 @@ public class NewMain {
      */
     public static void main(String[] args) throws SQLException {
         String nombre = "Isaac Rosales";
-        String cuenta = String.valueOf(StringToNumberConverter.convertToNumber(nombre));
-        String contraseña = Encriptador.encriptar(cuenta);
+        int cuenta = StringToNumberConverter.convertToNumber(nombre.toUpperCase());
+        String contraseña = Encriptador.encriptar(String.valueOf(cuenta));
+        String telefono = "7296300376";
+        Usuario u = new Usuario(cuenta, nombre, telefono, contraseña, true);
         System.out.println(cuenta);
-        System.out.println(contraseña);
-        Usuario u = new Usuario(3, nombre, "7291525322", cuenta, contraseña, true);
-
-        System.out.println(u);
-
-        new dao.DAO_control_log().insertControl("Creo un usuario", u);
-
+        
+        new dao.DAO_Usuario().createUsuario(u, u);
     }
 
 }

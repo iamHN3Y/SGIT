@@ -2,30 +2,33 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package gui.proveedor;
+package gui.producto;
 
+import dao.DAO_Producto;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicButtonUI;
-import models.Proveedor;
+import models.Producto;
 import models.Usuario;
 
 /**
  *
  * @author rosal
  */
-public class dlgCreateProovedores extends javax.swing.JDialog {
+public class dlgDeleteProductos extends javax.swing.JDialog {
 
     Usuario u;
-    frmProveedoresMenu parentFrame;
+    frmProductosMenu parentFrame;
 
     /**
      * Creates new form dlgCreateUsuarios
      */
-    public dlgCreateProovedores(java.awt.Frame parent, boolean modal, Usuario u, frmProveedoresMenu parentFrame) {
+    public dlgDeleteProductos(java.awt.Frame parent, boolean modal, Usuario u, frmProductosMenu parentFrame) {
         super(parent, modal);
         initComponents();
         this.u = u;
@@ -59,6 +62,17 @@ public class dlgCreateProovedores extends javax.swing.JDialog {
                 }
             });
         }
+        cargaCombobox();
+    }
+
+    void cargaCombobox() {
+        SwingUtilities.invokeLater(() -> {
+            try {
+                jComboBox1.setModel(new dao.DAO_Producto().listaProductos());
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Error: " + ex);
+            }
+        });
     }
 
     /**
@@ -72,35 +86,19 @@ public class dlgCreateProovedores extends javax.swing.JDialog {
 
         jPanelContenedor = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jTextFieldDireccion = new javax.swing.JTextField();
-        jTextFieldNombre = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         jButtonGuardar = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
-        jTextFieldTelefono1 = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        setPreferredSize(new java.awt.Dimension(400, 200));
 
         jPanelContenedor.setBackground(new java.awt.Color(234, 215, 187));
+        jPanelContenedor.setPreferredSize(new java.awt.Dimension(400, 300));
 
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 24)); // NOI18N
-        jLabel1.setText("Create Proovedores");
-
-        jLabel3.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 18)); // NOI18N
-        jLabel3.setText("Nombre:");
-
-        jLabel4.setFont(jLabel3.getFont());
-        jLabel4.setText("Telefono:");
-
-        jTextFieldDireccion.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
-
-        jTextFieldNombre.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
-
-        jLabel5.setFont(jLabel3.getFont());
-        jLabel5.setText("Direccion:");
+        jLabel1.setText("Delete Productos");
 
         jButtonGuardar.setFont(getFont());
         jButtonGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/controlar.png"))); // NOI18N
@@ -128,7 +126,12 @@ public class dlgCreateProovedores extends javax.swing.JDialog {
             }
         });
 
-        jTextFieldTelefono1.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        jComboBox1.setFont(getFont());
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelContenedorLayout = new javax.swing.GroupLayout(jPanelContenedor);
         jPanelContenedor.setLayout(jPanelContenedorLayout);
@@ -137,48 +140,28 @@ public class dlgCreateProovedores extends javax.swing.JDialog {
             .addGroup(jPanelContenedorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldTelefono1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextFieldDireccion, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(217, 217, 217))
-            .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                        .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                        .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanelContenedorLayout.setVerticalGroup(
             jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelContenedorLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelContenedorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextFieldTelefono1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextFieldDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(55, 55, 55)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(101, Short.MAX_VALUE))
+                    .addComponent(jButtonGuardar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         getContentPane().add(jPanelContenedor, java.awt.BorderLayout.CENTER);
@@ -188,38 +171,35 @@ public class dlgCreateProovedores extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        String nombre = jTextFieldNombre.getText();
-        String telefono = jTextFieldTelefono1.getText();
-        String direccion = jTextFieldDireccion.getText();
-        Proveedor p = new Proveedor(nombre, telefono, direccion);
-        if (new dao.DAO_Proveedor().createProveedor(p, u)) {
-            JOptionPane.showMessageDialog(this, "Se creo el proveedor");
+        int id = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getId();
+
+        if (new DAO_Producto().deleteProducto(id, u)) {
+            JOptionPane.showMessageDialog(this, "Se elimino el producto");
             limpiacajas();
+            cargaCombobox();
             parentFrame.cargaTabla();
         }
     }//GEN-LAST:event_jButtonGuardarActionPerformed
     private void limpiacajas() {
-        jTextFieldNombre.setText("");
-        jTextFieldTelefono1.setText("");
-        jTextFieldDireccion.setText("");
+        jComboBox1.setSelectedIndex(0);
     }
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonGuardar;
+    private javax.swing.JComboBox<Producto> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanelContenedor;
-    private javax.swing.JTextField jTextFieldDireccion;
-    private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JTextField jTextFieldTelefono1;
     // End of variables declaration//GEN-END:variables
 
 }

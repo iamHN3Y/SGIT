@@ -22,14 +22,16 @@ import utilities.StringToNumberConverter;
 public class dlgCreateUsuarios extends javax.swing.JDialog {
 
     Usuario u;
+    frmUsuariosMenu parentFrame;
 
     /**
      * Creates new form dlgCreateUsuarios
      */
-    public dlgCreateUsuarios(java.awt.Frame parent, boolean modal, Usuario u) {
+    public dlgCreateUsuarios(java.awt.Frame parent, boolean modal, Usuario u, frmUsuariosMenu parentFrame) {
         super(parent, modal);
         initComponents();
         this.u = u;
+        this.parentFrame = parentFrame;
         setLocationRelativeTo(this);
         JButton[] btns = {jButton1, jButtonCancelar, jButtonGuardar};
         for (JButton btn : btns) {
@@ -55,7 +57,7 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
 
                 @Override
                 public void mouseExited(MouseEvent e) {
-                    btn.setBackground(new Color(234,215,187));
+                    btn.setBackground(new Color(234, 215, 187));
                 }
             });
         }
@@ -109,6 +111,7 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
         jTextFieldCuenta.setEditable(false);
         jTextFieldCuenta.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
 
+        jButton1.setBackground(new java.awt.Color(234, 215, 187));
         jButton1.setFont(jLabel3.getFont());
         jButton1.setText("Genera Cuenta");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -126,6 +129,7 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
         jTextFieldContraseña.setEditable(false);
         jTextFieldContraseña.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
 
+        jButtonGuardar.setBackground(new java.awt.Color(234, 215, 187));
         jButtonGuardar.setFont(getFont());
         jButtonGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/controlar.png"))); // NOI18N
         jButtonGuardar.setToolTipText("Ingresar");
@@ -139,6 +143,7 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
             }
         });
 
+        jButtonCancelar.setBackground(new java.awt.Color(234, 215, 187));
         jButtonCancelar.setFont(getFont());
         jButtonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/cruz.png"))); // NOI18N
         jButtonCancelar.setToolTipText("Ingresar");
@@ -229,7 +234,7 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String nombre = jTextFieldNombre.getText();
+        String nombre = jTextFieldNombre.getText().toUpperCase();
         String cuenta = String.valueOf(StringToNumberConverter.convertToNumber(nombre));
         String contraseña = Encriptador.encriptar(cuenta);
 
@@ -239,17 +244,21 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        String nombre = jTextFieldNombre.getText();
-        String telefono = jTextFieldTelefono.getText();
-        String cuenta = jTextFieldCuenta.getText();
-        String contraseña = jTextFieldContraseña.getText();
-        boolean administrador = jCheckBoxAdministrador.isSelected();
-        Usuario nu = new Usuario(nombre, telefono, cuenta, contraseña, administrador);
-        if (new DAO_Usuario().createUsuario(nu, u)) {
-            JOptionPane.showMessageDialog(this, "Se creo el usuario");
-            limpiacajas();
-            
+        if (validarCampos()) {
+            String nombre = jTextFieldNombre.getText();
+            String telefono = jTextFieldTelefono.getText();
+            int cuenta = Integer.parseInt(jTextFieldCuenta.getText());
+            String contraseña = jTextFieldContraseña.getText();
+            boolean administrador = jCheckBoxAdministrador.isSelected();
+            Usuario nu = new Usuario(cuenta, nombre, telefono, contraseña, administrador);
+            if (new DAO_Usuario().createUsuario(nu, u)) {
+                JOptionPane.showMessageDialog(this, "Se creo el usuario");
+                limpiacajas();
+                parentFrame.cargaTabla();
+            }
+
         }
+
     }//GEN-LAST:event_jButtonGuardarActionPerformed
     private void limpiacajas() {
         jTextFieldContraseña.setText("");
@@ -262,6 +271,33 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
+    private boolean validarCampos() {
+        String nombre = jTextFieldNombre.getText();
+        String telefono = jTextFieldTelefono.getText();
+        String cuenta = jTextFieldCuenta.getText();
+        String contraseña = jTextFieldContraseña.getText();
+
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo 'Nombre' no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (telefono.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo 'Teléfono' no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (cuenta.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo 'Cuenta' no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (contraseña.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo 'Contraseña' no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -50,10 +50,9 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
             ps.setBoolean(3, false);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                u.setId(rs.getInt("id"));
+                u.setCuenta(rs.getInt("cuenta"));
                 u.setNombre(rs.getString("nombre"));
                 u.setTelefono(rs.getString("telefono"));
-                u.setCuenta(rs.getString("cuenta"));
                 u.setContraseña(rs.getString("contraseña"));
                 u.setTipo_admin(rs.getBoolean("tipo_admin"));
             }
@@ -96,15 +95,14 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
     private boolean create(Usuario n, Usuario u) throws Exception {
         try {
             this.conectar();
-            String query = "insert into usuario(nombre, telefono, cuenta, contraseña, tipo_admin, borrado) values (?, ?, ?, ?, ?, ?);";
+            String query = "insert into usuario(cuenta, nombre, telefono, contraseña, tipo_admin, borrado) values (?, ?, ?, ?, ?, ?);";
             PreparedStatement ps = this.conexion.prepareStatement(query);
-            ps.setString(1, n.getNombre());
-            ps.setString(2, n.getTelefono());
-            ps.setString(3, n.getCuenta());
+            ps.setInt(1, n.getCuenta());
+            ps.setString(2, n.getNombre());
+            ps.setString(3, n.getTelefono());
             ps.setString(4, n.getContraseña());
             ps.setBoolean(5, n.isTipo_admin());
             ps.setBoolean(6, false);
-
             boolean resul = ps.execute();
             if (resul != true) {
                 new DAO_control_log().insertControl("Creo un usuario", u);
@@ -149,14 +147,13 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
     private boolean update(Usuario n, Usuario u) throws SQLException, Exception {
         try {
             this.conectar();
-            String query = "update usuario set nombre = ?, telefono = ?, cuenta = ?, contraseña = ?, tipo_admin = ? where id = ?;";
+            String query = "update usuario set nombre = ?, telefono = ?, contraseña = ?, tipo_admin = ? where cuenta = ?;";
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setString(1, n.getNombre());
             ps.setString(2, n.getTelefono());
-            ps.setString(3, n.getCuenta());
-            ps.setString(4, n.getContraseña());
-            ps.setBoolean(5, n.isTipo_admin());
-            ps.setInt(6, n.getId());
+            ps.setString(3, n.getContraseña());
+            ps.setBoolean(4, n.isTipo_admin());
+            ps.setInt(5, n.getCuenta());
 
             boolean resul = ps.execute();
             if (resul != true) {
@@ -203,7 +200,7 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
     private boolean delete(int id, Usuario u) throws SQLException, Exception {
         try {
             this.conectar();
-            String query = "update usuario set borrado = ? where id = ?;";
+            String query = "update usuario set borrado = ? where cuenta = ?;";
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setBoolean(1, true);
             ps.setInt(2, id);
@@ -240,7 +237,6 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
     @Override
     public DefaultTableModel tablaUsuarios() throws SQLException {
         DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("ID");
         model.addColumn("Nombre");
         model.addColumn("Teléfono");
         model.addColumn("Cuenta");
@@ -248,16 +244,15 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
         model.addColumn("Administrador");
 
         for (Usuario u : readUsuarios()) {
-            Object[] fila = new Object[6];
-            fila[0] = u.getId();
-            fila[1] = u.getNombre();
-            fila[2] = u.getTelefono();
-            fila[3] = u.getCuenta();
-            fila[4] = u.getContraseña();
+            Object[] fila = new Object[5];
+            fila[0] = u.getNombre();
+            fila[1] = u.getTelefono();
+            fila[2] = u.getCuenta();
+            fila[3] = u.getContraseña();
             if (u.isTipo_admin()) {
-                fila[5] = "Administrador";
+                fila[4] = "Administrador";
             } else {
-                fila[5] = "";
+                fila[4] = "";
             }
             model.addRow(fila);
         }
@@ -281,10 +276,9 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Usuario u = new Usuario();
-                u.setId(rs.getInt("id"));
                 u.setNombre(rs.getString("nombre"));
                 u.setTelefono(rs.getString("telefono"));
-                u.setCuenta(rs.getString("cuenta"));
+                u.setCuenta(rs.getInt("cuenta"));
                 u.setContraseña(rs.getString("contraseña"));
                 u.setTipo_admin(rs.getBoolean("tipo_admin"));
                 usuarios.add(u);

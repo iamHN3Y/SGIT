@@ -22,17 +22,19 @@ import utilities.StringToNumberConverter;
  * @author rosal
  */
 public class dlgUpdateUsuarios extends javax.swing.JDialog {
-    
+
     Usuario u;
+    frmUsuariosMenu parentFrame;
 
     /**
      * Creates new form dlgCreateUsuarios
      */
-    public dlgUpdateUsuarios(java.awt.Frame parent, boolean modal, Usuario u) {
+    public dlgUpdateUsuarios(java.awt.Frame parent, boolean modal, Usuario u, frmUsuariosMenu frameParent) {
         super(parent, modal);
         initComponents();
         this.u = u;
-        setLocationRelativeTo(this);
+        this.parentFrame = frameParent;
+        setLocationRelativeTo(parent);
         JButton[] btns = {jButton1, jButtonCancelar, jButtonGuardar};
         for (JButton btn : btns) {
             btn.setUI(new BasicButtonUI());
@@ -40,21 +42,21 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                 }
-                
+
                 @Override
                 public void mousePressed(MouseEvent e) {
                 }
-                
+
                 @Override
                 public void mouseReleased(MouseEvent e) {
                 }
-                
+
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     btn.setBackground(new Color(188, 163, 127));
-                    
+
                 }
-                
+
                 @Override
                 public void mouseExited(MouseEvent e) {
                     btn.setBackground(new Color(234, 215, 187));
@@ -62,8 +64,9 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
             });
         }
         cargaCombobox();
+
     }
-    
+
     void cargaCombobox() {
         SwingUtilities.invokeLater(() -> {
             try {
@@ -98,8 +101,6 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
         jButtonGuardar = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel7 = new javax.swing.JLabel();
-        jTextFieldID = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
@@ -125,6 +126,7 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
         jTextFieldCuenta.setEditable(false);
         jTextFieldCuenta.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
 
+        jButton1.setBackground(new java.awt.Color(234, 215, 187));
         jButton1.setFont(jLabel3.getFont());
         jButton1.setText("Genera Cuenta");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -142,6 +144,7 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
         jTextFieldContraseña.setEditable(false);
         jTextFieldContraseña.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
 
+        jButtonGuardar.setBackground(new java.awt.Color(234, 215, 187));
         jButtonGuardar.setFont(getFont());
         jButtonGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/controlar.png"))); // NOI18N
         jButtonGuardar.setToolTipText("Ingresar");
@@ -155,6 +158,7 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
             }
         });
 
+        jButtonCancelar.setBackground(new java.awt.Color(234, 215, 187));
         jButtonCancelar.setFont(getFont());
         jButtonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/cruz.png"))); // NOI18N
         jButtonCancelar.setToolTipText("Ingresar");
@@ -175,12 +179,6 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
             }
         });
 
-        jLabel7.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 18)); // NOI18N
-        jLabel7.setText("id:");
-
-        jTextFieldID.setEditable(false);
-        jTextFieldID.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
-
         javax.swing.GroupLayout jPanelContenedorLayout = new javax.swing.GroupLayout(jPanelContenedor);
         jPanelContenedor.setLayout(jPanelContenedorLayout);
         jPanelContenedorLayout.setHorizontalGroup(
@@ -199,16 +197,14 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
                             .addComponent(jLabel5)
                             .addComponent(jLabel6)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel7))
+                            .addComponent(jLabel3))
                         .addGap(18, 18, 18)
                         .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox1, 0, 218, Short.MAX_VALUE)
                             .addComponent(jTextFieldTelefono, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jTextFieldContraseña, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jTextFieldCuenta, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextFieldNombre)
-                            .addComponent(jTextFieldID))
+                            .addComponent(jTextFieldNombre))
                         .addGap(39, 39, 39)
                         .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton1)
@@ -220,12 +216,8 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
             .addGroup(jPanelContenedorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -245,7 +237,7 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
                     .addComponent(jTextFieldContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jCheckBoxAdministrador)
-                .addGap(18, 18, 18)
+                .addGap(61, 61, 61)
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -259,33 +251,32 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String nombre = jTextFieldNombre.getText();
+        String nombre = jTextFieldNombre.getText().toUpperCase();
         String cuenta = String.valueOf(StringToNumberConverter.convertToNumber(nombre));
         String contraseña = Encriptador.encriptar(cuenta);
-        
+
         jTextFieldCuenta.setText(cuenta);
         jTextFieldContraseña.setText(contraseña);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        int id = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getId();
+        int cuenta = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getCuenta();
         String nombre = jTextFieldNombre.getText();
         String telefono = jTextFieldTelefono.getText();
-        String cuenta = jTextFieldCuenta.getText();
         String contraseña = jTextFieldContraseña.getText();
         boolean administrador = jCheckBoxAdministrador.isSelected();
-        Usuario nu = new Usuario(id, nombre, telefono, cuenta, contraseña, administrador);
-        
+        Usuario nu = new Usuario(cuenta, nombre, telefono, contraseña, administrador);
+
         if (new DAO_Usuario().updateUsuario(nu, u)) {
             JOptionPane.showMessageDialog(this, "Se actualizo el usuario");
             limpiacajas();
             cargaCombobox();
+            parentFrame.cargaTabla();
         }
     }//GEN-LAST:event_jButtonGuardarActionPerformed
     private void limpiacajas() {
         jComboBox1.setSelectedIndex(0);
-        jTextFieldID.setText("");
         jTextFieldContraseña.setText("");
         jTextFieldCuenta.setText("");
         jTextFieldNombre.setText("");
@@ -299,16 +290,14 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
-        int id = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getId();
+        int cuenta = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getCuenta();
         String nombre = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getNombre();
         String telefono = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getTelefono();
-        String cuenta = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getCuenta();
         String contrasenia = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getContraseña();
         boolean isAdmin = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).isTipo_admin();
-        
-        jTextFieldID.setText(String.valueOf(id));
+
         jTextFieldContraseña.setText(contrasenia);
-        jTextFieldCuenta.setText(cuenta);
+        jTextFieldCuenta.setText(String.valueOf(cuenta));
         jTextFieldNombre.setText(nombre);
         jTextFieldTelefono.setText(telefono);
         jCheckBoxAdministrador.setSelected(isAdmin);
@@ -327,11 +316,9 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanelContenedor;
     private javax.swing.JTextField jTextFieldContraseña;
     private javax.swing.JTextField jTextFieldCuenta;
-    private javax.swing.JTextField jTextFieldID;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldTelefono;
     // End of variables declaration//GEN-END:variables
