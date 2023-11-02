@@ -83,6 +83,6 @@ public class Producto {
     // Override del método toString para proporcionar una representación legible del producto
     @Override
     public String toString() {
-        return getNombre();
+        return getNombre() + " - " + getDescripcion();
     }
 }

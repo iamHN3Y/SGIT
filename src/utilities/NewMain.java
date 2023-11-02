@@ -5,6 +5,8 @@
 package utilities;
 
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import models.Usuario;
 
 /**
@@ -17,14 +19,17 @@ public class NewMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws SQLException {
-        String nombre = "Isaac Rosales";
-        int cuenta = StringToNumberConverter.convertToNumber(nombre.toUpperCase());
-        String contraseña = Encriptador.encriptar(String.valueOf(cuenta));
-        String telefono = "7296300376";
-        Usuario u = new Usuario(cuenta, nombre, telefono, contraseña, true);
-        System.out.println(cuenta);
-        
-        new dao.DAO_Usuario().createUsuario(u, u);
+        // Cambia el texto de los botones "Sí" y "No" a "Eliminar" y "Cancelar"
+        UIManager.put("OptionPane.yesButtonText", "Eliminar");
+        UIManager.put("OptionPane.noButtonText", "Cancelar");
+
+        int response = JOptionPane.showConfirmDialog(null, "¿Desea eliminar este elemento?", "Confirmación", JOptionPane.YES_NO_OPTION);
+
+        if (response == JOptionPane.YES_OPTION) {
+            System.out.println("El usuario eligió eliminar.");
+        } else {
+            System.out.println("El usuario eligió cancelar.");
+        }
     }
 
 }

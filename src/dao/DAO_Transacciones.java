@@ -16,13 +16,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 interface I_DAO_Transacciones {
-
+    
     boolean createTransaccion(ArrayList<Transaccion> ts, Usuario u) throws SQLException;
-
+    
     boolean updateTransaccion(Transaccion nt, Transaccion t, Usuario u) throws SQLException;
-
+    
     DefaultComboBoxModel<Transaccion> listaTransacciones() throws SQLException;
-
+    
     DefaultTableModel tablaTransacciones() throws SQLException;
 }
 
@@ -124,7 +124,7 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
     private boolean update(Transaccion nt, Transaccion t, Usuario u) throws SQLException, Exception {
         try {
             this.conectar();
-            String query = "update transaccion set id_proveedor = ?, id_producto = ?, cantidad = ?, total = ?, fecha = NOW() where id = ?;";
+            String query = "update transacciones set id_proveedor = ?, id_producto = ?, cantidad = ?, total = ?, fecha = NOW() where id = ?;";
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setInt(1, nt.getId_proveedor());
             ps.setInt(2, nt.getId_producto());
@@ -219,7 +219,15 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
         // Definir las columnas de la tabla (incluyendo nombres de producto, proveedor y fecha)
         String[] columnas = {"ID", "Proveedor", "Producto", "Cantidad", "Total", "Fecha", "id_producto", "id_proveedor"};
         // Crear un DefaultTableModel con las columnas
-        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0);
+        DefaultTableModel modeloTabla = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        for (String columna : columnas) {
+            modeloTabla.addColumn(columna);
+        }
         try {
             // Llenar el modelo con los datos de las transacciones
             for (Transaccion t : readTransacciones()) {
@@ -232,9 +240,9 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
                     t.getFecha(), // Agregar la fecha
                     t.getId_producto(),
                     t.getId_proveedor()
-
+                
                 };
-
+                
                 modeloTabla.addRow(fila);
             }
         } catch (Exception ex) {
@@ -242,5 +250,5 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
         }
         return modeloTabla;
     }
-
+    
 }

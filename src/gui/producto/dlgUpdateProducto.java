@@ -27,14 +27,16 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
 
     Usuario u;
     frmProductosMenu parentFrame;
+    Producto p;
 
     /**
      * Creates new form dlgCreateUsuarios
      */
-    public dlgUpdateProducto(java.awt.Frame parent, boolean modal, Usuario u, frmProductosMenu parentFrame) {
+    public dlgUpdateProducto(java.awt.Frame parent, boolean modal, Usuario u, frmProductosMenu parentFrame, Producto p) {
         super(parent, modal);
         initComponents();
         this.u = u;
+        this.p = p;
         this.parentFrame = parentFrame;
         setLocationRelativeTo(this);
         JButton[] btns = {jButtonCancelar, jButtonGuardar};
@@ -65,15 +67,21 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
                 }
             });
         }
-        cargaCombobox();
-        SpinnerNumberModel spinnermodel = new SpinnerNumberModel(0, 0, 10000, 1);
+        cargaCajas();
+        SpinnerNumberModel spinnermodel = new SpinnerNumberModel(p.getStock(), 0, 10000, 1);
         jSpinnerStock.setModel(spinnermodel);
     }
 
-    void cargaCombobox() {
+    void cargaCajas() {
         SwingUtilities.invokeLater(() -> {
             try {
                 jComboBox1.setModel(new dao.DAO_Producto().listaProductos());
+                jComboBox1.getModel().setSelectedItem(p);
+
+                jTextFieldID.setText(String.valueOf(p.getId()));
+                jTextFieldNombre.setText(p.getNombre());
+                jTextAreaDescripcion.setText(p.getDescripcion());
+                jTextFieldPrecio.setText(String.valueOf(p.getPrecio()));
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex);
             }
@@ -146,17 +154,14 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
         });
 
         jComboBox1.setFont(getFont());
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
+        jComboBox1.setEnabled(false);
 
         jLabel7.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 18)); // NOI18N
         jLabel7.setText("id:");
 
         jTextFieldID.setEditable(false);
         jTextFieldID.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        jTextFieldID.setEnabled(false);
 
         jTextAreaDescripcion.setColumns(20);
         jTextAreaDescripcion.setFont(jTextFieldNombre.getFont());
@@ -253,7 +258,7 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        int id = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getId();
+        int id = p.getId();
         String nombre = jTextFieldNombre.getText();
         String descripcion = jTextAreaDescripcion.getText();
         String precio = jTextFieldPrecio.getText();
@@ -263,39 +268,16 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
 
         if (new dao.DAO_Producto().updateProducto(p, u, s)) {
             JOptionPane.showMessageDialog(this, "Se actualizo el Producto");
-            limpiacajas();
-            cargaCombobox();
+            cargaCajas();
             parentFrame.cargaTabla();
+            this.dispose();
         }
     }//GEN-LAST:event_jButtonGuardarActionPerformed
-    private void limpiacajas() {
-        jComboBox1.setSelectedIndex(0);
-        jTextFieldID.setText("");
-        jTextFieldNombre.setText("");
-        jTextAreaDescripcion.setText("");
-        jTextFieldPrecio.setText("");
-        jSpinnerStock.setValue(0);
-    }
+
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-        int id = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getId();
-        String nombre = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getNombre();
-        String descripcion = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getDescripcion();
-        float precio = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getPrecio();
-        int stock = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getStock();
-
-        jTextFieldID.setText(String.valueOf(id));
-        jTextFieldNombre.setText(nombre);
-        jTextAreaDescripcion.setText(descripcion);
-        jTextFieldPrecio.setText(String.valueOf(precio));
-        jSpinnerStock.setValue(stock);
-
-    }//GEN-LAST:event_jComboBox1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

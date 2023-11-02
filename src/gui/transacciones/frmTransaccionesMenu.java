@@ -14,8 +14,6 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicButtonUI;
 import javax.swing.table.DefaultTableModel;
 import models.Transaccion;
@@ -37,7 +35,7 @@ public class frmTransaccionesMenu extends javax.swing.JFrame {
         initComponents();
         this.u = u;
         setLocationRelativeTo(this);
-        JButton[] btns = {jButton5, jButton6, jButton7};
+        JButton[] btns = {jButton5, jButton6};
         for (JButton btn : btns) {
             btn.setUI(new BasicButtonUI());
             btn.addMouseListener(new MouseListener() {
@@ -73,6 +71,7 @@ public class frmTransaccionesMenu extends javax.swing.JFrame {
         SwingUtilities.invokeLater(() -> {
             try {
                 jTable1.setModel(new dao.DAO_Transacciones().tablaTransacciones());
+
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex);
             }
@@ -101,7 +100,6 @@ public class frmTransaccionesMenu extends javax.swing.JFrame {
             // No se ha seleccionado ninguna fila
             return null;
         }
-
     }
 
     /**
@@ -116,14 +114,12 @@ public class frmTransaccionesMenu extends javax.swing.JFrame {
         jPanelSide = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jPanelContenedor = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setFont(new java.awt.Font("Yu Gothic UI Light", 0, 18)); // NOI18N
@@ -173,27 +169,6 @@ public class frmTransaccionesMenu extends javax.swing.JFrame {
         });
         jPanelSide.add(jButton6);
 
-        jButton7.setBackground(new java.awt.Color(255, 242, 216));
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/basura.png"))); // NOI18N
-        jButton7.setToolTipText("Crear");
-        jButton7.setBorder(null);
-        jButton7.setBorderPainted(false);
-        jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButton7.setFocusPainted(false);
-        jButton7.setFocusable(false);
-        jButton7.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton7MouseEntered(evt);
-            }
-        });
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-        jPanelSide.add(jButton7);
-
         jLabel2.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
         jLabel2.setText("           ");
         jPanelSide.add(jLabel2);
@@ -216,18 +191,10 @@ public class frmTransaccionesMenu extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTable1.setCellSelectionEnabled(true);
         jScrollPane1.setViewportView(jTable1);
 
         jLabel3.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 14)); // NOI18N
         jLabel3.setText("Transacciones registradas en plataforma");
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanelContenedorLayout = new javax.swing.GroupLayout(jPanelContenedor);
         jPanelContenedor.setLayout(jPanelContenedorLayout);
@@ -245,26 +212,18 @@ public class frmTransaccionesMenu extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(jPanelContenedorLayout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(72, 72, 72))))
+                        .addGap(72, 300, Short.MAX_VALUE))))
         );
         jPanelContenedorLayout.setVerticalGroup(
             jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelContenedorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jButton1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         getContentPane().add(jPanelContenedor, java.awt.BorderLayout.CENTER);
@@ -289,30 +248,18 @@ public class frmTransaccionesMenu extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        //new dlgUpdateUsuarios(this, rootPaneCheckingEnabled, u, this).setVisible(true);
+        t = obtenerTransaccionSeleccionada();
+        if (t == null) {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione una Transaccion.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            new dlgUpdateTransacciones(this, rootPaneCheckingEnabled, u, this, t).setVisible(true);
+        }
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
-        // TODO add your handling code here:
-        jLabel2.setText("Eliminar Transacciones");
-    }//GEN-LAST:event_jButton7MouseEntered
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-        //new dlgDeleteUsuarios(this, rootPaneCheckingEnabled, u, this).setVisible(true);
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        t = obtenerTransaccionSeleccionada();
-        System.out.println(t);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

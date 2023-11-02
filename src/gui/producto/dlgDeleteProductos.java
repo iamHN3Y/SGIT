@@ -24,14 +24,16 @@ public class dlgDeleteProductos extends javax.swing.JDialog {
 
     Usuario u;
     frmProductosMenu parentFrame;
+    Producto p;
 
     /**
      * Creates new form dlgCreateUsuarios
      */
-    public dlgDeleteProductos(java.awt.Frame parent, boolean modal, Usuario u, frmProductosMenu parentFrame) {
+    public dlgDeleteProductos(java.awt.Frame parent, boolean modal, Usuario u, frmProductosMenu parentFrame, Producto p) {
         super(parent, modal);
         initComponents();
         this.u = u;
+        this.p = p;
         this.parentFrame = parentFrame;
         setLocationRelativeTo(this);
         JButton[] btns = {jButtonCancelar, jButtonGuardar};

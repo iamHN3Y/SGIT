@@ -204,7 +204,12 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
      */
     @Override
     public DefaultTableModel tablaProductos() throws SQLException {
-        DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         model.addColumn("ID");
         model.addColumn("Nombre");
         model.addColumn("Descripción");
@@ -264,7 +269,7 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
             ps.setInt(4, p.getId());
 
             boolean resul = ps.execute();
-            s.setId_producto(searchID(p));
+            s.setId_producto(p.getId());
             if (resul != true) {
                 if (new DAO_Stock().updateStock(s)) {
                     new DAO_control_log().insertControl("Actualizo un producto", u);
