@@ -171,7 +171,12 @@ public class DAO_Proveedor extends Conexion implements I_DAO_Proveedor {
      */
     @Override
     public DefaultTableModel tablaProveedores() throws SQLException {
-        DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         model.addColumn("ID");
         model.addColumn("Nombre");
         model.addColumn("Teléfono");

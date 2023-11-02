@@ -268,7 +268,6 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
 
         if (new dao.DAO_Producto().updateProducto(p, u, s)) {
             JOptionPane.showMessageDialog(this, "Se actualizo el Producto");
-            cargaCajas();
             parentFrame.cargaTabla();
             this.dispose();
         }

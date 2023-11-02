@@ -12,8 +12,12 @@ import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicButtonUI;
+import javax.swing.table.DefaultTableModel;
+import models.Proveedor;
 import models.Usuario;
 
 /**
@@ -23,6 +27,7 @@ import models.Usuario;
 public class frmProveedoresMenu extends javax.swing.JFrame {
 
     Usuario u;
+    Proveedor p;
 
     /**
      * Creates new form frmUsuarios
@@ -71,6 +76,26 @@ public class frmProveedoresMenu extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Error: " + ex);
             }
         });
+        ListSelectionModel selectionModel = jTable1.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
+    public Proveedor obtenerProveedorSeleccionado() {
+        int filaSeleccionada = jTable1.getSelectedRow();
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+
+        if (filaSeleccionada != -1) {
+            Proveedor p = new Proveedor();
+
+            p.setId((int) modelo.getValueAt(filaSeleccionada, 0));
+            p.setNombre((String) modelo.getValueAt(filaSeleccionada, 1));
+            p.setTelefono((String) modelo.getValueAt(filaSeleccionada, 2));
+            p.setDireccion((String) modelo.getValueAt(filaSeleccionada, 3));
+            return p;
+        } else {
+            // No se ha seleccionado ninguna fila
+            return null;
+        }
     }
 
     /**
@@ -238,7 +263,13 @@ public class frmProveedoresMenu extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        new dlgUpdateProveedor(this, rootPaneCheckingEnabled, u, this).setVisible(true);
+        p = obtenerProveedorSeleccionado();
+        if (p == null) {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un proveedor de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            new dlgUpdateProveedor(this, rootPaneCheckingEnabled, u, this, p).setVisible(true);
+        }
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
@@ -248,7 +279,22 @@ public class frmProveedoresMenu extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        new dlgDeleteProveedor(this, rootPaneCheckingEnabled, u, this).setVisible(true);
+        p = obtenerProveedorSeleccionado();
+        if (p == null) {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un proveedor de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            UIManager.put("OptionPane.yesButtonText", "Eliminar");
+            UIManager.put("OptionPane.noButtonText", "Cancelar");
+
+            int response = JOptionPane.showConfirmDialog(this, "¿Desea eliminar el proveedor: " + p.getNombre() + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
+
+            if (response == JOptionPane.YES_OPTION) {
+                new dao.DAO_Proveedor().deleteProveedor(p.getId(), u);
+                cargaTabla();
+            } else {
+                JOptionPane.showMessageDialog(this, "Operacion cancelada", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
