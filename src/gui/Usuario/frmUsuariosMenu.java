@@ -4,6 +4,7 @@
  */
 package gui.Usuario;
 
+import dao.DAO_Usuario;
 import java.awt.Color;
 
 import java.awt.event.MouseEvent;
@@ -13,8 +14,11 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicButtonUI;
+import javax.swing.table.DefaultTableModel;
 import models.Usuario;
 
 /**
@@ -23,7 +27,7 @@ import models.Usuario;
  */
 public class frmUsuariosMenu extends javax.swing.JFrame {
 
-    Usuario u;
+    Usuario u, vu;
 
     /**
      * Creates new form frmUsuarios
@@ -72,6 +76,31 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Error: " + ex);
             }
         });
+        ListSelectionModel selectionModel = jTable1.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
+    public Usuario obtenerUsuarioSeleccionado() {
+        int filaSeleccionada = jTable1.getSelectedRow();
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+
+        if (filaSeleccionada != -1) {
+            Usuario u = new Usuario();
+
+            u.setNombre((String) modelo.getValueAt(filaSeleccionada, 0));
+            u.setTelefono((String) modelo.getValueAt(filaSeleccionada, 1));
+            u.setCuenta((int) modelo.getValueAt(filaSeleccionada, 2));
+            u.setContraseña((String) modelo.getValueAt(filaSeleccionada, 3));
+            if (modelo.getValueAt(filaSeleccionada, 4) == "Administrador") {
+                u.setTipo_admin(true);
+            } else {
+                u.setTipo_admin(false);
+            }
+            return u;
+        } else {
+            // No se ha seleccionado ninguna fila
+            return null;
+        }
     }
 
     /**
@@ -241,7 +270,12 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        new dlgUpdateUsuarios(this, rootPaneCheckingEnabled, u, this).setVisible(true);
+        vu = obtenerUsuarioSeleccionado();
+        if (vu == null) {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un usuario de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            new dlgUpdateUsuarios(this, rootPaneCheckingEnabled, u, this, vu).setVisible(true);
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
@@ -251,7 +285,23 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        new dlgDeleteUsuarios(this, rootPaneCheckingEnabled, u, this).setVisible(true);
+
+        vu = obtenerUsuarioSeleccionado();
+        if (vu == null) {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un usuario de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            UIManager.put("OptionPane.yesButtonText", "Eliminar");
+            UIManager.put("OptionPane.noButtonText", "Cancelar");
+
+            int response = JOptionPane.showConfirmDialog(this, "¿Desea eliminar el usuario: " + vu + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
+
+            if (response == JOptionPane.YES_OPTION) {
+                new DAO_Usuario().deleteUsuario(vu.getCuenta(), u);
+                cargaTabla();
+            } else {
+                JOptionPane.showMessageDialog(this, "Operacion cancelada", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

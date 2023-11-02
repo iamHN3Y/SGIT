@@ -22,17 +22,18 @@ import utilities.StringToNumberConverter;
  * @author rosal
  */
 public class dlgUpdateUsuarios extends javax.swing.JDialog {
-
-    Usuario u;
+    
+    Usuario u, vu;
     frmUsuariosMenu parentFrame;
 
     /**
      * Creates new form dlgCreateUsuarios
      */
-    public dlgUpdateUsuarios(java.awt.Frame parent, boolean modal, Usuario u, frmUsuariosMenu frameParent) {
+    public dlgUpdateUsuarios(java.awt.Frame parent, boolean modal, Usuario u, frmUsuariosMenu frameParent, Usuario vu) {
         super(parent, modal);
         initComponents();
         this.u = u;
+        this.vu = vu;
         this.parentFrame = frameParent;
         setLocationRelativeTo(parent);
         JButton[] btns = {jButton1, jButtonCancelar, jButtonGuardar};
@@ -42,21 +43,21 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                 }
-
+                
                 @Override
                 public void mousePressed(MouseEvent e) {
                 }
-
+                
                 @Override
                 public void mouseReleased(MouseEvent e) {
                 }
-
+                
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     btn.setBackground(new Color(188, 163, 127));
-
+                    
                 }
-
+                
                 @Override
                 public void mouseExited(MouseEvent e) {
                     btn.setBackground(new Color(234, 215, 187));
@@ -64,13 +65,21 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
             });
         }
         cargaCombobox();
-
+        
     }
-
+    
     void cargaCombobox() {
         SwingUtilities.invokeLater(() -> {
             try {
                 jComboBox1.setModel(new dao.DAO_Usuario().listaUsuario());
+                jComboBox1.getModel().setSelectedItem(vu);
+                
+                jTextFieldNombre.setText(vu.getNombre());
+                jTextFieldTelefono.setText(vu.getTelefono());
+                jTextFieldCuenta.setText(String.valueOf(vu.getCuenta()));
+                jTextFieldContraseña.setText(vu.getContraseña());
+                jCheckBoxAdministrador.setSelected(vu.isTipo_admin());
+                
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex);
             }
@@ -173,11 +182,7 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
         });
 
         jComboBox1.setFont(getFont());
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
+        jComboBox1.setEnabled(false);
 
         javax.swing.GroupLayout jPanelContenedorLayout = new javax.swing.GroupLayout(jPanelContenedor);
         jPanelContenedor.setLayout(jPanelContenedorLayout);
@@ -254,55 +259,32 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
         String nombre = jTextFieldNombre.getText().toUpperCase();
         String cuenta = String.valueOf(StringToNumberConverter.convertToNumber(nombre));
         String contraseña = Encriptador.encriptar(cuenta);
-
+        
         jTextFieldCuenta.setText(cuenta);
         jTextFieldContraseña.setText(contraseña);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        int cuenta = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getCuenta();
+        int cuenta = Integer.parseInt(jTextFieldCuenta.getText());
         String nombre = jTextFieldNombre.getText();
         String telefono = jTextFieldTelefono.getText();
         String contraseña = jTextFieldContraseña.getText();
         boolean administrador = jCheckBoxAdministrador.isSelected();
-        Usuario nu = new Usuario(cuenta, nombre, telefono, contraseña, administrador);
-
-        if (new DAO_Usuario().updateUsuario(nu, u)) {
+        
+        Usuario nus = new Usuario(cuenta, nombre, telefono, contraseña, administrador);
+        
+        if (new DAO_Usuario().updateUsuario(nus, u, vu)) {
             JOptionPane.showMessageDialog(this, "Se actualizo el usuario");
-            limpiacajas();
-            cargaCombobox();
             parentFrame.cargaTabla();
+            this.dispose();
         }
     }//GEN-LAST:event_jButtonGuardarActionPerformed
-    private void limpiacajas() {
-        jComboBox1.setSelectedIndex(0);
-        jTextFieldContraseña.setText("");
-        jTextFieldCuenta.setText("");
-        jTextFieldNombre.setText("");
-        jTextFieldTelefono.setText("");
-        jCheckBoxAdministrador.setSelected(false);
-    }
+
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-        int cuenta = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getCuenta();
-        String nombre = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getNombre();
-        String telefono = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getTelefono();
-        String contrasenia = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).getContraseña();
-        boolean isAdmin = jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).isTipo_admin();
-
-        jTextFieldContraseña.setText(contrasenia);
-        jTextFieldCuenta.setText(String.valueOf(cuenta));
-        jTextFieldNombre.setText(nombre);
-        jTextFieldTelefono.setText(telefono);
-        jCheckBoxAdministrador.setSelected(isAdmin);
-
-    }//GEN-LAST:event_jComboBox1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

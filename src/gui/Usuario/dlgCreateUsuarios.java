@@ -252,7 +252,8 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
             boolean administrador = jCheckBoxAdministrador.isSelected();
             Usuario nu = new Usuario(cuenta, nombre, telefono, contraseña, administrador);
             if (new DAO_Usuario().createUsuario(nu, u)) {
-                JOptionPane.showMessageDialog(this, "Se creo el usuario");
+                JOptionPane.showMessageDialog(this, "Se creó el usuario", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+
                 limpiacajas();
                 parentFrame.cargaTabla();
             }

@@ -17,7 +17,7 @@ interface I_DAO_Usuario {
 
     boolean createUsuario(Usuario n, Usuario u) throws SQLException;
 
-    boolean updateUsuario(Usuario n, Usuario u) throws SQLException;
+    boolean updateUsuario(Usuario n, Usuario u, Usuario v) throws SQLException;
 
     boolean deleteUsuario(int id, Usuario u) throws SQLException;
 
@@ -124,10 +124,10 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
      * (EXITO, ERROR_BD o OTRO_ERROR).
      */
     @Override
-    public boolean updateUsuario(Usuario n, Usuario u) {
+    public boolean updateUsuario(Usuario n, Usuario u, Usuario v) {
         boolean resultado = false;
         try {
-            resultado = update(n, u);
+            resultado = update(n, u, v);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Checale we pq hubo un error-> " + e);
         }
@@ -144,16 +144,17 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
      * (EXITO, ERROR_BD o OTRO_ERROR).
      * @throws SQLException Si ocurre un error de base de datos.
      */
-    private boolean update(Usuario n, Usuario u) throws SQLException, Exception {
+    private boolean update(Usuario n, Usuario u, Usuario vu) throws SQLException, Exception {
         try {
             this.conectar();
-            String query = "update usuario set nombre = ?, telefono = ?, contraseña = ?, tipo_admin = ? where cuenta = ?;";
+            String query = "update usuario set nombre = ?, telefono = ?, contraseña = ?, tipo_admin = ?, cuenta = ? where cuenta = ?;";
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setString(1, n.getNombre());
             ps.setString(2, n.getTelefono());
             ps.setString(3, n.getContraseña());
             ps.setBoolean(4, n.isTipo_admin());
             ps.setInt(5, n.getCuenta());
+            ps.setInt(6, vu.getCuenta());
 
             boolean resul = ps.execute();
             if (resul != true) {
@@ -236,7 +237,12 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
 
     @Override
     public DefaultTableModel tablaUsuarios() throws SQLException {
-        DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         model.addColumn("Nombre");
         model.addColumn("Teléfono");
         model.addColumn("Cuenta");

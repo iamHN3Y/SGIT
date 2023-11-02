@@ -86,7 +86,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return getCuenta() + "-" + getNombre();
+        return getCuenta() + " - " + getNombre();
     }
 
 }
