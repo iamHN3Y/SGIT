@@ -16,14 +16,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 interface I_DAO_Transacciones {
-    
+
     boolean createTransaccion(ArrayList<Transaccion> ts, Usuario u) throws SQLException;
-    
+
     boolean updateTransaccion(Transaccion nt, Transaccion t, Usuario u) throws SQLException;
-    
+
     DefaultComboBoxModel<Transaccion> listaTransacciones() throws SQLException;
-    
+
     DefaultTableModel tablaTransacciones() throws SQLException;
+
+    boolean deleteTransaccion(Transaccion t, Usuario u);
 }
 
 public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
@@ -240,9 +242,9 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
                     t.getFecha(), // Agregar la fecha
                     t.getId_producto(),
                     t.getId_proveedor()
-                
+
                 };
-                
+
                 modeloTabla.addRow(fila);
             }
         } catch (Exception ex) {
@@ -250,5 +252,40 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
         }
         return modeloTabla;
     }
-    
+
+    @Override
+    public boolean deleteTransaccion(Transaccion t, Usuario u) {
+        boolean resultado = false;
+        try {
+            resultado = delete(t, u);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Checale we pq hubo un error-> " + e);
+        }
+        return resultado;
+    }
+
+    private boolean delete(Transaccion t, Usuario u) throws Exception {
+        try {
+            this.conectar();
+            String query = "delete from transacciones where id = ?;";
+            PreparedStatement ps = this.conexion.prepareStatement(query);
+            ps.setInt(1, t.getId());
+            boolean resul = ps.execute();
+            if (resul != true) {
+                Stock s = new DAO_Stock().searchStock(t.getId_producto());
+                int stocktemp = s.getCantidad() - t.getCantidad();
+                s.setCantidad(stocktemp);
+                if (new DAO_Stock().updateStock(s)) {
+                    new DAO_control_log().insertControl("Elimino una transacción", u);
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            this.cerrar();
+        }
+        return false;
+    }
+
 }

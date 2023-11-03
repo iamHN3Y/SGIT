@@ -71,7 +71,7 @@ public class dlgUpdateTransacciones extends javax.swing.JDialog {
                 }
             });
         }
-        SpinnerNumberModel spinnermodel = new SpinnerNumberModel(0, 0, 10000, 1);
+        SpinnerNumberModel spinnermodel = new SpinnerNumberModel(t.getCantidad(), 0, 10000, 1);
         jSpinnerCantidad.setModel(spinnermodel);
         cargaCombobox();
     }
@@ -81,13 +81,14 @@ public class dlgUpdateTransacciones extends javax.swing.JDialog {
             try {
                 jComboBoxProveedor.setModel(new dao.DAO_Proveedor().listaProveedores());
                 jComboBoxProducto.setModel(new dao.DAO_Producto().listaProductos());
-                
+
                 jTextFieldid.setText(String.valueOf(t.getId()));
                 Producto p = new dao.DAO_Producto().readProducto(t.getId_producto());
                 jComboBoxProducto.getModel().setSelectedItem(p);
+
                 Proveedor pr = new dao.DAO_Proveedor().readProveedor(t.getId_proveedor());
                 jComboBoxProveedor.getModel().setSelectedItem(pr);
-                jSpinnerCantidad.getModel().setValue(t.getCantidad());
+
                 jTextFieldTotal.setText(String.valueOf(t.getTotal()));
             } catch (SQLException ex) {
                 Logger.getLogger(dlgUpdateProveedor.class.getName()).log(Level.SEVERE, null, ex);
@@ -256,11 +257,9 @@ public class dlgUpdateTransacciones extends javax.swing.JDialog {
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
         if (validarCampos()) {
-            Proveedor proveedor = jComboBoxProveedor.getItemAt(jComboBoxProveedor.getSelectedIndex());
-            Producto producto = jComboBoxProducto.getItemAt(jComboBoxProducto.getSelectedIndex());
             int cantidad = (int) jSpinnerCantidad.getValue();
             float total = Float.parseFloat(jTextFieldTotal.getText());
-            nt = new Transaccion(t.getId(), proveedor.getId(), producto.getId(), cantidad, total);
+            nt = new Transaccion(t.getId(), t.getId_proveedor(), t.getId_producto(), cantidad, total);
         }
         if (new dao.DAO_Transacciones().updateTransaccion(nt, t, u)) {
             JOptionPane.showMessageDialog(this, "Se actualizo la Transaccion");
@@ -275,20 +274,8 @@ public class dlgUpdateTransacciones extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private boolean validarCampos() {
-        Proveedor proveedor = jComboBoxProveedor.getItemAt(jComboBoxProveedor.getSelectedIndex());
-        Producto producto = jComboBoxProducto.getItemAt(jComboBoxProducto.getSelectedIndex());
         int cantidad = (int) jSpinnerCantidad.getValue();
         String totalText = jTextFieldTotal.getText();
-
-        if (proveedor == null) {
-            JOptionPane.showMessageDialog(null, "Por favor, seleccione un proveedor.", "Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        if (producto == null) {
-            JOptionPane.showMessageDialog(null, "Por favor, seleccione un producto.", "Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
 
         if (cantidad <= 0) {
             JOptionPane.showMessageDialog(null, "La cantidad debe ser mayor que cero.", "Error", JOptionPane.ERROR_MESSAGE);

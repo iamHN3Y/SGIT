@@ -4,6 +4,7 @@
  */
 package gui.transacciones;
 
+import gui.producto.frmProductosMenu;
 import java.awt.Color;
 
 import java.awt.event.MouseEvent;
@@ -14,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicButtonUI;
 import javax.swing.table.DefaultTableModel;
 import models.Transaccion;
@@ -35,7 +37,7 @@ public class frmTransaccionesMenu extends javax.swing.JFrame {
         initComponents();
         this.u = u;
         setLocationRelativeTo(this);
-        JButton[] btns = {jButton5, jButton6};
+        JButton[] btns = {jButton5, jButton6, jButton7};
         for (JButton btn : btns) {
             btn.setUI(new BasicButtonUI());
             btn.addMouseListener(new MouseListener() {
@@ -114,6 +116,7 @@ public class frmTransaccionesMenu extends javax.swing.JFrame {
         jPanelSide = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jPanelContenedor = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -168,6 +171,27 @@ public class frmTransaccionesMenu extends javax.swing.JFrame {
             }
         });
         jPanelSide.add(jButton6);
+
+        jButton7.setBackground(new java.awt.Color(255, 242, 216));
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/basura.png"))); // NOI18N
+        jButton7.setToolTipText("Crear");
+        jButton7.setBorder(null);
+        jButton7.setBorderPainted(false);
+        jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButton7.setFocusPainted(false);
+        jButton7.setFocusable(false);
+        jButton7.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton7MouseEntered(evt);
+            }
+        });
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        jPanelSide.add(jButton7);
 
         jLabel2.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
         jLabel2.setText("           ");
@@ -257,9 +281,45 @@ public class frmTransaccionesMenu extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
+        // TODO add your handling code here:
+        jLabel2.setText("Eliminar usuarios");
+    }//GEN-LAST:event_jButton7MouseEntered
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+
+        t = obtenerTransaccionSeleccionada();
+        if (t == null) {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione una transaccion de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            UIManager.put("OptionPane.yesButtonText", "Eliminar");
+            UIManager.put("OptionPane.noButtonText", "Cancelar");
+
+            int response = JOptionPane.showConfirmDialog(this, "¿Desea eliminar la: " + t + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
+
+            if (response == JOptionPane.YES_OPTION) {
+                new dao.DAO_Transacciones().deleteTransaccion(t, u);
+                System.out.println("El usuario eligio continuar, datos de la transaccion: ");
+                System.out.println("\nID: " + t.getId());
+                System.out.println("\nProveedor: " + t.getProveedor());
+                System.out.println("\nProducto: " + t.getProducto());
+                System.out.println("\nCantidad: " + t.getCantidad());
+                System.out.println("\nTotal: " + t.getTotal());
+                System.out.println("\nID del Proveedor: " + t.getId_proveedor());
+                System.out.println("\nID del Producto: " + t.getId_producto());
+                System.out.println("\nFecha: " + t.getFecha());
+                cargaTabla();
+            } else {
+                JOptionPane.showMessageDialog(this, "Operacion cancelada", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

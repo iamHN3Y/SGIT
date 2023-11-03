@@ -102,7 +102,7 @@ public class Transaccion {
 
     @Override
     public String toString() {
-        return "Transaccion hecha a las  - " + getFecha();
+        return "Transaccion realizada a las:  " + getFecha();
     }
 
 }
