@@ -1,11 +1,16 @@
 package gui.proveedor;
 
+import gui.Usuario.dlgCreateUsuarios;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicButtonUI;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 import models.Proveedor;
 import models.Usuario;
 
@@ -20,6 +25,7 @@ public class dlgCreateProovedores extends javax.swing.JDialog {
         this.u = u;
         this.parentFrame = parentFrame;
         setLocationRelativeTo(this);
+        ((AbstractDocument) jTextFieldTelefono1.getDocument()).setDocumentFilter(new dlgCreateProovedores.LengthLimitDocumentFilter(10));
         JButton[] btns = {jButtonCancelar, jButtonGuardar};
         for (JButton btn : btns) {
             btn.setUI(new BasicButtonUI());
@@ -170,16 +176,53 @@ public class dlgCreateProovedores extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        String nombre = jTextFieldNombre.getText();
-        String telefono = jTextFieldTelefono1.getText();
-        String direccion = jTextFieldDireccion.getText();
-        Proveedor p = new Proveedor(nombre, telefono, direccion);
-        if (new dao.DAO_Proveedor().createProveedor(p, u)) {
-            JOptionPane.showMessageDialog(this, "Se creo el proveedor");
-            limpiacajas();
-            parentFrame.cargaTabla();
+    private boolean validarCampos() {
+        // Validar que los campos no estén vacíos
+        if (jTextFieldNombre.getText().isEmpty() || jTextFieldTelefono1.getText().isEmpty() || jTextFieldDireccion.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
+
+        // Validar que jTextFieldNombre sea un nombre
+        if (!validarNombre(jTextFieldNombre.getText())) {
+            JOptionPane.showMessageDialog(this, "Ingrese un nombre válido.", "Error de validación", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Validar que jTextFieldTelefono1 sea un número de máximo 10 caracteres
+        if (!validarTelefono(jTextFieldTelefono1.getText())) {
+            JOptionPane.showMessageDialog(this, "Ingrese un número de teléfono válido (máximo 10 caracteres numéricos).", "Error de validación", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validarNombre(String nombre) {
+        // Puedes personalizar esta lógica según tus requisitos
+        // Por ejemplo, aquí se valida que solo contenga letras y espacios
+        return nombre.matches("[a-zA-Z ]+");
+    }
+
+    private boolean validarTelefono(String telefono) {
+        // Puedes personalizar esta lógica según tus requisitos
+        // Aquí se valida que sea un número y tenga máximo 10 caracteres
+        return telefono.matches("\\d{1,10}");
+    }
+
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+        if (validarCampos()) {
+            String nombre = jTextFieldNombre.getText();
+            String telefono = jTextFieldTelefono1.getText();
+            String direccion = jTextFieldDireccion.getText();
+            Proveedor p = new Proveedor(nombre, telefono, direccion);
+            if (new dao.DAO_Proveedor().createProveedor(p, u)) {
+                JOptionPane.showMessageDialog(this, "Se creo el proveedor");
+                limpiacajas();
+                parentFrame.cargaTabla();
+            }
+        }
+
     }//GEN-LAST:event_jButtonGuardarActionPerformed
     private void limpiacajas() {
         jTextFieldNombre.setText("");
@@ -189,7 +232,30 @@ public class dlgCreateProovedores extends javax.swing.JDialog {
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
+    public class LengthLimitDocumentFilter extends DocumentFilter {
 
+        private int maxLength;
+
+        public LengthLimitDocumentFilter(int maxLength) {
+            this.maxLength = maxLength;
+        }
+
+        @Override
+        public void insertString(DocumentFilter.FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+            if ((fb.getDocument().getLength() + string.length()) <= maxLength) {
+                super.insertString(fb, offset, string, attr);
+            }
+        }
+
+        @Override
+        public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            int currentLength = fb.getDocument().getLength();
+            int newLength = currentLength - length + text.length();
+            if (newLength <= maxLength) {
+                super.replace(fb, offset, length, text, attrs);
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;

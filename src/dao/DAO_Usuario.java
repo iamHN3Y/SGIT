@@ -56,6 +56,8 @@ public class DAO_Usuario extends Conexion implements I_DAO_Usuario {
                 u.setContraseña(rs.getString("contraseña"));
                 u.setTipo_admin(rs.getBoolean("tipo_admin"));
             }
+            if (u == null) {
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

@@ -23,7 +23,7 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
     public frmUsuariosMenu(Usuario u) {
         initComponents();
         this.u = u;
-        setLocationRelativeTo(this);
+        setLocationRelativeTo(null);
         JButton[] btns = {jButton5, jButton6, jButton7};
         for (JButton btn : btns) {
             btn.setUI(new BasicButtonUI());

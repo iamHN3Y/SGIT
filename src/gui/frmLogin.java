@@ -12,10 +12,9 @@ import javax.swing.plaf.basic.BasicButtonUI;
 import models.Usuario;
 import utilities.Encriptador;
 
-public class frmLogin extends javax.swing.JFrame implements Runnable {
+public class frmLogin extends javax.swing.JFrame {
 
     DAO_Usuario daoU = new DAO_Usuario();
-    Thread hilo = new Thread(this);
 
     public frmLogin() {
         initComponents();
@@ -182,9 +181,61 @@ public class frmLogin extends javax.swing.JFrame implements Runnable {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bttEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttEntrarActionPerformed
+        String cuenta = txtfCuenta.getText();
+        char[] contraseniaArray = jPasswordContrasenia.getPassword();
 
-        hilo.start();
+        if (cuenta.isEmpty() || contraseniaArray.length == 0) {
+            String mensajeError = "";
+            if (cuenta.isEmpty()) {
+                mensajeError += "El campo de cuenta no puede estar vacío.\n";
+            }
+            if (contraseniaArray.length == 0) {
+                mensajeError += "El campo de contraseña no puede estar vacío.";
+            }
+
+            JOptionPane.showMessageDialog(this, mensajeError, "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String contrasenia = Encriptador.encriptar(new String(contraseniaArray));
+        boolean resultado = login(cuenta, contrasenia);
+        if (resultado) {
+            if (u.getCuenta() == 0) {
+                JOptionPane.showMessageDialog(this, "Datos incorrectos, el usuario no existe", "Error de Inicio de Sesión", JOptionPane.ERROR_MESSAGE);
+            } else {
+                frmMenu menu = new frmMenu(u);
+                menu.setVisible(true);
+                menu.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                this.dispose();
+            }
+
+        }
     }//GEN-LAST:event_bttEntrarActionPerformed
+
+    Usuario u = null;
+
+    private boolean login(String cuenta, String contrasenia) {
+        try {
+            u = daoU.loginUsuario(cuenta, contrasenia);
+            if (u != null && !u.isBorrado()) {
+                return true;
+            } else if (u != null && u.isBorrado()) {
+                JOptionPane.showMessageDialog(this, "El usuario ha sido borrado.", "Error de Inicio de Sesión", JOptionPane.ERROR_MESSAGE);
+                return false;
+            } else {
+                JOptionPane.showMessageDialog(this, "Datos incorrectos, verifique sus credenciales", "Error de Inicio de Sesión", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        } catch (SQLException ex) {
+            // Mensaje específico para errores de SQL
+            JOptionPane.showMessageDialog(this, "Error al intentar iniciar sesión. Detalles: " + ex.getMessage(), "Error de SQL", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            // Mensaje para errores inesperados
+            JOptionPane.showMessageDialog(this, "Error inesperado: " + ex.getMessage(), "Error Inesperado", JOptionPane.ERROR_MESSAGE);
+        } 
+        return false;
+    }
+
 
     private void bttEntrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttEntrarMouseEntered
 
@@ -218,22 +269,4 @@ public class frmLogin extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTextField txtfCuenta;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void run() {
-        String cuenta = txtfCuenta.getText();
-        String contrasenia = Encriptador.encriptar(jPasswordContrasenia.getText());
-        try {
-            Usuario u = daoU.loginUsuario(cuenta, contrasenia);
-            if (u != null) {
-                frmMenu menu = new frmMenu(u);
-                menu.setVisible(true);
-                menu.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "Datos incorrectos, verifique sus credenciales");
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error: ->" + ex);
-        }
-    }
 }

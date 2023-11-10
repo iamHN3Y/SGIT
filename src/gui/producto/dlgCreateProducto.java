@@ -191,19 +191,52 @@ public class dlgCreateProducto extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+    private boolean validarCampos() {
         String nombre = jTextFieldNombre.getText();
         String descripcion = jTextAreaDescripcion.getText();
         String precio = jTextFieldPrecio.getText();
-        int stock = (int) jSpinnerStock.getValue();
 
-        Producto p = new Producto(nombre, descripcion, Float.parseFloat(precio));
-        Stock s = new Stock(stock);
-        if (new dao.DAO_Producto().createProducto(p, u, s)) {
-            JOptionPane.showMessageDialog(this, "Se creo el producto");
-            limpiacajas();
-            parentFrame.cargaTabla();
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo 'Nombre' no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
+
+        if (descripcion.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La descripción no puede estar vacia.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (descripcion.length() > 255) {
+            JOptionPane.showMessageDialog(this, "La descripción no puede exceder los 255 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        try {
+            Float.parseFloat(precio);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El campo 'Precio' debe contener un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Puedes agregar más reglas de validación según tus necesidades
+        return true;
+    }
+
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+        if (validarCampos()) {
+            String nombre = jTextFieldNombre.getText();
+            String descripcion = jTextAreaDescripcion.getText();
+            String precio = jTextFieldPrecio.getText();
+            int stock = (int) jSpinnerStock.getValue();
+
+            Producto p = new Producto(nombre, descripcion, Float.parseFloat(precio));
+            Stock s = new Stock(stock);
+            if (new dao.DAO_Producto().createProducto(p, u, s)) {
+                JOptionPane.showMessageDialog(this, "Se creo el producto");
+                limpiacajas();
+                parentFrame.cargaTabla();
+            }
+        }
+
     }//GEN-LAST:event_jButtonGuardarActionPerformed
     private void limpiacajas() {
         jTextFieldNombre.setText("");

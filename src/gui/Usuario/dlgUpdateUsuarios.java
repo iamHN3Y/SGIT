@@ -9,6 +9,10 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicButtonUI;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 import models.Usuario;
 import utilities.Encriptador;
 import utilities.StringToNumberConverter;
@@ -25,6 +29,7 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
         this.vu = vu;
         this.parentFrame = frameParent;
         setLocationRelativeTo(parent);
+        ((AbstractDocument) jTextFieldTelefono.getDocument()).setDocumentFilter(new dlgUpdateUsuarios.LengthLimitDocumentFilter(10));
         JButton[] btns = {jButton1, jButtonCancelar, jButtonGuardar};
         for (JButton btn : btns) {
             btn.setUI(new BasicButtonUI());
@@ -238,34 +243,128 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String nombre = jTextFieldNombre.getText().toUpperCase();
-        String cuenta = String.valueOf(StringToNumberConverter.convertToNumber(nombre));
-        String contraseña = Encriptador.encriptar(cuenta);
+    private boolean validarCampos() {
+        String nombre = jTextFieldNombre.getText().trim();
+        String telefono = jTextFieldTelefono.getText().trim();
+        String cuenta = jTextFieldCuenta.getText().trim();
+        String contraseña = jTextFieldContraseña.getText().trim();
 
-        jTextFieldCuenta.setText(cuenta);
-        jTextFieldContraseña.setText(contraseña);
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo 'Nombre' no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (!validarNombre(nombre)) {
+            JOptionPane.showMessageDialog(this, "Nombre inválido. Debe contener solo letras y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (telefono.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo 'Teléfono' no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (!validarTelefono(telefono)) {
+            JOptionPane.showMessageDialog(this, "Número de teléfono inválido. Debe contener 10 dígitos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (cuenta.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo 'Cuenta' no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (contraseña.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo 'Contraseña' no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validarNombre(String nombre) {
+        // Puedes personalizar esta validación según tus criterios específicos
+        return nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\\s]+");
+    }
+
+    private boolean validarTelefono(String telefono) {
+        // Validar que el número de teléfono tenga exactamente 10 dígitos
+        return telefono.matches("\\d{10}");
+    }
+
+    private boolean validarCamposCuenta() {
+        String nombre = jTextFieldNombre.getText().trim();
+
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo 'Nombre' no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (!validarNombre(nombre)) {
+            JOptionPane.showMessageDialog(this, "Nombre inválido. Debe contener solo letras y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (validarCamposCuenta()) {
+            String nombre = jTextFieldNombre.getText().toUpperCase();
+            String cuenta = String.valueOf(StringToNumberConverter.convertToNumber(nombre));
+            String contraseña = Encriptador.encriptar(cuenta);
+
+            jTextFieldCuenta.setText(cuenta);
+            jTextFieldContraseña.setText(contraseña);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        int cuenta = Integer.parseInt(jTextFieldCuenta.getText());
-        String nombre = jTextFieldNombre.getText();
-        String telefono = jTextFieldTelefono.getText();
-        String contraseña = jTextFieldContraseña.getText();
-        boolean administrador = jCheckBoxAdministrador.isSelected();
+        if (validarCampos()) {
+            int cuenta = Integer.parseInt(jTextFieldCuenta.getText());
+            String nombre = jTextFieldNombre.getText();
+            String telefono = jTextFieldTelefono.getText();
+            String contraseña = jTextFieldContraseña.getText();
+            boolean administrador = jCheckBoxAdministrador.isSelected();
 
-        Usuario nus = new Usuario(cuenta, nombre, telefono, contraseña, administrador);
+            Usuario nus = new Usuario(cuenta, nombre, telefono, contraseña, administrador);
 
-        if (new DAO_Usuario().updateUsuario(nus, u, vu)) {
-            JOptionPane.showMessageDialog(this, "Se actualizo el usuario");
-            parentFrame.cargaTabla();
-            this.dispose();
+            if (new DAO_Usuario().updateUsuario(nus, u, vu)) {
+                JOptionPane.showMessageDialog(this, "Se actualizo el usuario");
+                parentFrame.cargaTabla();
+                this.dispose();
+            }
         }
+
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    public class LengthLimitDocumentFilter extends DocumentFilter {
+
+        private int maxLength;
+
+        public LengthLimitDocumentFilter(int maxLength) {
+            this.maxLength = maxLength;
+        }
+
+        @Override
+        public void insertString(DocumentFilter.FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+            if ((fb.getDocument().getLength() + string.length()) <= maxLength) {
+                super.insertString(fb, offset, string, attr);
+            }
+        }
+
+        @Override
+        public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            int currentLength = fb.getDocument().getLength();
+            int newLength = currentLength - length + text.length();
+            if (newLength <= maxLength) {
+                super.replace(fb, offset, length, text, attrs);
+            }
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

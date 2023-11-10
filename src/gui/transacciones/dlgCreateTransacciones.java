@@ -223,72 +223,35 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        if (ts == null) {
-            JOptionPane.showMessageDialog(this, "Error, selecciona los parametros para crear una transaccion");
-        } else if (validarCampos()) {
-            Proveedor proveedor = jComboBoxProveedor.getItemAt(jComboBoxProveedor.getSelectedIndex());
-            Producto producto = jComboBoxProducto.getItemAt(jComboBoxProducto.getSelectedIndex());
-            int cantidad = (int) jSpinnerCantidad.getValue();
-            float total = Float.parseFloat(jTextFieldTotal.getText());
-
-            Transaccion t = new Transaccion(proveedor.getId(), producto.getId(), cantidad, total);
-
-            ts.add(t);
+    private boolean validarSeleccionCombo(javax.swing.JComboBox<?> comboBox, String mensajeError) {
+        if (comboBox.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, mensajeError, "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
-        if (new dao.DAO_Transacciones().createTransaccion(ts, u)) {
-            JOptionPane.showMessageDialog(this, "Se creo la Transaccion");
-            limpiacajas();
-            parentFrame.cargaTabla();
-        }
-    }//GEN-LAST:event_jButtonGuardarActionPerformed
-    private void limpiacajas() {
-        jComboBoxProveedor.setSelectedIndex(0);
-        jComboBoxProducto.setSelectedIndex(0);
-        jSpinnerCantidad.setValue(0);
-        jTextFieldTotal.setText("");
+        return true;
     }
-    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_jButtonCancelarActionPerformed
-
-    private void jButtonAgregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregaActionPerformed
-        Transaccion t;
-        if (validarCampos()) {
-            Proveedor proveedor = jComboBoxProveedor.getItemAt(jComboBoxProveedor.getSelectedIndex());
-            Producto producto = jComboBoxProducto.getItemAt(jComboBoxProducto.getSelectedIndex());
-            int cantidad = (int) jSpinnerCantidad.getValue();
-            float total = Float.parseFloat(jTextFieldTotal.getText());
-
-            t = new Transaccion(proveedor.getId(), producto.getId(), cantidad, total);
-
-            if (ts.add(t)) {
-                JOptionPane.showMessageDialog(this, "Se agrego a la lista");
-                limpiacajas();
-            }
-        }
-
-
-    }//GEN-LAST:event_jButtonAgregaActionPerformed
 
     private boolean validarCampos() {
-        Proveedor proveedor = jComboBoxProveedor.getItemAt(jComboBoxProveedor.getSelectedIndex());
-        Producto producto = jComboBoxProducto.getItemAt(jComboBoxProducto.getSelectedIndex());
+        // Validación de la selección en los JComboBox
+        if (!validarSeleccionCombo(jComboBoxProveedor, "Por favor, seleccione un proveedor.")) {
+            return false;
+        }
+
+        if (!validarSeleccionCombo(jComboBoxProducto, "Por favor, seleccione un producto.")) {
+            return false;
+        }
+
+        // Validación de la cantidad
         int cantidad = (int) jSpinnerCantidad.getValue();
-        String totalText = jTextFieldTotal.getText();
-
-        if (proveedor == null) {
-            JOptionPane.showMessageDialog(null, "Por favor, seleccione un proveedor.", "Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        if (producto == null) {
-            JOptionPane.showMessageDialog(null, "Por favor, seleccione un producto.", "Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
         if (cantidad <= 0) {
             JOptionPane.showMessageDialog(null, "La cantidad debe ser mayor que cero.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        // Validación del campo jTextFieldTotal
+        String totalText = jTextFieldTotal.getText();
+        if (totalText.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El campo total no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -301,6 +264,54 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
 
         return true; // Todos los campos son válidos
     }
+
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+        if (ts == null) {
+            JOptionPane.showMessageDialog(this, "Error, selecciona los parámetros para crear una transacción");
+        } else if (validarCampos()) {
+            Proveedor proveedor = jComboBoxProveedor.getItemAt(jComboBoxProveedor.getSelectedIndex());
+            Producto producto = jComboBoxProducto.getItemAt(jComboBoxProducto.getSelectedIndex());
+            int cantidad = (int) jSpinnerCantidad.getValue();
+            float total = Float.parseFloat(jTextFieldTotal.getText());
+
+            Transaccion t = new Transaccion(proveedor.getId(), producto.getId(), cantidad, total);
+
+            ts.add(t);
+
+            if (new dao.DAO_Transacciones().createTransaccion(ts, u)) {
+                JOptionPane.showMessageDialog(this, "Se creó la Transacción");
+                limpiacajas();
+                parentFrame.cargaTabla();
+            }
+        }
+
+    }//GEN-LAST:event_jButtonGuardarActionPerformed
+    private void limpiacajas() {
+        jComboBoxProveedor.setSelectedIndex(0);
+        jComboBoxProducto.setSelectedIndex(0);
+        jSpinnerCantidad.setValue(0);
+        jTextFieldTotal.setText("");
+    }
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void jButtonAgregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregaActionPerformed
+        if (validarCampos()) {
+            Proveedor proveedor = jComboBoxProveedor.getItemAt(jComboBoxProveedor.getSelectedIndex());
+            Producto producto = jComboBoxProducto.getItemAt(jComboBoxProducto.getSelectedIndex());
+            int cantidad = (int) jSpinnerCantidad.getValue();
+            float total = Float.parseFloat(jTextFieldTotal.getText());
+
+            Transaccion t = new Transaccion(proveedor.getId(), producto.getId(), cantidad, total);
+
+            if (ts.add(t)) {
+                JOptionPane.showMessageDialog(this, "Se agregó a la lista");
+                limpiacajas();
+            }
+        }
+    }//GEN-LAST:event_jButtonAgregaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgrega;
