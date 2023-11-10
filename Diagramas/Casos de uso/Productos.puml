@@ -1,0 +1,14 @@
+@startuml 
+title Diagrama de Casos de Uso - Productos
+
+actor "Administrador" as User
+
+usecase "Crear Productos" as CrearProductos
+usecase "Actualizar Productos" as ActualizarProductos
+usecase "Eliminar Productos" as EliminarProductos
+
+User --> CrearProductos
+User --> ActualizarProductos
+User --> EliminarProductos
+
+@enduml

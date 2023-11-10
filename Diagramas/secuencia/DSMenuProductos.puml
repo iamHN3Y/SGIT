@@ -1,0 +1,43 @@
+@startuml
+
+title Menu de Producto
+
+actor Usuario
+participant "frmProductosMenu" as App
+participant "dlgUpdateProducto" as UpdateDlg
+participant "DAO_Producto" as DAO
+
+Usuario -> App: Iniciar la aplicación
+activate Usuario
+activate App
+
+Usuario -> App: Visualiza menú de productos
+activate UpdateDlg
+
+Usuario -> UpdateDlg: Hacer clic en 'Eliminar Productos'
+activate UpdateDlg
+
+UpdateDlg -> App: Obtener producto seleccionado
+UpdateDlg --> App: Producto seleccionado
+deactivate UpdateDlg
+App --> Usuario: Muestra mensaje de error si no hay selección
+
+Usuario -> UpdateDlg: Hacer clic en 'Eliminar Productos'
+activate UpdateDlg
+
+UpdateDlg -> UpdateDlg: Muestra cuadro de diálogo de confirmación
+UpdateDlg --> Usuario: Muestra cuadro de diálogo de confirmación
+
+Usuario -> UpdateDlg: Confirmar eliminación
+Usuario <-- UpdateDlg: Selección de acción
+
+Usuario -> UpdateDlg: Selección de acción
+activate DAO
+UpdateDlg -> DAO: Eliminar producto
+UpdateDlg <-- DAO: Producto eliminado
+deactivate DAO
+
+Usuario --> App: Producto eliminado exitosamente
+deactivate UpdateDlg
+
+@enduml

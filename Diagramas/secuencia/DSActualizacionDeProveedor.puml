@@ -1,0 +1,28 @@
+@startuml
+
+title Diagrama de Secuencia - Actualización de Proveedor
+
+actor Usuario
+dlgUpdateProveedor -> Usuario: Crear dlgUpdateProveedor
+dlgUpdateProveedor -> dlgUpdateProveedor: Inicializar componentes
+Usuario -> dlgUpdateProveedor: Abrir el diálogo
+
+activate dlgUpdateProveedor
+
+dlgUpdateProveedor -> dlgUpdateProveedor: Cargar datos del Proveedor
+dlgUpdateProveedor -> Usuario: Mostrar datos del Proveedor
+Usuario -> dlgUpdateProveedor: Editar datos del Proveedor
+dlgUpdateProveedor -> dlgUpdateProveedor: Guardar cambios
+
+alt Cambios guardados con éxito
+    dlgUpdateProveedor -> dlgUpdateProveedor: Actualizar Proveedor
+    dlgUpdateProveedor -> Usuario: Mostrar mensaje de éxito
+    dlgUpdateProveedor -> parentFrame: Actualizar tabla
+    dlgUpdateProveedor -> dlgUpdateProveedor: Cerrar el diálogo
+else Cambios no guardados
+    dlgUpdateProveedor -> Usuario: Mostrar mensaje de error
+end
+
+deactivate dlgUpdateProveedor
+
+@enduml

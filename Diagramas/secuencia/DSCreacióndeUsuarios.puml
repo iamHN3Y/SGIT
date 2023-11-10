@@ -1,0 +1,32 @@
+@startuml
+
+title Diagrama de Secuencia - Creación de Usuarios
+
+actor Usuario
+participant frmUsuariosMenu
+participant dlgCreateUsuarios
+
+Usuario -> frmUsuariosMenu: Abrir menú de usuarios
+activate frmUsuariosMenu
+
+Usuario -> frmUsuariosMenu: Usuario realiza acciones en el menú
+note right: Varios eventos de mouseEntered y\nacciones de los botones
+
+Usuario -> dlgCreateUsuarios: Usuario selecciona\n"Crear Usuarios"
+activate dlgCreateUsuarios
+
+Usuario -> dlgCreateUsuarios: Usuario ingresa datos\npara crear un usuario
+dlgCreateUsuarios --> Usuario: Datos ingresados
+
+Usuario -> dlgCreateUsuarios: Usuario hace clic en "Genera Cuenta"
+dlgCreateUsuarios --> Usuario: Cuenta y contraseña generadas
+
+Usuario -> dlgCreateUsuarios: Usuario hace clic en "Guardar"
+dlgCreateUsuarios --> dlgCreateUsuarios: Validación de campos
+dlgCreateUsuarios --> Usuario: Usuario creado exitosamente
+
+Usuario -> dlgCreateUsuarios: Usuario hace clic en "Cancelar"
+dlgCreateUsuarios --> Usuario: Ventana de creación de usuarios cerrada
+deactivate dlgCreateUsuarios
+
+@enduml

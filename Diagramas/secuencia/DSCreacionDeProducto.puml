@@ -1,0 +1,31 @@
+@startuml
+
+title Creación de Producto
+
+actor Usuario
+participant "dlgCreateProducto" as CreateDlg
+participant "frmProductosMenu" as ParentFrame
+participant "DAO_Producto" as DAO
+
+Usuario -> CreateDlg: Iniciar creación de producto
+activate Usuario
+activate CreateDlg
+
+Usuario -> CreateDlg: Ingresa datos del producto
+Usuario <-- CreateDlg: Confirmación de creación
+Usuario --> CreateDlg: Datos del producto
+
+CreateDlg -> CreateDlg: Valida datos del producto
+CreateDlg --> Usuario: Muestra mensaje de error si los datos son inválidos
+
+Usuario -> CreateDlg: Confirmar creación
+activate DAO
+CreateDlg -> DAO: Crear producto
+CreateDlg <-- DAO: Producto creado
+deactivate DAO
+
+CreateDlg --> ParentFrame: Actualizar tabla de productos
+deactivate CreateDlg
+deactivate Usuario
+
+@enduml

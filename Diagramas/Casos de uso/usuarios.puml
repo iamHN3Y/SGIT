@@ -1,0 +1,14 @@
+@startuml 
+title Diagrama de Casos de Uso - Usuarios
+
+actor "Admin" as User
+
+usecase "Crear Usuarios" as CrearUsuarios
+usecase "Actualizar Usuarios" as ActualizarUsuarios
+usecase "Eliminar Usuarios" as EliminarUsuarios
+
+User --> CrearUsuarios
+User --> ActualizarUsuarios
+User --> EliminarUsuarios
+
+@enduml

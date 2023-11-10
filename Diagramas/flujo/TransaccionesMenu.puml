@@ -1,0 +1,33 @@
+@startuml
+start
+:Inicializar frmTransaccionesMenu con Usuario;
+:Establecer ubicación relativa;
+:Configurar botones y manejar eventos del ratón;
+:Cargar datos en la tabla;
+while (Usuario interactúa con los botones) is (Sí)
+  if (Botón "Crear Transacciones") then (Sí)
+    :Mostrar dlgCreateTransacciones;
+  else if (Botón "Actualizar Transacciones") then (Sí)
+    :Obtener Transacción seleccionada;
+    if (Transacción seleccionada existe) then (Sí)
+      :Mostrar dlgUpdateTransacciones;
+    else (No)
+      :Mostrar mensaje de error;
+    endif
+  else if (Botón "Eliminar Transacciones") then (Sí)
+    :Obtener Transacción seleccionada;
+    if (Transacción seleccionada existe) then (Sí)
+      :Mostrar confirmación para eliminar transacción;
+      if (Usuario confirma eliminación) then (Sí)
+        :Eliminar transacción;
+        :Recargar datos en la tabla;
+      else (No)
+        :Mostrar mensaje de cancelación;
+      endif
+    else (No)
+      :Mostrar mensaje de error;
+    endif
+  endif
+endwhile (No)
+stop
+@enduml

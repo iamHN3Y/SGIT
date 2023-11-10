@@ -1,0 +1,32 @@
+@startuml
+
+title Diagrama de Secuencia - Inicio de Sesión
+
+actor User
+
+User -> frmLogin: Abrir la aplicación
+activate frmLogin
+
+User -> frmLogin: Ingresar información de cuenta y contraseña
+frmLogin -> frmLogin: Validar campos
+alt Datos válidos
+    frmLogin -> Encriptador: Encriptar contraseña
+    activate Encriptador
+    Encriptador --> frmLogin: Contraseña encriptada
+    deactivate Encriptador
+    frmLogin -> DAO_Usuario: Iniciar sesión
+    activate DAO_Usuario
+    DAO_Usuario --> frmLogin: Usuario autenticado
+    deactivate DAO_Usuario
+    frmLogin -> frmMenu: Abrir menú principal
+    activate frmMenu
+    frmMenu --> frmLogin: Cerrar ventana de inicio de sesión
+    deactivate frmMenu
+else Datos inválidos
+    frmLogin --> User: Mostrar mensaje de error
+end
+
+User -> frmLogin: Realizar otras acciones en la ventana de inicio de sesión
+deactivate frmLogin
+
+@enduml

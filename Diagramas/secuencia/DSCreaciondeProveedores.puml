@@ -1,0 +1,27 @@
+@startuml
+
+title Diagrama de Secuencia - Creación de Proveedor
+
+actor Usuario
+dlgCreateProovedores -> Usuario: Crear dlgCreateProovedores
+dlgCreateProovedores -> dlgCreateProovedores: Inicializar componentes
+Usuario -> dlgCreateProovedores: Abrir el diálogo
+
+activate dlgCreateProovedores
+
+dlgCreateProovedores -> dlgCreateProovedores: Capturar datos del Proveedor
+dlgCreateProovedores -> Usuario: Mostrar el formulario de creación
+Usuario -> dlgCreateProovedores: Ingresar datos del Proveedor
+dlgCreateProovedores -> dlgCreateProovedores: Guardar datos
+
+alt Proveedor creado con éxito
+    dlgCreateProovedores -> Usuario: Mostrar mensaje de éxito
+    dlgCreateProovedores -> parentFrame: Actualizar tabla de proveedores
+    dlgCreateProovedores -> dlgCreateProovedores: Limpiar campos
+else Proveedor no creado
+    dlgCreateProovedores -> Usuario: Mostrar mensaje de error
+end
+
+deactivate dlgCreateProovedores
+
+@enduml

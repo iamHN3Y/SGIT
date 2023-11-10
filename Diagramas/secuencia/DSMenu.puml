@@ -1,0 +1,43 @@
+@startuml
+
+title Diagrama de Secuencia - Menú de Aplicación
+
+actor Usuario
+
+Usuario -> frmMenu: Abrir menú
+activate frmMenu
+
+Usuario -> frmMenu: Usuario inicia sesión
+frmMenu --> Usuario: Menú mostrado
+deactivate frmMenu
+
+Usuario -> frmMenu: Usuario navega por opciones del menú
+note right: Varios eventos de mouseEntered y\nacciones del botón
+
+Usuario -> frmUsuariosMenu: Usuario selecciona\n"Usuarios" en el menú
+activate frmUsuariosMenu
+frmUsuariosMenu --> Usuario: Ventana de usuarios mostrada
+deactivate frmUsuariosMenu
+
+Usuario -> frmProveedoresMenu: Usuario selecciona\n"Proveedores" en el menú
+activate frmProveedoresMenu
+frmProveedoresMenu --> Usuario: Ventana de proveedores mostrada
+deactivate frmProveedoresMenu
+
+Usuario -> frmProductosMenu: Usuario selecciona\n"Productos" en el menú
+activate frmProductosMenu
+frmProductosMenu --> Usuario: Ventana de productos mostrada
+deactivate frmProductosMenu
+
+Usuario -> frmTransaccionesMenu: Usuario selecciona\n"Transacciones" en el menú
+activate frmTransaccionesMenu
+frmTransaccionesMenu --> Usuario: Ventana de transacciones mostrada
+deactivate frmTransaccionesMenu
+
+Usuario -> frmVentasMenu: Usuario selecciona\n"Ventas" en el menú
+activate frmVentasMenu
+frmVentasMenu --> Usuario: Ventana de ventas mostrada
+deactivate frmVentasMenu
+
+@enduml
+

@@ -1,0 +1,14 @@
+@startuml 
+title Diagrama de Casos de Uso - Proveedores
+
+actor "Admin" as User
+
+usecase "Crear Proveedores" as CrearProveedores
+usecase "Actualizar Proveedores" as ActualizarProveedores
+usecase "Eliminar Proveedores" as EliminarProveedores
+
+User --> CrearProveedores
+User --> ActualizarProveedores
+User --> EliminarProveedores
+
+@enduml

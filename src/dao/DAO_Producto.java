@@ -124,7 +124,7 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
      * vista.
      * @throws SQLException Si ocurre un error de base de datos.
      */
-    private ArrayList<Producto> readProductos() throws SQLException {
+    public ArrayList<Producto> readProductos() throws SQLException {
         ArrayList<Producto> productos = new ArrayList<>();
         try {
             this.conectar();

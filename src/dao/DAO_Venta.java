@@ -51,7 +51,8 @@ public class DAO_Venta extends Conexion implements I_DAO_Venta {
                 ps.setFloat(3, v.getTotal());
                 ps.setInt(4, v.getId_usuario());
                 ps.setBoolean(5, false);
-                if (ps.execute()) {
+
+                if (ps.execute() != true) {
                     Stock s = new DAO_Stock().searchStock(v.getId_producto());
                     int stocktemp = s.getCantidad() - v.getCantidad();
                     s.setCantidad(stocktemp);

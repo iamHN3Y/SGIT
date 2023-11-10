@@ -1,0 +1,31 @@
+@startuml
+
+title Diagrama de Secuencia - Actualización de Usuario
+
+actor Usuario
+participant "dlgUpdateUsuarios" as Dialog
+database Database
+
+Usuario -> Dialog: Iniciar actualización
+activate Dialog
+
+Usuario -> Dialog: Seleccionar usuario
+activate Usuario
+
+Usuario -> Dialog: Ingresar datos de actualización
+Usuario <-- Dialog: Mostrar datos existentes
+Usuario --> Dialog: Confirmar actualización
+activate Database
+
+Dialog -> Database: Actualizar usuario
+activate Database
+
+Database --> Dialog: Usuario actualizado
+deactivate Database
+
+Usuario <-- Dialog: Confirmación de actualización
+Usuario --> Dialog: Cerrar diálogo
+deactivate Usuario
+deactivate Dialog
+
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+
+title Menu de Proveedor
+
+actor Usuario
+participant "frmProveedoresMenu" as ProveedoresMenu
+participant "Proveedor" as Proveedor
+participant "DAO_Proveedor" as DAO
+database Database
+
+Usuario -> ProveedoresMenu: Abrir menú de proveedores
+activate Usuario
+activate ProveedoresMenu
+
+Usuario -> ProveedoresMenu: Seleccionar opción Eliminar Proveedor
+Usuario --> ProveedoresMenu: Obtener proveedor seleccionado
+
+ProveedoresMenu -> DAO: Eliminar proveedor de la base de datos
+activate DAO
+
+ProveedoresMenu --> DAO: ID del proveedor a eliminar
+DAO -> Database: Eliminar proveedor con ID
+DAO <-- Database: Confirmación de eliminación
+deactivate DAO
+
+ProveedoresMenu --> ProveedoresMenu: Actualizar tabla de proveedores
+deactivate ProveedoresMenu
+
+@enduml

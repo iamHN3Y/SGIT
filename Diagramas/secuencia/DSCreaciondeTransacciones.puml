@@ -1,0 +1,30 @@
+@startuml
+
+title Diagrama de Secuencia - Creación de Transacciones
+
+actor Usuario
+participant dlgCreateTransacciones
+participant dao.DAO_Proveedor
+participant dao.DAO_Producto
+participant Proveedor
+participant Producto
+participant Transaccion
+participant frmTransaccionesMenu
+
+Usuario -> dlgCreateTransacciones: Crear Transacción
+Usuario -> dlgCreateTransacciones: Agregar producto
+
+activate dlgCreateTransacciones
+Usuario -> dlgCreateTransacciones: Guardar Transacción
+dlgCreateTransacciones -> dao.DAO_Proveedor: listaProveedores()
+dao.DAO_Proveedor -> Proveedor: Obtener proveedores
+dlgCreateTransacciones -> dao.DAO_Producto: listaProductos()
+dao.DAO_Producto -> Producto: Obtener productos
+dlgCreateTransacciones -> Transaccion: Crear Transacción
+dlgCreateTransacciones -> dao.DAO_Transacciones: createTransaccion()
+dao.DAO_Transacciones -> Transaccion: Almacenar Transacción
+dlgCreateTransacciones --> frmTransaccionesMenu: Actualizar tabla
+
+deactivate dlgCreateTransacciones
+
+@enduml

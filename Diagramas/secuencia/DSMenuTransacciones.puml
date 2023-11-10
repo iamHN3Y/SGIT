@@ -1,0 +1,23 @@
+@startuml
+
+title Diagrama de Secuencia - Gestión de Transacciones
+
+actor User as User 
+
+participant "frmTransaccionesMenu" as GUI 
+
+User -> GUI: Inicia la aplicación
+GUI -> GUI: Constructor: frmTransaccionesMenu(Usuario u)
+User -> GUI: Interactúa con la interfaz de usuario
+
+loop Hace clic en un botón
+    User -> GUI: Hace clic en un botón
+    GUI -> GUI: Acción del botón (por ejemplo, Crear, Actualizar, Eliminar)
+    GUI -> GUI: Llama a métodos correspondientes
+    GUI -> GUI: Actualiza la tabla de transacciones
+end
+
+User -> GUI: Cierra la aplicación
+
+@enduml
+

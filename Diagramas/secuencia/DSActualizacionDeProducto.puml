@@ -1,0 +1,30 @@
+@startuml
+
+title Actualización de Producto
+
+actor Usuario
+participant "dlgUpdateProducto" as UpdateDlg
+participant "frmProductosMenu" as ParentFrame
+participant "DAO_Producto" as DAO
+Usuario -> UpdateDlg: Iniciar actualización de producto
+activate Usuario
+activate UpdateDlg
+
+Usuario -> UpdateDlg: Ingresa datos de actualización
+Usuario <-- UpdateDlg: Confirmación de actualización
+Usuario --> UpdateDlg: Datos de actualización
+
+UpdateDlg -> UpdateDlg: Valida datos de actualización
+UpdateDlg --> Usuario: Muestra mensaje de error si los datos son inválidos
+
+Usuario -> UpdateDlg: Confirmar actualización
+activate DAO
+UpdateDlg -> DAO: Actualizar producto
+UpdateDlg <-- DAO: Producto actualizado
+deactivate DAO
+
+UpdateDlg --> ParentFrame: Actualizar tabla de productos
+deactivate UpdateDlg
+deactivate Usuario
+
+@enduml

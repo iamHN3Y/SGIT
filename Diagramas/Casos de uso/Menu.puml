@@ -1,0 +1,22 @@
+@startuml 
+
+title Diagrama de Casos de Uso - Menu
+
+actor Usuario as User
+actor Administrador as admin
+
+usecase "Menú Usuarios" as MenuUsuarios
+usecase "Menú Productos" as MenuProductos
+usecase "Menú Proveedores" as MenuProveedores
+usecase "Menú Transacciones" as MenuTransacciones
+usecase "Menú Ventas" as MenuVentas
+
+admin --> MenuUsuarios
+admin --> MenuProductos
+admin --> MenuProveedores
+admin --> MenuTransacciones
+admin --> MenuVentas
+User --> MenuTransacciones
+User --> MenuVentas
+
+@enduml

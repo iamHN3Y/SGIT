@@ -1,0 +1,19 @@
+@startuml
+start
+:Inicializar frmLogin;
+:Establecer ubicación relativa;
+:Establecer valores iniciales en txtfCuenta y jPasswordContrasenia;
+while (Usuario presiona bttEntrar) is (Sí)
+  :Iniciar hilo;
+  :Obtener valores de txtfCuenta y jPasswordContrasenia;
+  :Encriptar contraseña;
+  if (Login exitoso) then (Sí)
+    :Crear instancia de frmMenu con el Usuario;
+    :Mostrar frmMenu;
+    :Cerrar frmLogin;
+  else (No)
+    :Mostrar mensaje de error;
+  endif
+endwhile (No)
+stop
+@enduml

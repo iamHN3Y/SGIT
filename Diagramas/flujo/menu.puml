@@ -1,0 +1,21 @@
+@startuml
+start
+:Inicializar frmMenu con Usuario;
+:Establecer ubicación relativa;
+:Mostrar componentes según tipo de Usuario;
+while (Usuario interactúa con los botones) is (Sí)
+  :Procesar acción del botón;
+  if (Botón "Usuarios") then (Sí)
+    :Crear y mostrar frmUsuariosMenu;
+  else if (Botón "Ventas") then (Sí)
+    :Crear y mostrar frmVentasMenu;
+  else if (Botón "Proveedores") then (Sí)
+    :Crear y mostrar frmProveedoresMenu;
+  else if (Botón "Transacciones") then (Sí)
+    :Crear y mostrar frmTransaccionesMenu;
+  else if (Botón "Productos") then (Sí)
+    :Crear y mostrar frmProductosMenu;
+  endif
+endwhile (No)
+stop
+@enduml

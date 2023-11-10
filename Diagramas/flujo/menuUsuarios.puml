@@ -1,0 +1,33 @@
+@startuml
+start
+:Inicializar frmUsuariosMenu con Usuario;
+:Establecer ubicación relativa;
+:Configurar botones y manejar eventos del ratón;
+:Cargar datos en la tabla;
+while (Usuario interactúa con los botones) is (Sí)
+  if (Botón "Crear Usuarios") then (Sí)
+    :Mostrar dlgCreateUsuarios;
+  else if (Botón "Actualizar usuarios") then (Sí)
+    :Obtener Usuario seleccionado;
+    if (Usuario seleccionado existe) then (Sí)
+      :Mostrar dlgUpdateUsuarios;
+    else (No)
+      :Mostrar mensaje de error;
+    endif
+  else if (Botón "Eliminar usuarios") then (Sí)
+    :Obtener Usuario seleccionado;
+    if (Usuario seleccionado existe) then (Sí)
+      :Mostrar confirmación para eliminar usuario;
+      if (Usuario confirma eliminación) then (Sí)
+        :Eliminar usuario;
+        :Recargar datos en la tabla;
+      else (No)
+        :Mostrar mensaje de cancelación;
+      endif
+    else (No)
+      :Mostrar mensaje de error;
+    endif
+  endif
+endwhile (No)
+stop
+@enduml

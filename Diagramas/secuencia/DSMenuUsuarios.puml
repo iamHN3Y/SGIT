@@ -1,0 +1,25 @@
+@startuml
+
+title Diagrama de Secuencia - Menú de Usuarios
+
+actor Usuario
+
+Usuario -> frmUsuariosMenu: Abrir menú de usuarios
+activate frmUsuariosMenu
+
+Usuario -> frmUsuariosMenu: Usuario realiza acciones en el menú
+note right: Varios eventos de mouseEntered y\nacciones de los botones
+
+User -> dlgCreateUsuarios: Usuario selecciona\n"Crear Usuarios"
+dlgCreateUsuarios --> Usuario: Ventana de creación de usuarios mostrada
+deactivate dlgCreateUsuarios
+
+Usuario -> dlgUpdateUsuarios: Usuario selecciona\n"Actualizar Usuarios"
+dlgUpdateUsuarios --> Usuario: Ventana de actualización de usuarios mostrada
+deactivate dlgUpdateUsuarios
+
+Usuario -> dlgCreateUsuarios: Usuario selecciona\n"Eliminar Usuarios"
+dlgCreateUsuarios --> Usuario: Ventana de eliminación de usuarios mostrada
+deactivate dlgCreateUsuarios
+
+@enduml

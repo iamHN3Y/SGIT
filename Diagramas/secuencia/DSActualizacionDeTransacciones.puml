@@ -1,0 +1,26 @@
+@startuml
+
+title Diagrama de Secuencia - Actualización de Transacciones
+
+actor User as User
+participant "dlgUpdateTransacciones" as Dialog
+participant "frmTransaccionesMenu" as ParentFrame
+participant "Transaccion" as Transaccion
+
+User -> Dialog: Abre la ventana de actualización
+User -> Dialog: Ingresa los datos de actualización
+
+Dialog -> Transaccion: Obtiene la transacción original
+Dialog -> Dialog: Valida los campos
+alt Campos válidos
+    Dialog -> Transaccion: Crea una nueva transacción actualizada
+    Dialog -> Dialog: Llama al método de actualización
+    Dialog -> ParentFrame: Notifica la actualización a la ventana principal
+    ParentFrame -> ParentFrame: Recarga la tabla de transacciones
+else Campos inválidos
+    Dialog -> Dialog: Muestra mensajes de error
+end
+
+User -> Dialog: Cierra la ventana de actualización
+
+@enduml

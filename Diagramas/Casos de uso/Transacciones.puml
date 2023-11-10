@@ -1,0 +1,19 @@
+@startuml 
+title Diagrama de Casos de Uso - Transacciones
+
+actor "Usuario" as User
+actor "Administrador" as admin
+
+usecase "Crear Transacciones" as CrearTransacciones
+usecase "Actualizar Transacciones" as ActualizarTransacciones
+usecase "Eliminar Transacciones" as EliminarTransacciones
+
+admin --> CrearTransacciones
+admin --> ActualizarTransacciones
+admin --> EliminarTransacciones
+
+User --> CrearTransacciones
+User --> ActualizarTransacciones
+User --> EliminarTransacciones
+
+@enduml

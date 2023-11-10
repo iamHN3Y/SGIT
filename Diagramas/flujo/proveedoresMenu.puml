@@ -1,0 +1,33 @@
+@startuml
+start
+:Inicializar frmProveedoresMenu con Usuario;
+:Establecer ubicación relativa;
+:Configurar botones y manejar eventos del ratón;
+:Cargar datos en la tabla;
+while (Usuario interactúa con los botones) is (Sí)
+  if (Botón "Crear Proveedores") then (Sí)
+    :Mostrar dlgCreateProovedores;
+  else if (Botón "Actualizar Proveedores") then (Sí)
+    :Obtener Proveedor seleccionado;
+    if (Proveedor seleccionado existe) then (Sí)
+      :Mostrar dlgUpdateProveedor;
+    else (No)
+      :Mostrar mensaje de error;
+    endif
+  else if (Botón "Eliminar Proveedores") then (Sí)
+    :Obtener Proveedor seleccionado;
+    if (Proveedor seleccionado existe) then (Sí)
+      :Mostrar confirmación para eliminar proveedor;
+      if (Usuario confirma eliminación) then (Sí)
+        :Eliminar proveedor;
+        :Recargar datos en la tabla;
+      else (No)
+        :Mostrar mensaje de cancelación;
+      endif
+    else (No)
+      :Mostrar mensaje de error;
+    endif
+  endif
+endwhile (No)
+stop
+@enduml

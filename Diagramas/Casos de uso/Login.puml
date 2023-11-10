@@ -1,0 +1,13 @@
+@startuml 
+title Casos de Uso - Login
+
+actor "Usuario" as User
+User -- (Iniciar Sesión)
+User -- (Acceder al Sistema)
+
+actor "Administrador" as admin
+admin -- (Iniciar Sesión)
+admin -- (Acceder al Sistema)
+
+
+@enduml
