@@ -239,26 +239,42 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private boolean validarCampos() {
-        String nombre = jTextFieldNombre.getText();
-        String descripcion = jTextAreaDescripcion.getText();
-        String precio = jTextFieldPrecio.getText();
+        String nombre = jTextFieldNombre.getText().trim();
+        String descripcion = jTextAreaDescripcion.getText().trim();
+        String precio = jTextFieldPrecio.getText().trim();
 
         if (nombre.isEmpty()) {
             JOptionPane.showMessageDialog(this, "El campo 'Nombre' no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
-        if (descripcion.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "La descripción no puede estar vacia.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (!nombre.matches("[a-zA-Z]+")) {
+            JOptionPane.showMessageDialog(this, "El campo 'Nombre' solo puede contener caracteres alfabéticos.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+
+        if (descripcion.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "La descripción no puede estar vacía.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
         if (descripcion.length() > 255) {
             JOptionPane.showMessageDialog(this, "La descripción no puede exceder los 255 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
+        if (!descripcion.matches("[a-zA-Z0-9 ]*")) {
+            JOptionPane.showMessageDialog(this, "La descripción solo puede contener caracteres alfanuméricos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
         try {
-            Float.parseFloat(precio);
+            float precioFloat = Float.parseFloat(precio);
+
+            if (precioFloat < 0) {
+                JOptionPane.showMessageDialog(this, "El campo 'Precio' no puede ser un número negativo.", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El campo 'Precio' debe contener un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
@@ -267,12 +283,13 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
         // Puedes agregar más reglas de validación según tus necesidades
         return true;
     }
+
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         if (validarCampos()) {
             int id = p.getId();
-            String nombre = jTextFieldNombre.getText();
-            String descripcion = jTextAreaDescripcion.getText();
-            String precio = jTextFieldPrecio.getText();
+            String nombre = jTextFieldNombre.getText().trim();
+            String descripcion = jTextAreaDescripcion.getText().trim();
+            String precio = jTextFieldPrecio.getText().trim();
             int stock = (int) jSpinnerStock.getValue();
             Producto product = new Producto(id, nombre, descripcion, Float.parseFloat(precio));
             Stock s = new Stock(id, stock);

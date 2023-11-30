@@ -1,0 +1,57 @@
+@startuml
+usecase "Prediccion y generacion de contenido textual con IA" as 1
+usecase "Herramientas" as 2
+usecase "Modelos de lenguaje" as 3
+usecase "Redes neuronales" as 4
+usecase "Algoritmos de aprendizaje" as 5
+usecase "Aplicaciones" as 7
+usecase "Chatbots" as 8
+usecase "Resumen automatico" as 9
+usecase "Creacion de texto creativo" as 10
+usecase "Desafios" as 11
+usecase "Coherencia en el texto" as 12
+usecase "Sesgo en la generacion" as 13
+usecase "Evaluacion de calidad" as 14
+usecase "Tecnologias emergentes" as 15
+usecase "GPT (Generative Pre-trained Transformer)" as 16
+usecase "BERT (Bidireccional Encoder Representations from Transformer)" as 17
+usecase "Transformer models" as 18
+usecase "Futuras Direcciones" as 19
+usecase "Mejoras en modelos de lenguaje" as 20
+usecase "Etica  en la generacion de texto" as 21
+usecase "Integracion con otras tecnologias" as 22
+
+usecase "IA: la Inteligencia Artificial trata de \nsimular el comportamiento humano" as 23
+usecase "Maquina Inteligente: es un sistema que usa IA para \nrealizar acciones que requieren inteligencia humana" as 24
+usecase "Agente Inteligente: es un sistema autonomo capaz de \npercibir su entorno, con un corazon basado en IA" as 25
+usecase "Singularidad tecnologica: es un punto en el futuro en \nel que las maquinas superan la inteligencia humana" as 26
+1 --> 2
+2 --> 3
+2 --> 4
+2 --> 5
+
+1 ---> 7
+7 --> 8
+7 --> 9
+7 --> 10
+
+1 --> 11
+11 --> 12
+11 --> 13
+11 --> 14
+
+1 ---> 15
+15 --> 16
+15 --> 17
+15 --> 18
+
+1 --> 19
+19 --> 20
+19 --> 21
+19 --> 22
+
+1 -> 23
+1 -> 24
+1 -> 25
+1 -> 26
+@enduml

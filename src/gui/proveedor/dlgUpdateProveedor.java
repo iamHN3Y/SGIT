@@ -224,19 +224,19 @@ public class dlgUpdateProveedor extends javax.swing.JDialog {
 
     private boolean validarCampos() {
         // Validar que los campos no estén vacíos
-        if (jTextFieldNombre.getText().isEmpty() || jTextFieldTelefono.getText().isEmpty() || jTextFieldDireccion.getText().isEmpty()) {
+        if (jTextFieldNombre.getText().trim().isEmpty() || jTextFieldTelefono.getText().trim().isEmpty() || jTextFieldDireccion.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.", "Error de validación", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         // Validar que jTextFieldNombre sea un nombre
-        if (!validarNombre(jTextFieldNombre.getText())) {
+        if (!validarNombre(jTextFieldNombre.getText().trim())) {
             JOptionPane.showMessageDialog(this, "Ingrese un nombre válido.", "Error de validación", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         // Validar que jTextFieldTelefono1 sea un número de máximo 10 caracteres
-        if (!validarTelefono(jTextFieldTelefono.getText())) {
+        if (!validarTelefono(jTextFieldTelefono.getText().trim())) {
             JOptionPane.showMessageDialog(this, "Ingrese un número de teléfono válido (máximo 10 caracteres numéricos).", "Error de validación", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -258,9 +258,9 @@ public class dlgUpdateProveedor extends javax.swing.JDialog {
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         if (validarCampos()) {
             int id = p.getId();
-            String nombre = jTextFieldNombre.getText();
-            String telefono = jTextFieldTelefono.getText();
-            String direccion = jTextFieldDireccion.getText();
+            String nombre = jTextFieldNombre.getText().trim();
+            String telefono = jTextFieldTelefono.getText().trim();
+            String direccion = jTextFieldDireccion.getText().trim();
             Proveedor np = new Proveedor(id, nombre, telefono, direccion);
             if (new dao.DAO_Proveedor().updateProveedor(np, u)) {
                 JOptionPane.showMessageDialog(this, "Se actualizo el proveedor");

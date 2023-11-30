@@ -1,13 +1,17 @@
 @startuml 
-title Casos de Uso - Login
 
-actor "Usuario" as User
-User -- (Iniciar Sesión)
-User -- (Acceder al Sistema)
+usecase "Transformers la magia detras del chatgpt" as titulo
+usecase "En aprendizaje profundo,\n el termino arquitectura se refiere\n a la estructura, organizacion y configuracion\n de una red neuronal" as 1
+usecase "Cada vector ejerce una influencia\n sobre los demas presentes en el mismo\n parrafo" as 2
+usecase "El vector resultante de esta \nred neuronal una vez normalizado \npuede representar modificacion por tokens" as 3
+usecase "Chats convencionales \n\n se clasifican en una categoria de \nmodelos denominados modelos de lenguaje" as 4
+usecase "Son una forma particular de la IA. se nutren\n de una basta cantidad de documento, con\n frecuencia abarcan una gran parte \n de internet" as 5
 
-actor "Administrador" as admin
-admin -- (Iniciar Sesión)
-admin -- (Acceder al Sistema)
+titulo -- 1
+titulo -- 2
+titulo -- 3
+titulo -- 4
+titulo -- 5
 
 
 @enduml

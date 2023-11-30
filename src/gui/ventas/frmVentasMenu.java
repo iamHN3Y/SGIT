@@ -43,6 +43,7 @@ public class frmVentasMenu extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
         jPanelContenedor = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -58,7 +59,7 @@ public class frmVentasMenu extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable2);
 
         jLabel2.setFont(getFont());
-        jLabel2.setText("Total");
+        jLabel2.setText("Carrito");
 
         jLabel3.setFont(getFont());
         jLabel3.setText("  ");
@@ -71,32 +72,43 @@ public class frmVentasMenu extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setFont(getFont());
+        jLabel4.setText("Total");
+
         javax.swing.GroupLayout jPanelSideLayout = new javax.swing.GroupLayout(jPanelSide);
         jPanelSide.setLayout(jPanelSideLayout);
         jPanelSideLayout.setHorizontalGroup(
             jPanelSideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelSideLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
                 .addGroup(jPanelSideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelSideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanelSideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanelSideLayout.createSequentialGroup()
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(301, 301, 301)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanelSideLayout.createSequentialGroup()
+                            .addGap(12, 12, 12)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanelSideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelSideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanelSideLayout.createSequentialGroup()
+                                .addContainerGap(249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(13, 13, 13))
         );
         jPanelSideLayout.setVerticalGroup(
             jPanelSideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelSideLayout.createSequentialGroup()
-                .addGap(5, 5, 5)
+                .addGap(7, 7, 7)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanelSideLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 198, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -144,18 +156,33 @@ public class frmVentasMenu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El carrito de ventas está vacío. Agregue productos al carrito primero.", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             try {
-                boolean resultado = new dao.DAO_Venta().createVenta(carrito, u); // Llama al método de creación de venta
-                if (resultado) {
-                    // La venta se guardó exitosamente, puedes limpiar el carrito
-                    carrito.clear();
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo guardar la venta. Revise los detalles de la operación.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (HeadlessException e) {
-                JOptionPane.showMessageDialog(null, "Ocurrió un error al intentar guardar la venta: " + e, "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
+                boolean todasLasVentasExitosas = true;
 
+                // Itera sobre cada venta en el carrito
+                for (Venta venta : carrito) {
+                    boolean resultado = new dao.DAO_Venta().createVenta(venta, u);
+
+                    // Si una venta falla, marca que no todas las ventas fueron exitosas
+                    if (!resultado) {
+                        todasLasVentasExitosas = false;
+                    }
+                }
+
+                // Después de procesar todas las ventas
+                if (todasLasVentasExitosas) {
+                    // Si todas las ventas fueron exitosas, limpiar el carrito
+                    carrito.clear();
+                    cargaTabla();
+                } else {
+                    // Si al menos una venta falló, muestra un mensaje de error
+                    JOptionPane.showMessageDialog(null, "Al menos una venta no se pudo guardar. Revise los detalles de la operación.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            } catch (HeadlessException e) {
+                JOptionPane.showMessageDialog(null, "Ocurrió un error al intentar guardar las ventas: " + e, "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     ArrayList<Venta> carrito = new ArrayList<>();
@@ -249,6 +276,7 @@ public class frmVentasMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelContenedor;
     private javax.swing.JPanel jPanelSide;

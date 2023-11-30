@@ -178,19 +178,19 @@ public class dlgCreateProovedores extends javax.swing.JDialog {
 
     private boolean validarCampos() {
         // Validar que los campos no estén vacíos
-        if (jTextFieldNombre.getText().isEmpty() || jTextFieldTelefono1.getText().isEmpty() || jTextFieldDireccion.getText().isEmpty()) {
+        if (jTextFieldNombre.getText().trim().isEmpty() || jTextFieldTelefono1.getText().trim().isEmpty() || jTextFieldDireccion.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.", "Error de validación", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         // Validar que jTextFieldNombre sea un nombre
-        if (!validarNombre(jTextFieldNombre.getText())) {
+        if (!validarNombre(jTextFieldNombre.getText().trim())) {
             JOptionPane.showMessageDialog(this, "Ingrese un nombre válido.", "Error de validación", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         // Validar que jTextFieldTelefono1 sea un número de máximo 10 caracteres
-        if (!validarTelefono(jTextFieldTelefono1.getText())) {
+        if (!validarTelefono(jTextFieldTelefono1.getText().trim())) {
             JOptionPane.showMessageDialog(this, "Ingrese un número de teléfono válido (máximo 10 caracteres numéricos).", "Error de validación", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -212,9 +212,9 @@ public class dlgCreateProovedores extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         if (validarCampos()) {
-            String nombre = jTextFieldNombre.getText();
-            String telefono = jTextFieldTelefono1.getText();
-            String direccion = jTextFieldDireccion.getText();
+            String nombre = jTextFieldNombre.getText().trim();
+            String telefono = jTextFieldTelefono1.getText().trim();
+            String direccion = jTextFieldDireccion.getText().trim();
             Proveedor p = new Proveedor(nombre, telefono, direccion);
             if (new dao.DAO_Proveedor().createProveedor(p, u)) {
                 JOptionPane.showMessageDialog(this, "Se creo el proveedor");

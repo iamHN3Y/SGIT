@@ -73,4 +73,10 @@ public class Venta {
     public void setTotal(float total) {
         this.total = total;
     }
+
+    @Override
+    public String toString() {
+        return "Venta{" + "id=" + id + ", id_producto=" + id_producto + ", id_usuario=" + id_usuario + ", cantidad=" + cantidad + ", total=" + total + '}';
+    }
+    
 }

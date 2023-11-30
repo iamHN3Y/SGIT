@@ -249,7 +249,7 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
         }
 
         // Validación del campo jTextFieldTotal
-        String totalText = jTextFieldTotal.getText();
+        String totalText = jTextFieldTotal.getText().trim();
         if (totalText.isEmpty()) {
             JOptionPane.showMessageDialog(null, "El campo total no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
@@ -257,6 +257,10 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
 
         try {
             float total = Float.parseFloat(totalText);
+            if (total < 0) {
+                JOptionPane.showMessageDialog(this, "El campo 'Precio' no puede ser un número negativo.", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "El total debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
@@ -272,7 +276,7 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
             Proveedor proveedor = jComboBoxProveedor.getItemAt(jComboBoxProveedor.getSelectedIndex());
             Producto producto = jComboBoxProducto.getItemAt(jComboBoxProducto.getSelectedIndex());
             int cantidad = (int) jSpinnerCantidad.getValue();
-            float total = Float.parseFloat(jTextFieldTotal.getText());
+            float total = Float.parseFloat(jTextFieldTotal.getText().trim());
 
             Transaccion t = new Transaccion(proveedor.getId(), producto.getId(), cantidad, total);
 

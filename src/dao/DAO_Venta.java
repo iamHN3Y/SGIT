@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 interface I_DAO_Venta {
 
-    boolean createVenta(ArrayList<Venta> vs, Usuario u) throws SQLException;
+    boolean createVenta(Venta v, Usuario u) throws SQLException;
 
     boolean updateVenta(Venta nv, Venta v, Usuario u) throws SQLException;
 
@@ -30,40 +30,40 @@ interface I_DAO_Venta {
 public class DAO_Venta extends Conexion implements I_DAO_Venta {
 
     @Override
-    public boolean createVenta(ArrayList<Venta> vs, Usuario u) {
+    public boolean createVenta(Venta v, Usuario u) {
         boolean resultado = false;
         try {
-            resultado = create(vs, u);
+            resultado = create(v, u);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Checale we pq hubo un error-> " + e);
         }
         return resultado;
     }
 
-    private boolean create(ArrayList<Venta> vs, Usuario u) throws Exception {
+    private boolean create(Venta v, Usuario u) throws Exception {
         try {
             this.conectar();
-            for (Venta v : vs) {
-                String query = "insert into ventas(id_producto, cantidad, total, id_usuario, borrado, fecha_modificacion) values (?,?,?,?,?, NOW());";
-                PreparedStatement ps = this.conexion.prepareStatement(query);
-                ps.setInt(1, v.getId_producto());
-                ps.setInt(2, v.getCantidad());
-                ps.setFloat(3, v.getTotal());
-                ps.setInt(4, v.getId_usuario());
-                ps.setBoolean(5, false);
+            String query = "insert into ventas(id_producto, cantidad, total, id_usuario, borrado, fecha_modificacion) values (?,?,?,?,?, NOW());";
+            PreparedStatement ps = this.conexion.prepareStatement(query);
+            ps.setInt(1, v.getId_producto());
+            ps.setInt(2, v.getCantidad());
+            ps.setFloat(3, v.getTotal());
+            ps.setInt(4, v.getId_usuario());
+            ps.setBoolean(5, false);
 
-                if (ps.execute() != true) {
-                    Stock s = new DAO_Stock().searchStock(v.getId_producto());
-                    int stocktemp = s.getCantidad() - v.getCantidad();
-                    s.setCantidad(stocktemp);
-                    if (new DAO_Stock().updateStock(s)) {
-                        new DAO_control_log().insertControl("Hizo una venta", u);
-                        return true;
-                    }
+            if (ps.execute() != true) {
+                Stock s = new DAO_Stock().searchStock(v.getId_producto());
+                int stocktemp = s.getCantidad() - v.getCantidad();
+                s.setCantidad(stocktemp);
+                if (new DAO_Stock().updateStock(s)) {
+                    new DAO_control_log().insertControl("Hizo una venta", u);
+                    return true;
                 }
             }
         } catch (Exception e) {
             throw e;
+        } finally {
+            this.cerrar();
         }
         return false;
     }
