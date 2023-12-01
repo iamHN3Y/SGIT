@@ -4,7 +4,6 @@ import dao.DAO_Usuario;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicButtonUI;
 import javax.swing.text.AbstractDocument;
@@ -27,7 +26,7 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
         this.parentFrame = parentFrame;
         setLocationRelativeTo(parentFrame);
         ((AbstractDocument) jTextFieldTelefono.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(10));
-
+        ((AbstractDocument) jTextFieldNombre.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(50));
         //jButton1
         jButton1.setUI(new BasicButtonUI());
         jButton1.addMouseListener(new MouseListener() {

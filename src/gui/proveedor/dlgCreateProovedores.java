@@ -24,7 +24,9 @@ public class dlgCreateProovedores extends javax.swing.JDialog {
         this.u = u;
         this.parentFrame = parentFrame;
         setLocationRelativeTo(this);
-        ((AbstractDocument) jTextFieldTelefono1.getDocument()).setDocumentFilter(new dlgCreateProovedores.LengthLimitDocumentFilter(10));
+        ((AbstractDocument) jTextFieldNombre.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(50));
+        ((AbstractDocument) jTextFieldDireccion.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(150));
+        ((AbstractDocument) jTextFieldTelefono1.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(10));
         //jButtonCancelar
         jButtonCancelar.setUI(new BasicButtonUI());
         jButtonCancelar.addMouseListener(new MouseListener() {
@@ -272,6 +274,7 @@ public class dlgCreateProovedores extends javax.swing.JDialog {
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
+    
     public class LengthLimitDocumentFilter extends DocumentFilter {
 
         private int maxLength;
@@ -296,6 +299,7 @@ public class dlgCreateProovedores extends javax.swing.JDialog {
             }
         }
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;

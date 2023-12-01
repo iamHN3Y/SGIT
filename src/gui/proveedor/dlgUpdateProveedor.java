@@ -30,7 +30,9 @@ public class dlgUpdateProveedor extends javax.swing.JDialog {
         this.p = p;
         this.parentFrame = parentFrame;
         setLocationRelativeTo(parentFrame);
-        ((AbstractDocument) jTextFieldTelefono.getDocument()).setDocumentFilter(new dlgUpdateProveedor.LengthLimitDocumentFilter(10));
+        ((AbstractDocument) jTextFieldNombre.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(50));
+        ((AbstractDocument) jTextFieldDireccion.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(150));
+        ((AbstractDocument) jTextFieldTelefono.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(10));
         //jButtonCancelar
         jButtonCancelar.setUI(new BasicButtonUI());
         jButtonCancelar.addMouseListener(new MouseListener() {

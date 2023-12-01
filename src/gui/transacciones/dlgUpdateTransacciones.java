@@ -12,6 +12,10 @@ import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicButtonUI;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 import models.Proveedor;
 import models.Producto;
 import models.Transaccion;
@@ -31,6 +35,7 @@ public class dlgUpdateTransacciones extends javax.swing.JDialog {
         this.parentFrame = parentFrame;
         setLocationRelativeTo(this);
 
+        ((AbstractDocument) jTextFieldTotal.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(9));
         //jButtonCancelar
         jButtonCancelar.setUI(new BasicButtonUI());
         jButtonCancelar.addMouseListener(new MouseListener() {
@@ -323,6 +328,30 @@ public class dlgUpdateTransacciones extends javax.swing.JDialog {
         return true; // Todos los campos son válidos
     }
 
+    public class LengthLimitDocumentFilter extends DocumentFilter {
+
+        private int maxLength;
+
+        public LengthLimitDocumentFilter(int maxLength) {
+            this.maxLength = maxLength;
+        }
+
+        @Override
+        public void insertString(DocumentFilter.FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+            if ((fb.getDocument().getLength() + string.length()) <= maxLength) {
+                super.insertString(fb, offset, string, attr);
+            }
+        }
+
+        @Override
+        public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            int currentLength = fb.getDocument().getLength();
+            int newLength = currentLength - length + text.length();
+            if (newLength <= maxLength) {
+                super.replace(fb, offset, length, text, attrs);
+            }
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonGuardar;

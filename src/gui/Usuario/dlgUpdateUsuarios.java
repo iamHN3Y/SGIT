@@ -29,7 +29,8 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
         this.vu = vu;
         this.parentFrame = frameParent;
         setLocationRelativeTo(parent);
-        ((AbstractDocument) jTextFieldTelefono.getDocument()).setDocumentFilter(new dlgUpdateUsuarios.LengthLimitDocumentFilter(10));
+        ((AbstractDocument) jTextFieldTelefono.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(10));
+        ((AbstractDocument) jTextFieldNombre.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(50));
         //jButton1
         jButton1.setUI(new BasicButtonUI());
         jButton1.addMouseListener(new MouseListener() {
