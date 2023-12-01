@@ -24,32 +24,34 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
         initComponents();
         this.u = u;
         setLocationRelativeTo(null);
-        JButton[] btns = {jButton5, jButton6, jButton7};
+        JButton[] btns = {jButtonCrear, jButtonActualizar, jButtonBorrar};
         for (JButton btn : btns) {
             btn.setUI(new BasicButtonUI());
             btn.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+
                 }
 
                 @Override
                 public void mousePressed(MouseEvent e) {
+
                 }
 
                 @Override
                 public void mouseReleased(MouseEvent e) {
+
                 }
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    btn.setBackground(new Color(188, 163, 127));
+                    btn.setBackground(Color.decode("#F8A63A"));
 
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
-                    btn.setBackground(new Color(255, 242, 216));
-                    jLabel2.setText("                   ");
+                    btn.setBackground(Color.WHITE);
                 }
             });
         }
@@ -95,10 +97,12 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanelSide = new javax.swing.JPanel();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        jButtonCrear = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jButtonActualizar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jButtonBorrar = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
         jPanelContenedor = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -106,87 +110,103 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setFont(new java.awt.Font("Yu Gothic UI Light", 0, 18)); // NOI18N
         setPreferredSize(new java.awt.Dimension(750, 550));
 
-        jPanelSide.setBackground(new java.awt.Color(255, 242, 216));
+        jPanelSide.setBackground(getBackground());
         jPanelSide.setPreferredSize(new java.awt.Dimension(90, 0));
 
-        jButton5.setBackground(new java.awt.Color(255, 242, 216));
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/agregar-usuario.png"))); // NOI18N
-        jButton5.setToolTipText("Crear");
-        jButton5.setBorder(null);
-        jButton5.setBorderPainted(false);
-        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButton5.setFocusPainted(false);
-        jButton5.setFocusable(false);
-        jButton5.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButtonCrear.setBackground(getBackground());
+        jButtonCrear.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jButtonCrear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/agregar-usuario.png"))); // NOI18N
+        jButtonCrear.setToolTipText("Crear");
+        jButtonCrear.setBorder(null);
+        jButtonCrear.setBorderPainted(false);
+        jButtonCrear.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButtonCrear.setFocusPainted(false);
+        jButtonCrear.setFocusable(false);
+        jButtonCrear.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonCrear.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton5MouseEntered(evt);
+                jButtonCrearMouseEntered(evt);
             }
         });
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jButtonCrearActionPerformed(evt);
             }
         });
-        jPanelSide.add(jButton5);
+        jPanelSide.add(jButtonCrear);
 
-        jButton6.setBackground(new java.awt.Color(255, 242, 216));
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/actualizar.png"))); // NOI18N
-        jButton6.setToolTipText("Crear");
-        jButton6.setBorder(null);
-        jButton6.setBorderPainted(false);
-        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButton6.setFocusPainted(false);
-        jButton6.setFocusable(false);
-        jButton6.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel4.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Crear");
+        jPanelSide.add(jLabel4);
+
+        jButtonActualizar.setBackground(getBackground());
+        jButtonActualizar.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jButtonActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/actualizar.png"))); // NOI18N
+        jButtonActualizar.setToolTipText("Crear");
+        jButtonActualizar.setBorder(null);
+        jButtonActualizar.setBorderPainted(false);
+        jButtonActualizar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButtonActualizar.setFocusPainted(false);
+        jButtonActualizar.setFocusable(false);
+        jButtonActualizar.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton6MouseEntered(evt);
+                jButtonActualizarMouseEntered(evt);
             }
         });
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                jButtonActualizarActionPerformed(evt);
             }
         });
-        jPanelSide.add(jButton6);
+        jPanelSide.add(jButtonActualizar);
 
-        jButton7.setBackground(new java.awt.Color(255, 242, 216));
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/basura.png"))); // NOI18N
-        jButton7.setToolTipText("Crear");
-        jButton7.setBorder(null);
-        jButton7.setBorderPainted(false);
-        jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButton7.setFocusPainted(false);
-        jButton7.setFocusable(false);
-        jButton7.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel5.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Actualizar");
+        jPanelSide.add(jLabel5);
+
+        jButtonBorrar.setBackground(getBackground());
+        jButtonBorrar.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jButtonBorrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/basura.png"))); // NOI18N
+        jButtonBorrar.setToolTipText("Crear");
+        jButtonBorrar.setBorder(null);
+        jButtonBorrar.setBorderPainted(false);
+        jButtonBorrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButtonBorrar.setFocusPainted(false);
+        jButtonBorrar.setFocusable(false);
+        jButtonBorrar.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonBorrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton7MouseEntered(evt);
+                jButtonBorrarMouseEntered(evt);
             }
         });
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        jButtonBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                jButtonBorrarActionPerformed(evt);
             }
         });
-        jPanelSide.add(jButton7);
+        jPanelSide.add(jButtonBorrar);
 
-        jLabel2.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
-        jLabel2.setText("           ");
-        jPanelSide.add(jLabel2);
+        jLabel6.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Borrar");
+        jPanelSide.add(jLabel6);
 
         getContentPane().add(jPanelSide, java.awt.BorderLayout.WEST);
 
-        jPanelContenedor.setBackground(new java.awt.Color(234, 215, 187));
+        jPanelContenedor.setBackground(getBackground());
 
-        jLabel1.setFont(getFont());
+        jLabel1.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 24)); // NOI18N
         jLabel1.setText("Menu Usuarios");
 
+        jTable1.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -200,7 +220,7 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel3.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         jLabel3.setText("Usuarios activos en plataforma");
 
         javax.swing.GroupLayout jPanelContenedorLayout = new javax.swing.GroupLayout(jPanelContenedor);
@@ -210,7 +230,7 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
             .addGroup(jPanelContenedorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
                     .addGroup(jPanelContenedorLayout.createSequentialGroup()
                         .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -223,10 +243,10 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
             .addGroup(jPanelContenedorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -235,33 +255,32 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseEntered
+    private void jButtonCrearMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonCrearMouseEntered
 
-        jLabel2.setText("Crear Usuarios");
-    }//GEN-LAST:event_jButton5MouseEntered
+    }//GEN-LAST:event_jButtonCrearMouseEntered
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
         new dlgCreateUsuarios(this, rootPaneCheckingEnabled, u, this).setVisible(true);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_jButtonCrearActionPerformed
 
-    private void jButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseEntered
-        jLabel2.setText("Actualizar usuarios");
-    }//GEN-LAST:event_jButton6MouseEntered
+    private void jButtonActualizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonActualizarMouseEntered
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_jButtonActualizarMouseEntered
+
+    private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
         vu = obtenerUsuarioSeleccionado();
         if (vu == null) {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un usuario de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             new dlgUpdateUsuarios(this, rootPaneCheckingEnabled, u, this, vu).setVisible(true);
         }
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_jButtonActualizarActionPerformed
 
-    private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
-        jLabel2.setText("Eliminar usuarios");
-    }//GEN-LAST:event_jButton7MouseEntered
+    private void jButtonBorrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonBorrarMouseEntered
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_jButtonBorrarMouseEntered
+
+    private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed
         vu = obtenerUsuarioSeleccionado();
         if (vu == null) {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un usuario de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -278,15 +297,17 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Operacion cancelada", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_jButtonBorrarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButtonActualizar;
+    private javax.swing.JButton jButtonBorrar;
+    private javax.swing.JButton jButtonCrear;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanelContenedor;
     private javax.swing.JPanel jPanelSide;
     private javax.swing.JScrollPane jScrollPane1;

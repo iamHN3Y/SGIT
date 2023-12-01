@@ -30,34 +30,100 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
         this.u = u;
         this.parentFrame = parentFrame;
         setLocationRelativeTo(this);
-        JButton[] btns = {jButtonCancelar, jButtonGuardar, jButtonAgrega};
-        for (JButton btn : btns) {
-            btn.setUI(new BasicButtonUI());
-            btn.addMouseListener(new MouseListener() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                }
+        //jButtonAgrega
+        jButtonAgrega.setUI(new BasicButtonUI());
+        jButtonAgrega.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
 
-                @Override
-                public void mousePressed(MouseEvent e) {
-                }
+            }
 
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                }
+            @Override
+            public void mousePressed(MouseEvent e) {
 
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    btn.setBackground(new Color(188, 163, 127));
+            }
 
-                }
+            @Override
+            public void mouseReleased(MouseEvent e) {
 
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    btn.setBackground(new Color(234, 215, 187));
-                }
-            });
-        }
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jButtonAgrega.setBackground(Color.decode("#577590"));
+                jButtonAgrega.setForeground(Color.white);
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                jButtonAgrega.setBackground(Color.WHITE);
+                jButtonAgrega.setForeground(Color.black);
+            }
+        });
+        //jButtonCancelar
+        jButtonCancelar.setUI(new BasicButtonUI());
+        jButtonCancelar.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jButtonCancelar.setBackground(Color.decode("#F94144"));
+                jButtonCancelar.setForeground(Color.white);
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                jButtonCancelar.setBackground(Color.WHITE);
+                jButtonCancelar.setForeground(Color.black);
+            }
+        });
+        //jButtonGuardar
+        jButtonGuardar.setUI(new BasicButtonUI());
+        jButtonGuardar.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jButtonGuardar.setBackground(Color.decode("#90BE6D"));
+                jButtonGuardar.setForeground(Color.white);
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                jButtonGuardar.setBackground(Color.WHITE);
+                jButtonGuardar.setForeground(Color.black);
+            }
+        });
+
         SpinnerNumberModel spinnermodel = new SpinnerNumberModel(0, 0, 10000, 1);
         jSpinnerCantidad.setModel(spinnermodel);
         cargaCombobox();
@@ -93,18 +159,19 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
         jButtonAgrega = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
 
-        jPanelContenedor.setBackground(new java.awt.Color(234, 215, 187));
+        jPanelContenedor.setBackground(getBackground());
 
-        jLabel1.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 24)); // NOI18N
-        jLabel1.setText("Create Transacciones");
+        jLabel1.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 24)); // NOI18N
+        jLabel1.setText("Crear Transacciones");
 
-        jButtonGuardar.setFont(getFont());
-        jButtonGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/controlar.png"))); // NOI18N
+        jButtonGuardar.setBackground(getBackground());
+        jButtonGuardar.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
+        jButtonGuardar.setText("Guardar");
         jButtonGuardar.setToolTipText("Ingresar");
         jButtonGuardar.setBorder(null);
-        jButtonGuardar.setBorderPainted(false);
         jButtonGuardar.setFocusPainted(false);
         jButtonGuardar.setFocusable(false);
         jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -113,11 +180,11 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
             }
         });
 
-        jButtonCancelar.setFont(getFont());
-        jButtonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/cruz.png"))); // NOI18N
+        jButtonCancelar.setBackground(getBackground());
+        jButtonCancelar.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
+        jButtonCancelar.setText("Cancelar");
         jButtonCancelar.setToolTipText("Ingresar");
         jButtonCancelar.setBorder(null);
-        jButtonCancelar.setBorderPainted(false);
         jButtonCancelar.setFocusPainted(false);
         jButtonCancelar.setFocusable(false);
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -126,24 +193,30 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
             }
         });
 
-        jComboBoxProveedor.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
+        jComboBoxProveedor.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 14)); // NOI18N
-        jLabel2.setText("Selecciona un proveedor:");
+        jLabel2.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
+        jLabel2.setText("Proveedor:");
 
-        jLabel3.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 14)); // NOI18N
-        jLabel3.setText("Selecciona un producto:");
+        jLabel3.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
+        jLabel3.setText("Producto:");
 
-        jComboBoxProducto.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
+        jComboBoxProducto.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
 
-        jLabel4.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 14)); // NOI18N
-        jLabel4.setText("Selecciona una cantidad:");
+        jLabel4.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
+        jLabel4.setText("Cantidad:");
 
-        jLabel5.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 14)); // NOI18N
-        jLabel5.setText("Ingresa un total:");
+        jSpinnerCantidad.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
 
-        jButtonAgrega.setFont(jLabel3.getFont());
+        jLabel5.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
+        jLabel5.setText("Total:");
+
+        jTextFieldTotal.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+
+        jButtonAgrega.setBackground(getBackground());
+        jButtonAgrega.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
         jButtonAgrega.setText("Agregar otro producto");
+        jButtonAgrega.setBorder(null);
         jButtonAgrega.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAgregaActionPerformed(evt);
@@ -158,35 +231,30 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(jButtonCancelar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(39, 186, Short.MAX_VALUE)
+                        .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34))
+                        .addContainerGap())
                     .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBoxProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(25, 25, 25))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelContenedorLayout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jComboBoxProducto, 0, 213, Short.MAX_VALUE)
-                                    .addComponent(jSpinnerCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldTotal)
-                                    .addComponent(jButtonAgrega, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonAgrega, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jComboBoxProveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxProducto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSpinnerCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 90, Short.MAX_VALUE))
         );
         jPanelContenedorLayout.setVerticalGroup(
             jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,25 +265,25 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+                .addGap(19, 19, 19)
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jComboBoxProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jSpinnerCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSpinnerCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
-                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonAgrega)
-                .addGap(50, 50, 50)
-                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                    .addComponent(jButtonCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         getContentPane().add(jPanelContenedor, java.awt.BorderLayout.CENTER);
@@ -315,7 +383,6 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_jButtonAgregaActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgrega;

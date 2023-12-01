@@ -28,34 +28,100 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
         setLocationRelativeTo(parentFrame);
         ((AbstractDocument) jTextFieldTelefono.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(10));
 
-        JButton[] btns = {jButton1, jButtonCancelar, jButtonGuardar};
-        for (JButton btn : btns) {
-            btn.setUI(new BasicButtonUI());
-            btn.addMouseListener(new MouseListener() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                }
+        //jButton1
+        jButton1.setUI(new BasicButtonUI());
+        jButton1.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
 
-                @Override
-                public void mousePressed(MouseEvent e) {
-                }
+            }
 
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                }
+            @Override
+            public void mousePressed(MouseEvent e) {
 
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    btn.setBackground(new Color(188, 163, 127));
+            }
 
-                }
+            @Override
+            public void mouseReleased(MouseEvent e) {
 
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    btn.setBackground(new Color(234, 215, 187));
-                }
-            });
-        }
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jButton1.setBackground(Color.decode("#577590"));
+                jButton1.setForeground(Color.white);
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                jButton1.setBackground(Color.WHITE);
+                jButton1.setForeground(Color.black);
+            }
+        });
+        //jButtonCancelar
+        jButtonCancelar.setUI(new BasicButtonUI());
+        jButtonCancelar.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jButtonCancelar.setBackground(Color.decode("#F94144"));
+                jButtonCancelar.setForeground(Color.white);
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                jButtonCancelar.setBackground(Color.WHITE);
+                jButtonCancelar.setForeground(Color.black);
+            }
+        });
+        //jButtonGuardar
+        jButtonGuardar.setUI(new BasicButtonUI());
+        jButtonGuardar.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jButtonGuardar.setBackground(Color.decode("#90BE6D"));
+                jButtonGuardar.setForeground(Color.white);
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                jButtonGuardar.setBackground(Color.WHITE);
+                jButtonGuardar.setForeground(Color.black);
+            }
+        });
+
     }
 
     @SuppressWarnings("unchecked")
@@ -78,54 +144,55 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
         jButtonCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setFont(new java.awt.Font("Yu Gothic UI", 0, 18)); // NOI18N
+        setBackground(new java.awt.Color(255, 255, 255));
+        setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
 
-        jPanelContenedor.setBackground(new java.awt.Color(234, 215, 187));
+        jPanelContenedor.setBackground(getBackground());
 
-        jLabel1.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 24)); // NOI18N
-        jLabel1.setText("Create Usuarios");
+        jLabel1.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 24)); // NOI18N
+        jLabel1.setText("Altas de usuarios");
 
-        jLabel3.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         jLabel3.setText("Nombre:");
 
-        jLabel4.setFont(jLabel3.getFont());
+        jLabel4.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         jLabel4.setText("Telefono:");
 
-        jTextFieldTelefono.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        jTextFieldTelefono.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
 
-        jTextFieldNombre.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        jTextFieldNombre.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
 
-        jLabel5.setFont(jLabel3.getFont());
+        jLabel5.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         jLabel5.setText("Cuenta:");
 
         jTextFieldCuenta.setEditable(false);
-        jTextFieldCuenta.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        jTextFieldCuenta.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
 
-        jButton1.setBackground(new java.awt.Color(234, 215, 187));
-        jButton1.setFont(jLabel3.getFont());
+        jButton1.setBackground(getBackground());
+        jButton1.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         jButton1.setText("Genera Cuenta");
+        jButton1.setBorder(null);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jLabel6.setFont(jLabel3.getFont());
-        jLabel6.setText("Contraseña: ");
+        jLabel6.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
+        jLabel6.setText("Contraseña:");
 
-        jCheckBoxAdministrador.setFont(jLabel3.getFont());
+        jCheckBoxAdministrador.setBackground(getBackground());
+        jCheckBoxAdministrador.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         jCheckBoxAdministrador.setText("Administrador");
 
         jTextFieldContraseña.setEditable(false);
-        jTextFieldContraseña.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        jTextFieldContraseña.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
 
-        jButtonGuardar.setBackground(new java.awt.Color(234, 215, 187));
-        jButtonGuardar.setFont(getFont());
-        jButtonGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/controlar.png"))); // NOI18N
-        jButtonGuardar.setToolTipText("Ingresar");
+        jButtonGuardar.setBackground(getBackground());
+        jButtonGuardar.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
+        jButtonGuardar.setText("Guardar");
+        jButtonGuardar.setToolTipText("");
         jButtonGuardar.setBorder(null);
-        jButtonGuardar.setBorderPainted(false);
-        jButtonGuardar.setFocusPainted(false);
         jButtonGuardar.setFocusable(false);
         jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,13 +200,11 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
             }
         });
 
-        jButtonCancelar.setBackground(new java.awt.Color(234, 215, 187));
-        jButtonCancelar.setFont(getFont());
-        jButtonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/cruz.png"))); // NOI18N
+        jButtonCancelar.setBackground(getBackground());
+        jButtonCancelar.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
+        jButtonCancelar.setText("Cancelar");
         jButtonCancelar.setToolTipText("Ingresar");
         jButtonCancelar.setBorder(null);
-        jButtonCancelar.setBorderPainted(false);
-        jButtonCancelar.setFocusPainted(false);
         jButtonCancelar.setFocusable(false);
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,36 +220,40 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                        .addComponent(jCheckBoxAdministrador)
+                        .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelContenedorLayout.createSequentialGroup()
-                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldCuenta))
-                            .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldTelefono))
-                            .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldContraseña))
+                                .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanelContenedorLayout.createSequentialGroup()
                                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelContenedorLayout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jTextFieldTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                                            .addComponent(jTextFieldNombre)))
                                     .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(39, 39, 39)
-                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(34, 34, 34))))
+                                        .addGap(12, 12, 12)
+                                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel5))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextFieldCuenta)
+                                            .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                                                .addComponent(jCheckBoxAdministrador)
+                                                .addGap(0, 59, Short.MAX_VALUE))
+                                            .addComponent(jTextFieldContraseña))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1)))
+                        .addGap(28, 28, 28))))
         );
         jPanelContenedorLayout.setVerticalGroup(
             jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,17 +273,20 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
                     .addComponent(jLabel5)
                     .addComponent(jTextFieldCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextFieldContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBoxAdministrador)
-                .addGap(18, 18, 18)
-                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                    .addComponent(jButtonCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addComponent(jCheckBoxAdministrador)
+                        .addGap(34, 34, 34)
+                        .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         getContentPane().add(jPanelContenedor, java.awt.BorderLayout.CENTER);

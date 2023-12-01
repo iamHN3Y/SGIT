@@ -22,12 +22,13 @@ public class frmMenu extends javax.swing.JFrame {
         this.u = u;
         setLocationRelativeTo(null);
 
-        JButton[] btns = {jButton1, jButton2, jButton3, jButton4, jButton5};
         if (u.isTipo_admin() == false) {
-            jButton1.setVisible(false);
-            jButton3.setVisible(false);
-            jButton5.setVisible(false);
+            jButtonUsuarios.setVisible(false);
+            jButtonProveedor.setVisible(false);
+            jButtonProductos.setVisible(false);
         }
+
+        JButton[] btns = {jButtonUsuarios, jButtonVentas, jButtonProveedor, jButtonTransacciones, jButtonProductos};
 
         for (JButton btn : btns) {
             btn.setUI(new BasicButtonUI());
@@ -49,14 +50,13 @@ public class frmMenu extends javax.swing.JFrame {
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    btn.setBackground(new Color(188, 163, 127));
+                    btn.setBackground(Color.decode("#F8A63A"));
 
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
-                    btn.setBackground(new Color(255, 242, 216));
-                    jLabel2.setText("           ");
+                    btn.setBackground(Color.WHITE);
                 }
             });
         }
@@ -69,141 +69,167 @@ public class frmMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanelSide = new javax.swing.JPanel();
-        jButton5 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jButtonProductos = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jButtonProveedor = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jButtonTransacciones = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jButtonVentas = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jButtonUsuarios = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
         jPanelContenedor = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 242, 216));
-        setFont(new java.awt.Font("Yu Gothic UI Light", 0, 18)); // NOI18N
+        setBackground(new java.awt.Color(255, 255, 255));
+        setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
 
-        jPanelSide.setBackground(new java.awt.Color(255, 242, 216));
-        jPanelSide.setPreferredSize(new java.awt.Dimension(90, 0));
+        jPanelSide.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelSide.setPreferredSize(new java.awt.Dimension(100, 0));
 
-        jButton5.setBackground(getBackground());
-        jButton5.setFont(getFont());
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/cesta-de-la-compra.png"))); // NOI18N
-        jButton5.setToolTipText("Menu Productos");
-        jButton5.setBorder(null);
-        jButton5.setBorderPainted(false);
-        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButton5.setFocusPainted(false);
-        jButton5.setFocusable(false);
-        jButton5.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel7.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 36)); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/logo.jpg"))); // NOI18N
+        jLabel7.setToolTipText("");
+        jPanelSide.add(jLabel7);
+
+        jButtonProductos.setBackground(jPanelSide.getBackground());
+        jButtonProductos.setFont(getFont());
+        jButtonProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/cesta-de-la-compra.png"))); // NOI18N
+        jButtonProductos.setToolTipText("Menu Productos");
+        jButtonProductos.setBorder(null);
+        jButtonProductos.setBorderPainted(false);
+        jButtonProductos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButtonProductos.setFocusPainted(false);
+        jButtonProductos.setFocusable(false);
+        jButtonProductos.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonProductos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton5MouseEntered(evt);
+                jButtonProductosMouseEntered(evt);
             }
         });
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jButtonProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jButtonProductosActionPerformed(evt);
             }
         });
-        jPanelSide.add(jButton5);
+        jPanelSide.add(jButtonProductos);
 
-        jButton3.setBackground(getBackground());
-        jButton3.setFont(getFont());
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/proovedores.png"))); // NOI18N
-        jButton3.setToolTipText("Menu Proveedores");
-        jButton3.setBorder(null);
-        jButton3.setBorderPainted(false);
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButton3.setFocusPainted(false);
-        jButton3.setFocusable(false);
-        jButton3.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel3.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabel3.setText("Productos");
+        jPanelSide.add(jLabel3);
+
+        jButtonProveedor.setBackground(jPanelSide.getBackground());
+        jButtonProveedor.setFont(getFont());
+        jButtonProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/proovedores.png"))); // NOI18N
+        jButtonProveedor.setToolTipText("Menu Proveedores");
+        jButtonProveedor.setBorder(null);
+        jButtonProveedor.setBorderPainted(false);
+        jButtonProveedor.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButtonProveedor.setFocusPainted(false);
+        jButtonProveedor.setFocusable(false);
+        jButtonProveedor.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton3MouseEntered(evt);
+                jButtonProveedorMouseEntered(evt);
             }
         });
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButtonProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonProveedorActionPerformed(evt);
             }
         });
-        jPanelSide.add(jButton3);
+        jPanelSide.add(jButtonProveedor);
 
-        jButton4.setBackground(getBackground());
-        jButton4.setFont(getFont());
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/lado-del-camion.png"))); // NOI18N
-        jButton4.setToolTipText("Menu Transacciones");
-        jButton4.setBorder(null);
-        jButton4.setBorderPainted(false);
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButton4.setFocusPainted(false);
-        jButton4.setFocusable(false);
-        jButton4.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton4MouseEntered(evt);
-            }
-        });
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        jPanelSide.add(jButton4);
-
-        jButton2.setBackground(getBackground());
-        jButton2.setFont(getFont());
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/carrito-de-compras.png"))); // NOI18N
-        jButton2.setToolTipText("Menu ventas");
-        jButton2.setBorder(null);
-        jButton2.setBorderPainted(false);
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButton2.setFocusPainted(false);
-        jButton2.setFocusable(false);
-        jButton2.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton2MouseEntered(evt);
-            }
-        });
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanelSide.add(jButton2);
-
-        jButton1.setBackground(getBackground());
-        jButton1.setFont(getFont());
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/usuarios-alt.png"))); // NOI18N
-        jButton1.setToolTipText("Menu usuarios");
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButton1.setFocusPainted(false);
-        jButton1.setFocusable(false);
-        jButton1.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButton1MouseEntered(evt);
-            }
-        });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanelSide.add(jButton1);
-
-        jLabel2.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
-        jLabel2.setText("           ");
+        jLabel2.setFont(jLabel3.getFont());
+        jLabel2.setText("Proovedores");
         jPanelSide.add(jLabel2);
+
+        jButtonTransacciones.setBackground(jPanelSide.getBackground());
+        jButtonTransacciones.setFont(getFont());
+        jButtonTransacciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/lado-del-camion.png"))); // NOI18N
+        jButtonTransacciones.setToolTipText("Menu Transacciones");
+        jButtonTransacciones.setBorder(null);
+        jButtonTransacciones.setBorderPainted(false);
+        jButtonTransacciones.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButtonTransacciones.setFocusPainted(false);
+        jButtonTransacciones.setFocusable(false);
+        jButtonTransacciones.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonTransacciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButtonTransaccionesMouseEntered(evt);
+            }
+        });
+        jButtonTransacciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTransaccionesActionPerformed(evt);
+            }
+        });
+        jPanelSide.add(jButtonTransacciones);
+
+        jLabel4.setFont(jLabel3.getFont());
+        jLabel4.setText("Transacciones");
+        jPanelSide.add(jLabel4);
+
+        jButtonVentas.setBackground(jPanelSide.getBackground());
+        jButtonVentas.setFont(getFont());
+        jButtonVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/carrito-de-compras.png"))); // NOI18N
+        jButtonVentas.setToolTipText("Menu ventas");
+        jButtonVentas.setBorder(null);
+        jButtonVentas.setBorderPainted(false);
+        jButtonVentas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButtonVentas.setFocusPainted(false);
+        jButtonVentas.setFocusable(false);
+        jButtonVentas.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonVentas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButtonVentasMouseEntered(evt);
+            }
+        });
+        jButtonVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVentasActionPerformed(evt);
+            }
+        });
+        jPanelSide.add(jButtonVentas);
+
+        jLabel5.setFont(jLabel3.getFont());
+        jLabel5.setText("Ventas");
+        jPanelSide.add(jLabel5);
+
+        jButtonUsuarios.setBackground(jPanelSide.getBackground());
+        jButtonUsuarios.setFont(getFont());
+        jButtonUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/usuarios-alt.png"))); // NOI18N
+        jButtonUsuarios.setToolTipText("Menu usuarios");
+        jButtonUsuarios.setBorder(null);
+        jButtonUsuarios.setBorderPainted(false);
+        jButtonUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButtonUsuarios.setFocusPainted(false);
+        jButtonUsuarios.setFocusable(false);
+        jButtonUsuarios.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButtonUsuariosMouseEntered(evt);
+            }
+        });
+        jButtonUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUsuariosActionPerformed(evt);
+            }
+        });
+        jPanelSide.add(jButtonUsuarios);
+
+        jLabel6.setFont(jLabel3.getFont());
+        jLabel6.setText("Usuarios");
+        jPanelSide.add(jLabel6);
 
         getContentPane().add(jPanelSide, java.awt.BorderLayout.WEST);
 
-        jPanelContenedor.setBackground(new java.awt.Color(234, 215, 187));
+        jPanelContenedor.setBackground(getBackground());
 
-        jLabel1.setFont(getFont());
+        jLabel1.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 36)); // NOI18N
         jLabel1.setText("jLabel1");
 
         javax.swing.GroupLayout jPanelContenedorLayout = new javax.swing.GroupLayout(jPanelContenedor);
@@ -213,14 +239,14 @@ public class frmMenu extends javax.swing.JFrame {
             .addGroup(jPanelContenedorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(554, Short.MAX_VALUE))
+                .addContainerGap(777, Short.MAX_VALUE))
         );
         jPanelContenedorLayout.setVerticalGroup(
             jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelContenedorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(380, Short.MAX_VALUE))
+                .addContainerGap(358, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanelContenedor, java.awt.BorderLayout.CENTER);
@@ -228,74 +254,74 @@ public class frmMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseEntered
+    private void jButtonProductosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonProductosMouseEntered
 
-        jLabel2.setText("Productos");
-    }//GEN-LAST:event_jButton5MouseEntered
+    }//GEN-LAST:event_jButtonProductosMouseEntered
 
-    private void jButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseEntered
+    private void jButtonProveedorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonProveedorMouseEntered
 
-        jLabel2.setText("Proveedores");
-    }//GEN-LAST:event_jButton3MouseEntered
+    }//GEN-LAST:event_jButtonProveedorMouseEntered
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUsuariosActionPerformed
 
         frmUsuariosMenu usuario = new frmUsuariosMenu(u);
         usuario.setVisible(true);
         usuario.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonUsuariosActionPerformed
 
-    private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
+    private void jButtonUsuariosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonUsuariosMouseEntered
 
-        jLabel2.setText("Usuarios");
-    }//GEN-LAST:event_jButton1MouseEntered
+    }//GEN-LAST:event_jButtonUsuariosMouseEntered
 
-    private void jButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseEntered
+    private void jButtonTransaccionesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonTransaccionesMouseEntered
 
-        jLabel2.setText("Transacciones");
-    }//GEN-LAST:event_jButton4MouseEntered
+    }//GEN-LAST:event_jButtonTransaccionesMouseEntered
 
-    private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
+    private void jButtonVentasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonVentasMouseEntered
 
-        jLabel2.setText("Ventas");
-    }//GEN-LAST:event_jButton2MouseEntered
+    }//GEN-LAST:event_jButtonVentasMouseEntered
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButtonProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProveedorActionPerformed
 
         frmProveedoresMenu proveedor = new frmProveedoresMenu(u);
         proveedor.setVisible(true);
         proveedor.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButtonProveedorActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jButtonProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProductosActionPerformed
 
         frmProductosMenu productos = new frmProductosMenu(u);
         productos.setVisible(true);
         productos.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_jButtonProductosActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButtonTransaccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTransaccionesActionPerformed
 
         frmTransaccionesMenu transacciones = new frmTransaccionesMenu(u);
         transacciones.setVisible(true);
         transacciones.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jButtonTransaccionesActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVentasActionPerformed
 
         frmVentasMenu ventas = new frmVentasMenu(u);
         ventas.setVisible(true);
         ventas.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonVentasActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButtonProductos;
+    private javax.swing.JButton jButtonProveedor;
+    private javax.swing.JButton jButtonTransacciones;
+    private javax.swing.JButton jButtonUsuarios;
+    private javax.swing.JButton jButtonVentas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanelContenedor;
     private javax.swing.JPanel jPanelSide;
     // End of variables declaration//GEN-END:variables

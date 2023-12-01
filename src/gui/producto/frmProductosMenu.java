@@ -32,29 +32,32 @@ public class frmProductosMenu extends javax.swing.JFrame {
             btn.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+
                 }
 
                 @Override
                 public void mousePressed(MouseEvent e) {
+
                 }
 
                 @Override
                 public void mouseReleased(MouseEvent e) {
+
                 }
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    btn.setBackground(new Color(188, 163, 127));
+                    btn.setBackground(Color.decode("#F8A63A"));
 
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
-                    btn.setBackground(new Color(255, 242, 216));
-                    jLabel2.setText("                   ");
+                    btn.setBackground(Color.WHITE);
                 }
             });
         }
+
         cargaTabla();
     }
 
@@ -94,22 +97,25 @@ public class frmProductosMenu extends javax.swing.JFrame {
 
         jPanelSide = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jPanelContenedor = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         setFont(new java.awt.Font("Yu Gothic UI Light", 0, 18)); // NOI18N
 
-        jPanelSide.setBackground(new java.awt.Color(255, 242, 216));
+        jPanelSide.setBackground(getBackground());
         jPanelSide.setPreferredSize(new java.awt.Dimension(90, 0));
 
-        jButton5.setBackground(new java.awt.Color(255, 242, 216));
+        jButton5.setBackground(getBackground());
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/agregar-usuario.png"))); // NOI18N
         jButton5.setToolTipText("Crear");
         jButton5.setBorder(null);
@@ -130,7 +136,11 @@ public class frmProductosMenu extends javax.swing.JFrame {
         });
         jPanelSide.add(jButton5);
 
-        jButton6.setBackground(new java.awt.Color(255, 242, 216));
+        jLabel3.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabel3.setText("Crear");
+        jPanelSide.add(jLabel3);
+
+        jButton6.setBackground(getBackground());
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/actualizar.png"))); // NOI18N
         jButton6.setToolTipText("Crear");
         jButton6.setBorder(null);
@@ -151,7 +161,11 @@ public class frmProductosMenu extends javax.swing.JFrame {
         });
         jPanelSide.add(jButton6);
 
-        jButton7.setBackground(new java.awt.Color(255, 242, 216));
+        jLabel5.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabel5.setText("Actualizar");
+        jPanelSide.add(jLabel5);
+
+        jButton7.setBackground(getBackground());
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/basura.png"))); // NOI18N
         jButton7.setToolTipText("Crear");
         jButton7.setBorder(null);
@@ -172,17 +186,18 @@ public class frmProductosMenu extends javax.swing.JFrame {
         });
         jPanelSide.add(jButton7);
 
-        jLabel2.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 12)); // NOI18N
-        jLabel2.setText("           ");
-        jPanelSide.add(jLabel2);
+        jLabel6.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabel6.setText("Borrar");
+        jPanelSide.add(jLabel6);
 
         getContentPane().add(jPanelSide, java.awt.BorderLayout.WEST);
 
-        jPanelContenedor.setBackground(new java.awt.Color(234, 215, 187));
+        jPanelContenedor.setBackground(getBackground());
 
-        jLabel1.setFont(getFont());
+        jLabel1.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 24)); // NOI18N
         jLabel1.setText("Menu productos");
 
+        jTable1.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -196,8 +211,8 @@ public class frmProductosMenu extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel3.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 14)); // NOI18N
-        jLabel3.setText("productos activos en plataforma");
+        jLabel4.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
+        jLabel4.setText("Productos activos en plataforma");
 
         javax.swing.GroupLayout jPanelContenedorLayout = new javax.swing.GroupLayout(jPanelContenedor);
         jPanelContenedor.setLayout(jPanelContenedorLayout);
@@ -206,11 +221,11 @@ public class frmProductosMenu extends javax.swing.JFrame {
             .addGroup(jPanelContenedorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
                     .addGroup(jPanelContenedorLayout.createSequentialGroup()
                         .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel3))
+                            .addComponent(jLabel4))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -219,10 +234,10 @@ public class frmProductosMenu extends javax.swing.JFrame {
             .addGroup(jPanelContenedorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -232,8 +247,6 @@ public class frmProductosMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseEntered
-
-        jLabel2.setText("Crear Productos");
     }//GEN-LAST:event_jButton5MouseEntered
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -241,7 +254,6 @@ public class frmProductosMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseEntered
-        jLabel2.setText("Actualizar Productos");
     }//GEN-LAST:event_jButton6MouseEntered
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -255,7 +267,6 @@ public class frmProductosMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseEntered
-        jLabel2.setText("Eliminar Productos");
     }//GEN-LAST:event_jButton7MouseEntered
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -283,8 +294,10 @@ public class frmProductosMenu extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanelContenedor;
     private javax.swing.JPanel jPanelSide;
     private javax.swing.JScrollPane jScrollPane1;

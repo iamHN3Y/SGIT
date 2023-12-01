@@ -78,5 +78,5 @@ public class Venta {
     public String toString() {
         return "Venta{" + "id=" + id + ", id_producto=" + id_producto + ", id_usuario=" + id_usuario + ", cantidad=" + cantidad + ", total=" + total + '}';
     }
-    
+
 }
