@@ -214,6 +214,7 @@ public class frmVentasMenu extends javax.swing.JFrame {
                     carrito.clear();
                     cargaTabla();
                     jLabelTotal.setText("");
+                    botones();
                 } else {
                     // Si al menos una venta falló, muestra un mensaje de error
                     JOptionPane.showMessageDialog(null, "Al menos una venta no se pudo guardar. Revise los detalles de la operación.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -231,10 +232,14 @@ public class frmVentasMenu extends javax.swing.JFrame {
 
     public void botones() {
         jPanel2.setLayout(new GridLayout(0, 5));
+        jPanel2.revalidate();
+        jPanel2.removeAll();
+        jPanel2.repaint();
 
         ArrayList<Producto> productos = null;
         try {
             productos = new dao.DAO_Producto().readProductos();
+
         } catch (SQLException ex) {
             System.out.println("error: " + ex);
         }
@@ -257,6 +262,11 @@ public class frmVentasMenu extends javax.swing.JFrame {
 
             button.setBackground(Color.WHITE);
             button.setUI(new BasicButtonUI());
+
+            int stocktemp = new dao.DAO_Stock().searchStock(producto.getId()).getCantidad();
+            if (stocktemp <= 0) {
+                button.setEnabled(false);
+            }
             button.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -275,9 +285,15 @@ public class frmVentasMenu extends javax.swing.JFrame {
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    button.setBackground(Color.decode("#4D908E"));
-                    button.setForeground(Color.white);
+                    if (stocktemp >= 10) {
+                        button.setBackground(Color.decode("#4D908E"));
+                    } else if (stocktemp < 10 && stocktemp > 5) {
+                        button.setBackground(Color.decode("#F9C74F"));
+                    } else if (stocktemp <= 5) {
+                        button.setBackground(Color.decode("#F94144"));
+                    }
 
+                    button.setForeground(Color.white);
                 }
 
                 @Override
@@ -290,6 +306,7 @@ public class frmVentasMenu extends javax.swing.JFrame {
             button.addActionListener((ActionEvent e) -> {
                 Producto p = mapaBotones.get(button);
                 Stock s = new dao.DAO_Stock().searchStock(p.getId());
+
                 try {
                     int cantidad = 1;
 

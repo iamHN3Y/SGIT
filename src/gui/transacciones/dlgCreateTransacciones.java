@@ -2,18 +2,16 @@ package gui.transacciones;
 
 import gui.proveedor.dlgUpdateProveedor;
 import java.awt.Color;
+import java.awt.HeadlessException;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicButtonUI;
-import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
@@ -33,9 +31,8 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
         initComponents();
         this.u = u;
         this.parentFrame = parentFrame;
-        setLocationRelativeTo(this);
+        setLocationRelativeTo(parentFrame);
 
-        ((AbstractDocument) jTextFieldTotal.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(9));
         //jButtonAgrega
         jButtonAgrega.setUI(new BasicButtonUI());
         jButtonAgrega.addMouseListener(new MouseListener() {
@@ -129,17 +126,24 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
                 jButtonGuardar.setForeground(Color.black);
             }
         });
-
-        SpinnerNumberModel spinnermodel = new SpinnerNumberModel(0, 0, 10000, 1);
-        jSpinnerCantidad.setModel(spinnermodel);
         cargaCombobox();
+
     }
 
     void cargaCombobox() {
         SwingUtilities.invokeLater(() -> {
             try {
                 jComboBoxProveedor.setModel(new dao.DAO_Proveedor().listaProveedores());
-                jComboBoxProducto.setModel(new dao.DAO_Producto().listaProductos());
+            } catch (SQLException ex) {
+                Logger.getLogger(dlgUpdateProveedor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+    }
+
+    void cargaComboboxProducto(int id) {
+        SwingUtilities.invokeLater(() -> {
+            try {
+                jComboBoxProducto.setModel(new dao.DAO_Producto().listaProductosProveedor(id));
             } catch (SQLException ex) {
                 Logger.getLogger(dlgUpdateProveedor.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -159,10 +163,10 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jComboBoxProducto = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        jSpinnerCantidad = new javax.swing.JSpinner();
         jLabel5 = new javax.swing.JLabel();
-        jTextFieldTotal = new javax.swing.JTextField();
         jButtonAgrega = new javax.swing.JButton();
+        jTextFieldCantidad = new javax.swing.JTextField();
+        jLabeltotal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -200,6 +204,11 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
         });
 
         jComboBoxProveedor.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jComboBoxProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxProveedorActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         jLabel2.setText("Proveedor:");
@@ -212,12 +221,8 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         jLabel4.setText("Cantidad:");
 
-        jSpinnerCantidad.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
-
         jLabel5.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         jLabel5.setText("Total:");
-
-        jTextFieldTotal.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
 
         jButtonAgrega.setBackground(getBackground());
         jButtonAgrega.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
@@ -229,6 +234,16 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
             }
         });
 
+        jTextFieldCantidad.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jTextFieldCantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldCantidadActionPerformed(evt);
+            }
+        });
+
+        jLabeltotal.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jLabeltotal.setText("  ");
+
         javax.swing.GroupLayout jPanelContenedorLayout = new javax.swing.GroupLayout(jPanelContenedor);
         jPanelContenedor.setLayout(jPanelContenedorLayout);
         jPanelContenedorLayout.setHorizontalGroup(
@@ -238,7 +253,7 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelContenedorLayout.createSequentialGroup()
                         .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
                         .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(jPanelContenedorLayout.createSequentialGroup()
@@ -255,11 +270,12 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
                             .addComponent(jLabel3)
                             .addComponent(jLabel2))
                         .addGap(27, 27, 27)
-                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBoxProveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBoxProducto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jSpinnerCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jComboBoxProveedor, 0, 213, Short.MAX_VALUE)
+                                .addComponent(jComboBoxProducto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jTextFieldCantidad))
+                            .addComponent(jLabeltotal))))
                 .addGap(0, 90, Short.MAX_VALUE))
         );
         jPanelContenedorLayout.setVerticalGroup(
@@ -275,17 +291,17 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jComboBoxProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSpinnerCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                .addGap(19, 19, 19)
+                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextFieldCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabeltotal))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonAgrega)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -307,40 +323,24 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
 
     private boolean validarCampos() {
         // Validación de la selección en los JComboBox
-        if (!validarSeleccionCombo(jComboBoxProveedor, "Por favor, seleccione un proveedor.")) {
-            return false;
-        }
-
-        if (!validarSeleccionCombo(jComboBoxProducto, "Por favor, seleccione un producto.")) {
-            return false;
-        }
-
-        // Validación de la cantidad
-        int cantidad = (int) jSpinnerCantidad.getValue();
-        if (cantidad <= 0) {
-            JOptionPane.showMessageDialog(null, "La cantidad debe ser mayor que cero.", "Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        // Validación del campo jTextFieldTotal
-        String totalText = jTextFieldTotal.getText().trim();
-        if (totalText.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "El campo total no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
+        String cantidad = jTextFieldCantidad.getText().trim();
         try {
-            float total = Float.parseFloat(totalText);
-            if (total < 0) {
-                JOptionPane.showMessageDialog(this, "El campo 'Precio' no puede ser un número negativo.", "Error", JOptionPane.ERROR_MESSAGE);
+            int cantidadInt = Integer.parseInt(cantidad);
+
+            if (cantidadInt < 0) {
+                JOptionPane.showMessageDialog(this, "El campo 'Cantidad' no puede ser un número negativo.", "Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "El total debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "El campo 'Cantidad' debe contener un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
         return true; // Todos los campos son válidos
+    }
+
+    float calculaTotal(int cantidad, float preciocom) {
+        return cantidad * preciocom;
     }
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
@@ -349,26 +349,78 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
         } else if (validarCampos()) {
             Proveedor proveedor = jComboBoxProveedor.getItemAt(jComboBoxProveedor.getSelectedIndex());
             Producto producto = jComboBoxProducto.getItemAt(jComboBoxProducto.getSelectedIndex());
-            int cantidad = (int) jSpinnerCantidad.getValue();
-            float total = Float.parseFloat(jTextFieldTotal.getText().trim());
+            int cantidad = Integer.parseInt(jTextFieldCantidad.getText().trim());
+            float total = calculaTotal(cantidad, producto.getPreciocom());
 
             Transaccion t = new Transaccion(proveedor.getId(), producto.getId(), cantidad, total);
 
             ts.add(t);
 
-            if (new dao.DAO_Transacciones().createTransaccion(ts, u)) {
-                JOptionPane.showMessageDialog(this, "Se creó la Transacción");
-                limpiacajas();
-                parentFrame.cargaTabla();
+            try {
+                boolean todasLasTransaccionesExitosas = true;
+
+                // Itera sobre cada venta en el carrito
+                for (Transaccion transaccion : ts) {
+                    boolean resultado = new dao.DAO_Transacciones().createTransaccion(transaccion, u);
+
+                    // Si una venta transaccion falla, marca que no todas fueron exitosas
+                    if (!resultado) {
+                        todasLasTransaccionesExitosas = false;
+                    }
+                }
+
+                // Después de procesar todas las ventas
+                if (todasLasTransaccionesExitosas) {
+                    // Si todas las ventas fueron exitosas, limpiar el carrito
+                    JOptionPane.showMessageDialog(this, "Se guardaron las transacciones", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                    ts.clear();
+                    parentFrame.cargaTabla();
+                    limpiacajas();
+                } else {
+                    // Si al menos una venta falló, muestra un mensaje de error
+                    JOptionPane.showMessageDialog(null, "Al menos una transaccion no se pudo guardar. Revise los detalles de la operación.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            } catch (HeadlessException e) {
+                JOptionPane.showMessageDialog(null, "Ocurrió un error al intentar guardar las transacciones: " + e, "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            try {
+                boolean todasLasTransaccionesExitosas = true;
+
+                // Itera sobre cada venta en el carrito
+                for (Transaccion transaccion : ts) {
+                    boolean resultado = new dao.DAO_Transacciones().createTransaccion(transaccion, u);
+
+                    // Si una venta transaccion falla, marca que no todas fueron exitosas
+                    if (!resultado) {
+                        todasLasTransaccionesExitosas = false;
+                    }
+                }
+
+                // Después de procesar todas las ventas
+                if (todasLasTransaccionesExitosas) {
+                    // Si todas las ventas fueron exitosas, limpiar el carrito
+                    JOptionPane.showMessageDialog(this, "Se guardaron las transacciones", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                    ts.clear();
+                    parentFrame.cargaTabla();
+                    limpiacajas();
+                } else {
+                    // Si al menos una venta falló, muestra un mensaje de error
+                    JOptionPane.showMessageDialog(null, "Al menos una transaccion no se pudo guardar. Revise los detalles de la operación.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            } catch (HeadlessException e) {
+                JOptionPane.showMessageDialog(null, "Ocurrió un error al intentar guardar las transacciones: " + e, "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
 
     }//GEN-LAST:event_jButtonGuardarActionPerformed
     private void limpiacajas() {
-        jComboBoxProveedor.setSelectedIndex(0);
-        jComboBoxProducto.setSelectedIndex(0);
-        jSpinnerCantidad.setValue(0);
-        jTextFieldTotal.setText("");
+        cargaCombobox();
+        jComboBoxProducto.removeAllItems();
+        jTextFieldCantidad.setText("");
+        jLabeltotal.setText("");
     }
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         this.dispose();
@@ -378,8 +430,8 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
         if (validarCampos()) {
             Proveedor proveedor = jComboBoxProveedor.getItemAt(jComboBoxProveedor.getSelectedIndex());
             Producto producto = jComboBoxProducto.getItemAt(jComboBoxProducto.getSelectedIndex());
-            int cantidad = (int) jSpinnerCantidad.getValue();
-            float total = Float.parseFloat(jTextFieldTotal.getText());
+            int cantidad = Integer.parseInt(jTextFieldCantidad.getText().trim());
+            float total = calculaTotal(cantidad, producto.getPreciocom());
 
             Transaccion t = new Transaccion(proveedor.getId(), producto.getId(), cantidad, total);
 
@@ -389,6 +441,21 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_jButtonAgregaActionPerformed
+
+    private void jComboBoxProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProveedorActionPerformed
+        // TODO add your handling code here:
+        int id_proveedor = jComboBoxProveedor.getItemAt(jComboBoxProveedor.getSelectedIndex()).getId();
+        cargaComboboxProducto(id_proveedor);
+    }//GEN-LAST:event_jComboBoxProveedorActionPerformed
+
+    private void jTextFieldCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCantidadActionPerformed
+        // TODO add your handling code here:
+        Producto producto = jComboBoxProducto.getItemAt(jComboBoxProducto.getSelectedIndex());
+        int cantidad = Integer.parseInt(jTextFieldCantidad.getText().trim());
+
+        float total = calculaTotal(cantidad, producto.getPreciocom());
+        jLabeltotal.setText("$" + total);
+    }//GEN-LAST:event_jTextFieldCantidadActionPerformed
 
     public class LengthLimitDocumentFilter extends DocumentFilter {
 
@@ -425,9 +492,9 @@ public class dlgCreateTransacciones extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabeltotal;
     private javax.swing.JPanel jPanelContenedor;
-    private javax.swing.JSpinner jSpinnerCantidad;
-    private javax.swing.JTextField jTextFieldTotal;
+    private javax.swing.JTextField jTextFieldCantidad;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -8,20 +8,27 @@ public class Producto {
     private float precio; // Precio del producto
     private int stock;
     private boolean borrado; //estatus del producto
+    private int id_proveedor;
+    private float preciocom;
+    private String nombre_proveedor;
 
     // Constructor para un producto con todos los atributos
-    public Producto(int id, String nombre, String descripcion, float precio) {
+    public Producto(int id, String nombre, String descripcion, float precio, int id_proveedor, float preciocom) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
+        this.id_proveedor = id_proveedor;
+        this.preciocom = preciocom;
     }
 
     // Constructor para un producto sin el atributo id (posiblemente para crear nuevos productos)
-    public Producto(String nombre, String descripcion, float precio) {
+    public Producto(String nombre, String descripcion, float precio, int id_proveedor, float preciocom) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
+        this.id_proveedor = id_proveedor;
+        this.preciocom = preciocom;
     }
 
     // Constructor vacío
@@ -85,4 +92,29 @@ public class Producto {
     public String toString() {
         return getNombre() + " - " + getDescripcion();
     }
+
+    public int getId_proveedor() {
+        return id_proveedor;
+    }
+
+    public void setId_proveedor(int id_proveedor) {
+        this.id_proveedor = id_proveedor;
+    }
+
+    public float getPreciocom() {
+        return preciocom;
+    }
+
+    public void setPreciocom(float preciocom) {
+        this.preciocom = preciocom;
+    }
+
+    public String getNombre_proveedor() {
+        return nombre_proveedor;
+    }
+
+    public void setNombre_proveedor(String nombre_proveedor) {
+        this.nombre_proveedor = nombre_proveedor;
+    }
+
 }

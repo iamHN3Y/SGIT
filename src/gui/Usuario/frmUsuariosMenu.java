@@ -78,10 +78,9 @@ public class frmUsuariosMenu extends javax.swing.JFrame {
             Usuario u = new Usuario();
 
             u.setNombre((String) modelo.getValueAt(filaSeleccionada, 0));
-            u.setTelefono((String) modelo.getValueAt(filaSeleccionada, 1));
-            u.setCuenta((int) modelo.getValueAt(filaSeleccionada, 2));
-            u.setContraseña((String) modelo.getValueAt(filaSeleccionada, 3));
-            if (modelo.getValueAt(filaSeleccionada, 4) == "Administrador") {
+            u.setCuenta((int) modelo.getValueAt(filaSeleccionada, 1));
+            u.setContraseña((String) modelo.getValueAt(filaSeleccionada, 2));
+            if (modelo.getValueAt(filaSeleccionada, 3) == "Administrador") {
                 u.setTipo_admin(true);
             } else {
                 u.setTipo_admin(false);

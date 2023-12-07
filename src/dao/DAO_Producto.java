@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 interface I_DAO_Producto {
 
@@ -25,6 +27,8 @@ interface I_DAO_Producto {
     boolean updateProducto(Producto p, Usuario u, Stock s) throws SQLException;
 
     boolean deleteProducto(int id, Usuario u) throws SQLException;
+
+    DefaultComboBoxModel<Producto> listaProductosProveedor(int id) throws SQLException;
 
 }
 
@@ -64,12 +68,14 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
     private boolean create(Producto p, Usuario u, Stock s) throws SQLException, Exception {
         try {
             this.conectar();
-            String query = "insert into producto(nombre, descripcion, precio, borrado, fecha_modificacion) values (?, ?, ?, ?, NOW());";
+            String query = "insert into producto(nombre, descripcion, precio, borrado, fecha_modificacion, id_proveedor, preciocom) values (?, ?, ?, ?, NOW(),?,?);";
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setString(1, p.getNombre());
             ps.setString(2, p.getDescripcion());
             ps.setFloat(3, p.getPrecio());
             ps.setBoolean(4, false);
+            ps.setInt(5, p.getId_proveedor());
+            ps.setFloat(6, p.getPreciocom());
 
             boolean resul = ps.execute();
             s.setId_producto(searchID(p));
@@ -138,6 +144,9 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
                 p.setDescripcion(rs.getString("descripcion"));
                 p.setPrecio(rs.getFloat("precio"));
                 p.setStock(rs.getInt("cantidad"));
+                p.setNombre_proveedor(rs.getString("proveedor"));
+                p.setPreciocom(rs.getFloat("precio_compra"));
+                p.setId_proveedor(rs.getInt("id_proveedor"));
                 productos.add(p);
             }
         } catch (Exception e) {
@@ -171,6 +180,9 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
                 p.setDescripcion(rs.getString("descripcion"));
                 p.setPrecio(rs.getFloat("precio"));
                 p.setStock(rs.getInt("cantidad"));
+                p.setNombre_proveedor(rs.getString("proveedor"));
+                p.setPreciocom(rs.getFloat("precio_compra"));
+                p.setId_proveedor(rs.getInt("id_proveedor"));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -213,15 +225,21 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
         model.addColumn("ID");
         model.addColumn("Nombre");
         model.addColumn("Descripción");
-        model.addColumn("Precio");
+        model.addColumn("Precio Venta");
         model.addColumn("Cantidad");
+        model.addColumn("Proveedor");
+        model.addColumn("Precio Compra");
+        model.addColumn("ID Proveedor");
         for (Producto p : readProductos()) {
-            Object[] fila = new Object[5];
+            Object[] fila = new Object[8];
             fila[0] = p.getId();
             fila[1] = p.getNombre();
             fila[2] = p.getDescripcion();
             fila[3] = p.getPrecio();
             fila[4] = p.getStock();
+            fila[5] = p.getNombre_proveedor();
+            fila[6] = p.getPreciocom();
+            fila[7] = p.getId_proveedor();
             model.addRow(fila);
         }
         return model;
@@ -261,12 +279,13 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
     private boolean update(Producto p, Usuario u, Stock s) throws Exception {
         try {
             this.conectar();
-            String query = "update producto set nombre = ?, descripcion = ?, precio = ?, fecha_modificacion = NOW() where id = ?;";
+            String query = "update producto set nombre = ?, descripcion = ?, precio = ?, fecha_modificacion = NOW(), preciocom = ?  where id = ?;";
             PreparedStatement ps = this.conexion.prepareStatement(query);
             ps.setString(1, p.getNombre());
             ps.setString(2, p.getDescripcion());
             ps.setFloat(3, p.getPrecio());
-            ps.setInt(4, p.getId());
+            ps.setFloat(4, p.getPreciocom());
+            ps.setInt(5, p.getId());
 
             boolean resul = ps.execute();
             s.setId_producto(p.getId());
@@ -327,4 +346,50 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
         }
         return false;
     }
+
+    public ArrayList<Producto> filtrarProductosPorProveedor(int id) throws Exception {
+        ArrayList<Producto> productosFiltrados = new ArrayList<>();
+
+        try {
+            this.conectar();
+            String query = "SELECT * FROM vista_listproductos WHERE id_proveedor = ?;";
+            try (PreparedStatement ps = this.conexion.prepareStatement(query)) {
+                ps.setInt(1, id);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Producto p = new Producto();
+                        p.setId(rs.getInt("id"));
+                        p.setNombre(rs.getString("nombre"));
+                        p.setDescripcion(rs.getString("descripcion"));
+                        p.setPrecio(rs.getFloat("precio"));
+                        p.setStock(rs.getInt("cantidad"));
+                        p.setNombre_proveedor(rs.getString("proveedor"));
+                        p.setPreciocom(rs.getFloat("precio_compra"));
+                        p.setId_proveedor(rs.getInt("id_proveedor"));
+                        productosFiltrados.add(p);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al filtrar productos por proveedor", e);
+        } finally {
+            this.cerrar();
+        }
+
+        return productosFiltrados;
+    }
+
+    @Override
+    public DefaultComboBoxModel<Producto> listaProductosProveedor(int id) throws SQLException {
+        DefaultComboBoxModel<Producto> modelo = new DefaultComboBoxModel<>();
+        try {
+            for (Producto p : filtrarProductosPorProveedor(id)) {
+                modelo.addElement(p);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(DAO_Producto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return modelo;
+    }
+
 }

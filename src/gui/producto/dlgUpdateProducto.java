@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
-import javax.swing.JButton;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicButtonUI;
 import javax.swing.text.AbstractDocument;
@@ -14,15 +14,16 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import models.Producto;
+import models.Proveedor;
 import models.Stock;
 import models.Usuario;
 
 public class dlgUpdateProducto extends javax.swing.JDialog {
-
+    
     Usuario u;
     frmProductosMenu parentFrame;
     Producto p;
-
+    
     public dlgUpdateProducto(java.awt.Frame parent, boolean modal, Usuario u, frmProductosMenu parentFrame, Producto p) {
         super(parent, modal);
         initComponents();
@@ -30,7 +31,7 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
         this.p = p;
         this.parentFrame = parentFrame;
         setLocationRelativeTo(parentFrame);
-
+        
         ((AbstractDocument) jTextFieldNombre.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(50));
         ((AbstractDocument) jTextAreaDescripcion.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(150));
         ((AbstractDocument) jTextFieldPrecio.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(9));
@@ -40,26 +41,26 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
         jButtonCancelar.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                
             }
-
+            
             @Override
             public void mousePressed(MouseEvent e) {
-
+                
             }
-
+            
             @Override
             public void mouseReleased(MouseEvent e) {
-
+                
             }
-
+            
             @Override
             public void mouseEntered(MouseEvent e) {
                 jButtonCancelar.setBackground(Color.decode("#F94144"));
                 jButtonCancelar.setForeground(Color.white);
-
+                
             }
-
+            
             @Override
             public void mouseExited(MouseEvent e) {
                 jButtonCancelar.setBackground(Color.WHITE);
@@ -71,54 +72,55 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
         jButtonGuardar.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                
             }
-
+            
             @Override
             public void mousePressed(MouseEvent e) {
-
+                
             }
-
+            
             @Override
             public void mouseReleased(MouseEvent e) {
-
+                
             }
-
+            
             @Override
             public void mouseEntered(MouseEvent e) {
                 jButtonGuardar.setBackground(Color.decode("#90BE6D"));
                 jButtonGuardar.setForeground(Color.white);
-
+                
             }
-
+            
             @Override
             public void mouseExited(MouseEvent e) {
                 jButtonGuardar.setBackground(Color.WHITE);
                 jButtonGuardar.setForeground(Color.black);
             }
         });
-
+        
         cargaCajas();
-        SpinnerNumberModel spinnermodel = new SpinnerNumberModel(p.getStock(), 0, 10000, 1);
-        jSpinnerStock.setModel(spinnermodel);
     }
-
+    
     void cargaCajas() {
         SwingUtilities.invokeLater(() -> {
             try {
-                jComboBox1.setModel(new dao.DAO_Producto().listaProductos());
-                jComboBox1.getModel().setSelectedItem(p);
-
-                jTextFieldID.setText(String.valueOf(p.getId()));
-                jTextFieldNombre.setText(p.getNombre());
-                jTextAreaDescripcion.setText(p.getDescripcion());
-                jTextFieldPrecio.setText(String.valueOf(p.getPrecio()));
+                jComboBoxProveedor.setModel(new dao.DAO_Proveedor().listaProveedores());
+                Proveedor prov = new dao.DAO_Proveedor().readProveedor(p.getId_proveedor());
+                jComboBoxProveedor.getModel().setSelectedItem(prov);
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Error: " + ex);
+                Logger.getLogger(dlgUpdateProducto.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+            jTextFieldID.setText(String.valueOf(p.getId()));
+            jTextFieldNombre.setText(p.getNombre());
+            jTextAreaDescripcion.setText(p.getDescripcion());
+            jTextFieldPrecio.setText(String.valueOf(p.getPrecio()));
+            jTextFieldCantidad.setText(String.valueOf(p.getStock()));
+            jTextFieldPreciocom.setText(String.valueOf(p.getPreciocom()));
         });
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -129,7 +131,6 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
         jTextFieldNombre = new javax.swing.JTextField();
         jButtonGuardar = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jTextFieldID = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -138,7 +139,11 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         jTextFieldPrecio = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jSpinnerStock = new javax.swing.JSpinner();
+        jTextFieldCantidad = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jComboBoxProveedor = new javax.swing.JComboBox<>();
+        jTextFieldPreciocom = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -180,9 +185,6 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
             }
         });
 
-        jComboBox1.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
-        jComboBox1.setEnabled(false);
-
         jLabel7.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         jLabel7.setText("id:");
 
@@ -207,7 +209,24 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
         jLabel9.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         jLabel9.setText("Cantidad:");
 
-        jSpinnerStock.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jTextFieldCantidad.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+
+        jLabel10.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
+        jLabel10.setText("Proveedor:");
+
+        jComboBoxProveedor.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jComboBoxProveedor.setEnabled(false);
+        jComboBoxProveedor.setFocusable(false);
+        jComboBoxProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxProveedorActionPerformed(evt);
+            }
+        });
+
+        jTextFieldPreciocom.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+
+        jLabel11.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
+        jLabel11.setText("Precio compra:");
 
         javax.swing.GroupLayout jPanelContenedorLayout = new javax.swing.GroupLayout(jPanelContenedor);
         jPanelContenedor.setLayout(jPanelContenedorLayout);
@@ -217,32 +236,34 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5)
+                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                                .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE)
+                                .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelContenedorLayout.createSequentialGroup()
+                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel9)
                             .addComponent(jLabel8)
-                            .addComponent(jLabel9))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxProveedor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextFieldPreciocom)
                             .addComponent(jTextFieldPrecio)
                             .addComponent(jTextFieldNombre)
                             .addComponent(jTextFieldID)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                                .addComponent(jSpinnerStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addGap(47, 47, 47))
-                    .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                        .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
-                        .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jTextFieldCantidad))
+                        .addGap(47, 47, 47))))
         );
         jPanelContenedorLayout.setVerticalGroup(
             jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,8 +271,6 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -270,8 +289,16 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jSpinnerStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                    .addComponent(jTextFieldCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldPreciocom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -287,41 +314,66 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
         String nombre = jTextFieldNombre.getText().trim();
         String descripcion = jTextAreaDescripcion.getText().trim();
         String precio = jTextFieldPrecio.getText().trim();
-
+        String cantidad = jTextFieldCantidad.getText().trim();
+        String preciocom = jTextFieldPreciocom.getText().trim();
+        
         if (nombre.isEmpty()) {
             JOptionPane.showMessageDialog(this, "El campo 'Nombre' no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-
-        if (!nombre.matches("[a-zA-Z]+")) {
-            JOptionPane.showMessageDialog(this, "El campo 'Nombre' solo puede contener caracteres alfabéticos.", "Error", JOptionPane.ERROR_MESSAGE);
+        
+        if (!nombre.matches("[a-zA-Z\\sáéíóúÁÉÍÓÚ]+")) {
+            JOptionPane.showMessageDialog(this, "El campo 'Nombre' solo puede contener caracteres alfabéticos y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-
+        
         if (descripcion.isEmpty()) {
             JOptionPane.showMessageDialog(this, "La descripción no puede estar vacía.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-
+        
         if (descripcion.length() > 255) {
             JOptionPane.showMessageDialog(this, "La descripción no puede exceder los 255 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-
+        
         if (!descripcion.matches("[a-zA-Z0-9 ]*")) {
             JOptionPane.showMessageDialog(this, "La descripción solo puede contener caracteres alfanuméricos.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-
+        
         try {
             float precioFloat = Float.parseFloat(precio);
-
+            
             if (precioFloat < 0) {
                 JOptionPane.showMessageDialog(this, "El campo 'Precio' no puede ser un número negativo.", "Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "El campo 'Precio' debe contener un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        try {
+            float precioFloat = Float.parseFloat(preciocom);
+            
+            if (precioFloat < 0) {
+                JOptionPane.showMessageDialog(this, "El campo 'Precio compra' no puede ser un número negativo.", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El campo 'Precio compra' debe contener un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        try {
+            int cantidadInt = Integer.parseInt(cantidad);
+            
+            if (cantidadInt < 0) {
+                JOptionPane.showMessageDialog(this, "El campo 'Cantidad' no puede ser un número negativo.", "Error", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El campo 'Cantidad' debe contener un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -335,10 +387,12 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
             String nombre = jTextFieldNombre.getText().trim();
             String descripcion = jTextAreaDescripcion.getText().trim();
             String precio = jTextFieldPrecio.getText().trim();
-            int stock = (int) jSpinnerStock.getValue();
-            Producto product = new Producto(id, nombre, descripcion, Float.parseFloat(precio));
+            int stock = Integer.parseInt(jTextFieldCantidad.getText().trim());
+            Float preciocom = Float.valueOf(jTextFieldPreciocom.getText().trim());
+            
+            Producto product = new Producto(id, nombre, descripcion, Float.parseFloat(precio), p.getId_proveedor(), preciocom);
             Stock s = new Stock(id, stock);
-
+            
             if (new dao.DAO_Producto().updateProducto(product, u, s)) {
                 JOptionPane.showMessageDialog(this, "Se actualizo el Producto");
                 parentFrame.cargaTabla();
@@ -352,21 +406,25 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
+    private void jComboBoxProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProveedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxProveedorActionPerformed
+    
     public class LengthLimitDocumentFilter extends DocumentFilter {
-
+        
         private int maxLength;
-
+        
         public LengthLimitDocumentFilter(int maxLength) {
             this.maxLength = maxLength;
         }
-
+        
         @Override
         public void insertString(DocumentFilter.FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
             if ((fb.getDocument().getLength() + string.length()) <= maxLength) {
                 super.insertString(fb, offset, string, attr);
             }
         }
-
+        
         @Override
         public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
             int currentLength = fb.getDocument().getLength();
@@ -379,8 +437,10 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonGuardar;
-    private javax.swing.JComboBox<Producto> jComboBox1;
+    private javax.swing.JComboBox<Proveedor> jComboBoxProveedor;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
@@ -388,11 +448,12 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanelContenedor;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinnerStock;
     private javax.swing.JTextArea jTextAreaDescripcion;
+    private javax.swing.JTextField jTextFieldCantidad;
     private javax.swing.JTextField jTextFieldID;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldPrecio;
+    private javax.swing.JTextField jTextFieldPreciocom;
     // End of variables declaration//GEN-END:variables
 
 }

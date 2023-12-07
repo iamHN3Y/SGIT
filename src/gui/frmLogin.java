@@ -90,14 +90,6 @@ public class frmLogin extends javax.swing.JFrame {
         bttEntrar.setBorder(null);
         bttEntrar.setFocusPainted(false);
         bttEntrar.setFocusable(false);
-        bttEntrar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                bttEntrarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                bttEntrarMouseExited(evt);
-            }
-        });
         bttEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bttEntrarActionPerformed(evt);
@@ -222,14 +214,6 @@ public class frmLogin extends javax.swing.JFrame {
         }
         return false;
     }
-
-    private void bttEntrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttEntrarMouseEntered
-
-    }//GEN-LAST:event_bttEntrarMouseEntered
-
-    private void bttEntrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bttEntrarMouseExited
-
-    }//GEN-LAST:event_bttEntrarMouseExited
 
     public static void main(String args[]) {
 

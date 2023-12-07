@@ -4,24 +4,21 @@ public class Usuario {
 
     private int cuenta; // Nombre de cuenta del usuario
     private String nombre; // Nombre del usuario
-    private String telefono; // Número de teléfono del usuario
     private String contraseña; // Contraseña del usuario
     private boolean tipo_admin; // Indica si el usuario es administrador o no
     private boolean borrado; //Indica si el usuario ha sido borrado o no
 
     // Constructor para un usuario con todos los atributos
-    public Usuario(int cuenta, String nombre, String telefono, String contraseña, boolean tipo_admin) {
+    public Usuario(int cuenta, String nombre, String contraseña, boolean tipo_admin) {
         this.nombre = nombre;
-        this.telefono = telefono;
         this.cuenta = cuenta;
         this.contraseña = contraseña;
         this.tipo_admin = tipo_admin;
     }
 
     // Constructor para un usuario sin el atributo id (posiblemente para crear nuevos usuarios)
-    public Usuario(String nombre, String telefono, String contraseña, boolean tipo_admin) {
+    public Usuario(String nombre, String contraseña, boolean tipo_admin) {
         this.nombre = nombre;
-        this.telefono = telefono;
         this.contraseña = contraseña;
         this.tipo_admin = tipo_admin;
     }
@@ -37,15 +34,6 @@ public class Usuario {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    // Métodos de acceso para el atributo telefono
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
     }
 
     // Métodos de acceso para el atributo cuenta

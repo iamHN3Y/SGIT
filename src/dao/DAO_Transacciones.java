@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 interface I_DAO_Transacciones {
 
-    boolean createTransaccion(ArrayList<Transaccion> ts, Usuario u) throws SQLException;
+    boolean createTransaccion(Transaccion ts, Usuario u) throws SQLException;
 
     boolean updateTransaccion(Transaccion nt, Transaccion t, Usuario u) throws SQLException;
 
@@ -41,7 +41,7 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
      * (EXITO, ERROR_BD o OTRO_ERROR).
      */
     @Override
-    public boolean createTransaccion(ArrayList<Transaccion> ts, Usuario u) {
+    public boolean createTransaccion(Transaccion ts, Usuario u) {
         boolean resultado = false;
         try {
             resultado = create(ts, u);
@@ -62,27 +62,27 @@ public class DAO_Transacciones extends Conexion implements I_DAO_Transacciones {
      * (EXITO, ERROR_BD o OTRO_ERROR).
      * @throws SQLException Si ocurre un error de base de datos.
      */
-    private boolean create(ArrayList<Transaccion> ts, Usuario u) throws SQLException, Exception {
+    private boolean create(Transaccion t, Usuario u) throws SQLException, Exception {
         try {
             this.conectar();
-            for (Transaccion t : ts) {
-                String query = "insert into transacciones(id_proveedor, id_producto, cantidad, total) values (?, ?, ?, ?)";
-                PreparedStatement ps = this.conexion.prepareStatement(query);
-                ps.setInt(1, t.getId_proveedor());
-                ps.setInt(2, t.getId_producto());
-                ps.setInt(3, t.getCantidad());
-                ps.setFloat(4, t.getTotal());
-                boolean resul = ps.execute();
-                if (resul != true) {
-                    Stock s = new DAO_Stock().searchStock(t.getId_producto());
-                    int stocktemp = s.getCantidad() + t.getCantidad();
-                    s.setCantidad(stocktemp);
-                    if (new DAO_Stock().updateStock(s)) {
-                        new DAO_control_log().insertControl("Creó una transacción", u);
-                        return true;
-                    }
+
+            String query = "insert into transacciones(id_proveedor, id_producto, cantidad, total) values (?, ?, ?, ?)";
+            PreparedStatement ps = this.conexion.prepareStatement(query);
+            ps.setInt(1, t.getId_proveedor());
+            ps.setInt(2, t.getId_producto());
+            ps.setInt(3, t.getCantidad());
+            ps.setFloat(4, t.getTotal());
+            boolean resul = ps.execute();
+            if (resul != true) {
+                Stock s = new DAO_Stock().searchStock(t.getId_producto());
+                int stocktemp = s.getCantidad() + t.getCantidad();
+                s.setCantidad(stocktemp);
+                if (new DAO_Stock().updateStock(s)) {
+                    new DAO_control_log().insertControl("Creó una transacción", u);
+                    return true;
                 }
             }
+
         } catch (Exception e) {
             throw e;
         } finally {

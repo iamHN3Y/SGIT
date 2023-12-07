@@ -18,10 +18,10 @@ import models.Producto;
 import models.Usuario;
 
 public class frmProductosMenu extends javax.swing.JFrame {
-
+    
     Usuario u;
     Producto p;
-
+    
     public frmProductosMenu(Usuario u) {
         initComponents();
         this.u = u;
@@ -32,35 +32,35 @@ public class frmProductosMenu extends javax.swing.JFrame {
             btn.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-
+                    
                 }
-
+                
                 @Override
                 public void mousePressed(MouseEvent e) {
-
+                    
                 }
-
+                
                 @Override
                 public void mouseReleased(MouseEvent e) {
-
+                    
                 }
-
+                
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     btn.setBackground(Color.decode("#F8A63A"));
-
+                    
                 }
-
+                
                 @Override
                 public void mouseExited(MouseEvent e) {
                     btn.setBackground(Color.WHITE);
                 }
             });
         }
-
+        
         cargaTabla();
     }
-
+    
     void cargaTabla() {
         SwingUtilities.invokeLater(() -> {
             try {
@@ -72,25 +72,28 @@ public class frmProductosMenu extends javax.swing.JFrame {
         ListSelectionModel selectionModel = jTable1.getSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
-
+    
     public Producto obtenerProductoSeleccionado() {
         int filaSeleccionada = jTable1.getSelectedRow();
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-
+        
         if (filaSeleccionada != -1) {
             Producto p = new Producto();
-
+            
             p.setId((int) modelo.getValueAt(filaSeleccionada, 0));
             p.setNombre((String) modelo.getValueAt(filaSeleccionada, 1));
             p.setDescripcion((String) modelo.getValueAt(filaSeleccionada, 2));
             p.setPrecio((float) modelo.getValueAt(filaSeleccionada, 3));
             p.setStock((int) modelo.getValueAt(filaSeleccionada, 4));
+            p.setNombre_proveedor((String) modelo.getValueAt(filaSeleccionada, 5));
+            p.setPreciocom((float) modelo.getValueAt(filaSeleccionada, 6));
+            p.setId_proveedor((int) modelo.getValueAt(filaSeleccionada, 7));
             return p;
         } else {
             return null;
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -276,9 +279,9 @@ public class frmProductosMenu extends javax.swing.JFrame {
         } else {
             UIManager.put("OptionPane.yesButtonText", "Eliminar");
             UIManager.put("OptionPane.noButtonText", "Cancelar");
-
+            
             int response = JOptionPane.showConfirmDialog(this, "¿Desea eliminar el producto: " + p.getNombre() + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
-
+            
             if (response == JOptionPane.YES_OPTION) {
                 new DAO_Producto().deleteProducto(p.getId(), u);
                 cargaTabla();

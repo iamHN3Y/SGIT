@@ -25,7 +25,6 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
         this.u = u;
         this.parentFrame = parentFrame;
         setLocationRelativeTo(parentFrame);
-        ((AbstractDocument) jTextFieldTelefono.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(10));
         ((AbstractDocument) jTextFieldNombre.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(50));
         //jButton1
         jButton1.setUI(new BasicButtonUI());
@@ -130,8 +129,6 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
         jPanelContenedor = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jTextFieldTelefono = new javax.swing.JTextField();
         jTextFieldNombre = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jTextFieldCuenta = new javax.swing.JTextField();
@@ -145,6 +142,7 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        setPreferredSize(new java.awt.Dimension(493, 340));
 
         jPanelContenedor.setBackground(getBackground());
 
@@ -153,11 +151,6 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
 
         jLabel3.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         jLabel3.setText("Nombre:");
-
-        jLabel4.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
-        jLabel4.setText("Telefono:");
-
-        jTextFieldTelefono.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
 
         jTextFieldNombre.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
 
@@ -230,14 +223,10 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
                             .addGroup(jPanelContenedorLayout.createSequentialGroup()
                                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelContenedorLayout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
+                                        .addGap(0, 67, Short.MAX_VALUE)
+                                        .addComponent(jLabel3)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jTextFieldTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
-                                            .addComponent(jTextFieldNombre)))
+                                        .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanelContenedorLayout.createSequentialGroup()
                                         .addGap(12, 12, 12)
                                         .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -265,25 +254,21 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
                     .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextFieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jTextFieldCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jCheckBoxAdministrador)
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                        .addComponent(jCheckBoxAdministrador)
-                        .addGap(34, 34, 34)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
                         .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 86, Short.MAX_VALUE)
                         .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -295,7 +280,6 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
 
     private boolean validarCampos() {
         String nombre = jTextFieldNombre.getText().trim();
-        String telefono = jTextFieldTelefono.getText().trim();
         String cuenta = jTextFieldCuenta.getText().trim();
         String contraseña = jTextFieldContraseña.getText().trim();
 
@@ -306,16 +290,6 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
 
         if (!validarNombre(nombre)) {
             JOptionPane.showMessageDialog(this, "Nombre inválido. Debe contener solo letras y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        if (telefono.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El campo 'Teléfono' no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        if (!validarTelefono(telefono)) {
-            JOptionPane.showMessageDialog(this, "Número de teléfono inválido. Debe contener 10 dígitos.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -373,12 +347,11 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         if (validarCampos()) {
             String nombre = jTextFieldNombre.getText();
-            String telefono = jTextFieldTelefono.getText();
             int cuenta = Integer.parseInt(jTextFieldCuenta.getText());
             String contraseña = jTextFieldContraseña.getText();
             boolean administrador = jCheckBoxAdministrador.isSelected();
 
-            if (new DAO_Usuario().createUsuario(new Usuario(cuenta, nombre, telefono, contraseña, administrador), u)) {
+            if (new DAO_Usuario().createUsuario(new Usuario(cuenta, nombre, contraseña, administrador), u)) {
                 JOptionPane.showMessageDialog(this, "Se creó el usuario", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                 limpiacajas();
                 parentFrame.cargaTabla();
@@ -390,7 +363,6 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
         jTextFieldContraseña.setText("");
         jTextFieldCuenta.setText("");
         jTextFieldNombre.setText("");
-        jTextFieldTelefono.setText("");
         jCheckBoxAdministrador.setSelected(false);
     }
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -428,14 +400,12 @@ public class dlgCreateUsuarios extends javax.swing.JDialog {
     private javax.swing.JCheckBox jCheckBoxAdministrador;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanelContenedor;
     private javax.swing.JTextField jTextFieldContraseña;
     private javax.swing.JTextField jTextFieldCuenta;
     private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JTextField jTextFieldTelefono;
     // End of variables declaration//GEN-END:variables
 
 }

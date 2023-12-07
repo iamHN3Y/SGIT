@@ -29,7 +29,6 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
         this.vu = vu;
         this.parentFrame = frameParent;
         setLocationRelativeTo(parent);
-        ((AbstractDocument) jTextFieldTelefono.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(10));
         ((AbstractDocument) jTextFieldNombre.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(50));
         //jButton1
         jButton1.setUI(new BasicButtonUI());
@@ -136,7 +135,6 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
                 jComboBox1.getModel().setSelectedItem(vu);
 
                 jTextFieldNombre.setText(vu.getNombre());
-                jTextFieldTelefono.setText(vu.getTelefono());
                 jTextFieldCuenta.setText(String.valueOf(vu.getCuenta()));
                 jTextFieldContraseña.setText(vu.getContraseña());
                 jCheckBoxAdministrador.setSelected(vu.isTipo_admin());
@@ -154,8 +152,6 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
         jPanelContenedor = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jTextFieldTelefono = new javax.swing.JTextField();
         jTextFieldNombre = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jTextFieldCuenta = new javax.swing.JTextField();
@@ -178,11 +174,6 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
 
         jLabel3.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         jLabel3.setText("Nombre:");
-
-        jLabel4.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
-        jLabel4.setText("Telefono:");
-
-        jTextFieldTelefono.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
 
         jTextFieldNombre.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
 
@@ -254,29 +245,31 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelContenedorLayout.createSequentialGroup()
-                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanelContenedorLayout.createSequentialGroup()
-                                .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelContenedorLayout.createSequentialGroup()
                                 .addGap(21, 21, 21)
                                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel6)
                                     .addComponent(jLabel5)
-                                    .addComponent(jLabel4)
                                     .addComponent(jLabel3))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jCheckBoxAdministrador, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jTextFieldContraseña, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jTextFieldCuenta, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextFieldTelefono, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jTextFieldNombre, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, 0, 254, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1)))
-                        .addGap(34, 34, 34))))
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, 0, 254, Short.MAX_VALUE)))
+                            .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                                .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                                .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelContenedorLayout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(34, 34, 34))))))
         );
         jPanelContenedorLayout.setVerticalGroup(
             jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -291,24 +284,24 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
                     .addComponent(jLabel5))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBoxAdministrador)
-                .addGap(18, 18, 18)
-                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBoxAdministrador)
+                        .addContainerGap(68, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelContenedorLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
 
         getContentPane().add(jPanelContenedor, java.awt.BorderLayout.CENTER);
@@ -318,7 +311,6 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
 
     private boolean validarCampos() {
         String nombre = jTextFieldNombre.getText().trim();
-        String telefono = jTextFieldTelefono.getText().trim();
         String cuenta = jTextFieldCuenta.getText().trim();
         String contraseña = jTextFieldContraseña.getText().trim();
 
@@ -329,16 +321,6 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
 
         if (!validarNombre(nombre)) {
             JOptionPane.showMessageDialog(this, "Nombre inválido. Debe contener solo letras y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        if (telefono.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El campo 'Teléfono' no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-
-        if (!validarTelefono(telefono)) {
-            JOptionPane.showMessageDialog(this, "Número de teléfono inválido. Debe contener 10 dígitos.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
 
@@ -395,11 +377,10 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
         if (validarCampos()) {
             int cuenta = Integer.parseInt(jTextFieldCuenta.getText());
             String nombre = jTextFieldNombre.getText();
-            String telefono = jTextFieldTelefono.getText();
             String contraseña = jTextFieldContraseña.getText();
             boolean administrador = jCheckBoxAdministrador.isSelected();
 
-            Usuario nus = new Usuario(cuenta, nombre, telefono, contraseña, administrador);
+            Usuario nus = new Usuario(cuenta, nombre, contraseña, administrador);
 
             if (new DAO_Usuario().updateUsuario(nus, u, vu)) {
                 JOptionPane.showMessageDialog(this, "Se actualizo el usuario");
@@ -447,14 +428,12 @@ public class dlgUpdateUsuarios extends javax.swing.JDialog {
     private javax.swing.JComboBox<Usuario> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanelContenedor;
     private javax.swing.JTextField jTextFieldContraseña;
     private javax.swing.JTextField jTextFieldCuenta;
     private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JTextField jTextFieldTelefono;
     // End of variables declaration//GEN-END:variables
 
 }
