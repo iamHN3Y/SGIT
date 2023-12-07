@@ -25,50 +25,51 @@ import models.Stock;
 
 import models.Usuario;
 import models.Venta;
+import utilities.TicketDeVenta;
 
 public class frmVentasMenu extends javax.swing.JFrame {
-
+    
     Usuario u;
-
+    
     public frmVentasMenu(Usuario u) {
         initComponents();
         this.u = u;
         setLocationRelativeTo(this);
         botones();
-
+        
         jButtonGuardar.setUI(new BasicButtonUI());
         jButtonGuardar.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                
             }
-
+            
             @Override
             public void mousePressed(MouseEvent e) {
-
+                
             }
-
+            
             @Override
             public void mouseReleased(MouseEvent e) {
-
+                
             }
-
+            
             @Override
             public void mouseEntered(MouseEvent e) {
                 jButtonGuardar.setBackground(Color.decode("#577590"));
                 jButtonGuardar.setForeground(Color.white);
-
+                
             }
-
+            
             @Override
             public void mouseExited(MouseEvent e) {
                 jButtonGuardar.setBackground(Color.WHITE);
                 jButtonGuardar.setForeground(Color.black);
             }
         });
-
+        
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -196,20 +197,44 @@ public class frmVentasMenu extends javax.swing.JFrame {
         } else {
             try {
                 boolean todasLasVentasExitosas = true;
-
                 // Itera sobre cada venta en el carrito
+                double totalventa = 0.0;
                 for (Venta venta : carrito) {
                     boolean resultado = new dao.DAO_Venta().createVenta(venta, u);
-
+                    totalventa += venta.getTotal();
                     // Si una venta falla, marca que no todas las ventas fueron exitosas
                     if (!resultado) {
                         todasLasVentasExitosas = false;
                     }
                 }
 
+                //aqui va la interfaz para metodos de pago
+                boolean entradaCorrecta = false;
+                
+                while (!entradaCorrecta) {
+                    // Muestra el JOptionPane para que el usuario ingrese una cantidad
+                    String dinerorecibido = JOptionPane.showInputDialog("Ingrese el dinero recibido:");
+                    
+                    try {
+                        float dinerorecib = Float.parseFloat(dinerorecibido);
+
+                        // La conversión fue exitosa, puedes usar la variable "cantidad"
+                        float cambio = (float) (dinerorecib - totalventa);
+                        JOptionPane.showMessageDialog(null, "El cambio a dar es: " + cambio, "Información", JOptionPane.INFORMATION_MESSAGE);
+
+                        //aqui va lo del ticket
+                        TicketDeVenta.ticket(carrito, u, dinerorecib, cambio);
+
+                        // Establece entradaCorrecta a true para salir del bucle
+                        entradaCorrecta = true;
+                    } catch (NumberFormatException e) {
+                        // Si la conversión falla, muestra un mensaje de error
+                        JOptionPane.showMessageDialog(null, "Error: Ingrese un valor numérico válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+
                 // Después de procesar todas las ventas
                 if (todasLasVentasExitosas) {
-                    // Si todas las ventas fueron exitosas, limpiar el carrito
                     JOptionPane.showMessageDialog(this, "Se guardo la venta", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                     carrito.clear();
                     cargaTabla();
@@ -219,33 +244,33 @@ public class frmVentasMenu extends javax.swing.JFrame {
                     // Si al menos una venta falló, muestra un mensaje de error
                     JOptionPane.showMessageDialog(null, "Al menos una venta no se pudo guardar. Revise los detalles de la operación.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-
+                
             } catch (HeadlessException e) {
                 JOptionPane.showMessageDialog(null, "Ocurrió un error al intentar guardar las ventas: " + e, "Error", JOptionPane.ERROR_MESSAGE);
             }
-
+            
         }
     }//GEN-LAST:event_jButtonGuardarActionPerformed
-
+    
     ArrayList<Venta> carrito = new ArrayList<>();
     double total = 0.0;
-
+    
     public void botones() {
         jPanel2.setLayout(new GridLayout(0, 5));
         jPanel2.revalidate();
         jPanel2.removeAll();
         jPanel2.repaint();
-
+        
         ArrayList<Producto> productos = null;
         try {
             productos = new dao.DAO_Producto().readProductos();
-
+            
         } catch (SQLException ex) {
             System.out.println("error: " + ex);
         }
-
+        
         Map<JButton, Producto> mapaBotones = new HashMap<>();
-
+        
         for (Producto producto : productos) {
             JButton button = new JButton(producto.toString());
             // Establecer la fuente y tamaño de la fuente
@@ -255,14 +280,14 @@ public class frmVentasMenu extends javax.swing.JFrame {
             // Desactivar bordes y establecer borderPainted a true
             button.setBorderPainted(true);
             button.setBorder(null);
-
+            
             button.setPreferredSize(new Dimension(50, 150));
-
+            
             mapaBotones.put(button, producto);
-
+            
             button.setBackground(Color.WHITE);
             button.setUI(new BasicButtonUI());
-
+            
             int stocktemp = new dao.DAO_Stock().searchStock(producto.getId()).getCantidad();
             if (stocktemp <= 0) {
                 button.setEnabled(false);
@@ -270,19 +295,19 @@ public class frmVentasMenu extends javax.swing.JFrame {
             button.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-
+                    
                 }
-
+                
                 @Override
                 public void mousePressed(MouseEvent e) {
-
+                    
                 }
-
+                
                 @Override
                 public void mouseReleased(MouseEvent e) {
-
+                    
                 }
-
+                
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     if (stocktemp >= 10) {
@@ -292,21 +317,21 @@ public class frmVentasMenu extends javax.swing.JFrame {
                     } else if (stocktemp <= 5) {
                         button.setBackground(Color.decode("#F94144"));
                     }
-
+                    
                     button.setForeground(Color.white);
                 }
-
+                
                 @Override
                 public void mouseExited(MouseEvent e) {
                     button.setBackground(Color.WHITE);
                     button.setForeground(Color.black);
                 }
             });
-
+            
             button.addActionListener((ActionEvent e) -> {
                 Producto p = mapaBotones.get(button);
                 Stock s = new dao.DAO_Stock().searchStock(p.getId());
-
+                
                 try {
                     int cantidad = 1;
 
@@ -318,7 +343,7 @@ public class frmVentasMenu extends javax.swing.JFrame {
                         float subtotal = cantidad * p.getPrecio();
                         Venta venta = new Venta(p.getId(), u.getCuenta(), cantidad, subtotal);
                         carrito.add(venta);
-
+                        
                         total += subtotal;
                         jLabelTotal.setText(String.valueOf(total));
                         cargaTabla();
@@ -327,19 +352,19 @@ public class frmVentasMenu extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "La cantidad ingresada no es válida", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             });
-
+            
             jPanel2.add(button);
             jPanel2.revalidate();
         }
-
+        
     }
-
+    
     void cargaTabla() {
         SwingUtilities.invokeLater(() -> {
             jTable2.setModel(crearTableModelCarrito(carrito));
         });
     }
-
+    
     public DefaultTableModel crearTableModelCarrito(ArrayList<Venta> carrito) {
         // Definir las columnas del modelo de datos
         String[] columnas = {"Producto", "Cantidad", "Subtotal"};
@@ -360,7 +385,7 @@ public class frmVentasMenu extends javax.swing.JFrame {
             // Agregar la fila al modelo
             modelo.addRow(fila);
         }
-
+        
         return modelo;
     }
 

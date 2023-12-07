@@ -7,6 +7,24 @@ public class Venta {
     private int id_usuario; // Identificador del usuario que realizó la venta
     private int cantidad; // Cantidad de productos vendidos
     private float total; // Total de la venta
+    protected String nombreProducto;
+    protected float precioProducto;
+
+    public float getPrecioProducto() {
+        return precioProducto;
+    }
+
+    public void setPrecioProducto(float precioProducto) {
+        this.precioProducto = precioProducto;
+    }
+
+    public String getNombreProducto() {
+        return nombreProducto;
+    }
+
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
+    }
 
     // Constructor para una venta con todos los atributos
     public Venta(int id, int id_producto, int id_usuario, int cantidad, float total) {
