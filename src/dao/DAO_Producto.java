@@ -392,4 +392,88 @@ public class DAO_Producto extends Conexion implements I_DAO_Producto {
         return modelo;
     }
 
+    public ArrayList<Object[]> vista_producto_critico() {
+        ArrayList<Object[]> listaProductosCriticos = new ArrayList<>();
+        try {
+            this.conectar();
+            String query = "select * from vista_producto_critico;";
+            try (PreparedStatement ps = this.conexion.prepareStatement(query)) {
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Object[] obj = new Object[2];
+                        obj[0] = rs.getString("nombre_producto");
+                        obj[1] = rs.getString("stock_actual");
+                        listaProductosCriticos.add(obj);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaProductosCriticos;
+    }
+
+    public ArrayList<Object[]> vista_producto_mas_vendido() {
+        ArrayList<Object[]> listaProductosMasVendidos = new ArrayList<>();
+        try {
+            this.conectar();
+            String query = "SELECT * FROM sgit.vista_producto_mas_vendido;";
+            try (PreparedStatement ps = this.conexion.prepareStatement(query)) {
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Object[] obj = new Object[2];
+                        obj[0] = rs.getString("nombre_producto");
+                        obj[1] = rs.getString("total_vendido");
+                        listaProductosMasVendidos.add(obj);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaProductosMasVendidos;
+    }
+
+    public ArrayList<Object[]> vista_producto_menos_vendido() {
+        ArrayList<Object[]> listaProductosMenosVendidos = new ArrayList<>();
+        try {
+            this.conectar();
+            String query = "SELECT * FROM sgit.vista_producto_menos_vendido;";
+            try (PreparedStatement ps = this.conexion.prepareStatement(query)) {
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Object[] obj = new Object[2];
+                        obj[0] = rs.getString("nombre_producto");
+                        obj[1] = rs.getString("total_vendido");
+                        listaProductosMenosVendidos.add(obj);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaProductosMenosVendidos;
+    }
+    
+    public ArrayList<Object[]> vista_producto_recomendable() {
+        ArrayList<Object[]> listaProductosRecomendable = new ArrayList<>();
+        try {
+            this.conectar();
+            String query = "SELECT * FROM sgit.vista_producto_recomendable;";
+            try (PreparedStatement ps = this.conexion.prepareStatement(query)) {
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Object[] obj = new Object[2];
+                        obj[0] = rs.getString("nombre_producto");
+                        obj[1] = rs.getString("stock_actual");
+                        listaProductosRecomendable.add(obj);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaProductosRecomendable;
+    }
+
 }

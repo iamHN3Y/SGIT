@@ -32,7 +32,8 @@ public class dlgCreateProducto extends javax.swing.JDialog {
         ((AbstractDocument) jTextFieldNombre.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(50));
         ((AbstractDocument) jTextAreaDescripcion.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(150));
         ((AbstractDocument) jTextFieldPrecio.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(9));
-
+        ((AbstractDocument) jTextFieldPreciocom.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(9));
+        ((AbstractDocument) jTextFieldCantidad.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(9));
         //jButtonCancelar
         jButtonCancelar.setUI(new BasicButtonUI());
         jButtonCancelar.addMouseListener(new MouseListener() {

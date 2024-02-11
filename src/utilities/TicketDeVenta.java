@@ -60,7 +60,7 @@ public class TicketDeVenta {
 
         // Imprimir el ticket
         System.out.println(ticketContent.toString());
-        imprimirTicket(ticketContent.toString());
+        //imprimirTicket(ticketContent.toString());
     }
 
     private static void imprimirTicket(String contenido) {

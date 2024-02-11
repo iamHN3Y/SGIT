@@ -19,11 +19,11 @@ import models.Stock;
 import models.Usuario;
 
 public class dlgUpdateProducto extends javax.swing.JDialog {
-    
+
     Usuario u;
     frmProductosMenu parentFrame;
     Producto p;
-    
+
     public dlgUpdateProducto(java.awt.Frame parent, boolean modal, Usuario u, frmProductosMenu parentFrame, Producto p) {
         super(parent, modal);
         initComponents();
@@ -31,36 +31,38 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
         this.p = p;
         this.parentFrame = parentFrame;
         setLocationRelativeTo(parentFrame);
-        
+
         ((AbstractDocument) jTextFieldNombre.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(50));
         ((AbstractDocument) jTextAreaDescripcion.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(150));
         ((AbstractDocument) jTextFieldPrecio.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(9));
+        ((AbstractDocument) jTextFieldPreciocom.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(9));
+        ((AbstractDocument) jTextFieldCantidad.getDocument()).setDocumentFilter(new LengthLimitDocumentFilter(9));
 
         //jButtonCancelar
         jButtonCancelar.setUI(new BasicButtonUI());
         jButtonCancelar.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                
+
             }
-            
+
             @Override
             public void mousePressed(MouseEvent e) {
-                
+
             }
-            
+
             @Override
             public void mouseReleased(MouseEvent e) {
-                
+
             }
-            
+
             @Override
             public void mouseEntered(MouseEvent e) {
                 jButtonCancelar.setBackground(Color.decode("#F94144"));
                 jButtonCancelar.setForeground(Color.white);
-                
+
             }
-            
+
             @Override
             public void mouseExited(MouseEvent e) {
                 jButtonCancelar.setBackground(Color.WHITE);
@@ -72,36 +74,36 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
         jButtonGuardar.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                
+
             }
-            
+
             @Override
             public void mousePressed(MouseEvent e) {
-                
+
             }
-            
+
             @Override
             public void mouseReleased(MouseEvent e) {
-                
+
             }
-            
+
             @Override
             public void mouseEntered(MouseEvent e) {
                 jButtonGuardar.setBackground(Color.decode("#90BE6D"));
                 jButtonGuardar.setForeground(Color.white);
-                
+
             }
-            
+
             @Override
             public void mouseExited(MouseEvent e) {
                 jButtonGuardar.setBackground(Color.WHITE);
                 jButtonGuardar.setForeground(Color.black);
             }
         });
-        
+
         cargaCajas();
     }
-    
+
     void cargaCajas() {
         SwingUtilities.invokeLater(() -> {
             try {
@@ -111,7 +113,7 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
             } catch (SQLException ex) {
                 Logger.getLogger(dlgUpdateProducto.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             jTextFieldID.setText(String.valueOf(p.getId()));
             jTextFieldNombre.setText(p.getNombre());
             jTextAreaDescripcion.setText(p.getDescripcion());
@@ -120,7 +122,7 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
             jTextFieldPreciocom.setText(String.valueOf(p.getPreciocom()));
         });
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -316,35 +318,35 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
         String precio = jTextFieldPrecio.getText().trim();
         String cantidad = jTextFieldCantidad.getText().trim();
         String preciocom = jTextFieldPreciocom.getText().trim();
-        
+
         if (nombre.isEmpty()) {
             JOptionPane.showMessageDialog(this, "El campo 'Nombre' no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        
+
         if (!nombre.matches("[a-zA-Z\\sáéíóúÁÉÍÓÚ]+")) {
             JOptionPane.showMessageDialog(this, "El campo 'Nombre' solo puede contener caracteres alfabéticos y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        
+
         if (descripcion.isEmpty()) {
             JOptionPane.showMessageDialog(this, "La descripción no puede estar vacía.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        
+
         if (descripcion.length() > 255) {
             JOptionPane.showMessageDialog(this, "La descripción no puede exceder los 255 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        
+
         if (!descripcion.matches("[a-zA-Z0-9 ]*")) {
             JOptionPane.showMessageDialog(this, "La descripción solo puede contener caracteres alfanuméricos.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        
+
         try {
             float precioFloat = Float.parseFloat(precio);
-            
+
             if (precioFloat < 0) {
                 JOptionPane.showMessageDialog(this, "El campo 'Precio' no puede ser un número negativo.", "Error", JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -355,7 +357,7 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
         }
         try {
             float precioFloat = Float.parseFloat(preciocom);
-            
+
             if (precioFloat < 0) {
                 JOptionPane.showMessageDialog(this, "El campo 'Precio compra' no puede ser un número negativo.", "Error", JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -364,10 +366,10 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "El campo 'Precio compra' debe contener un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        
+
         try {
             int cantidadInt = Integer.parseInt(cantidad);
-            
+
             if (cantidadInt < 0) {
                 JOptionPane.showMessageDialog(this, "El campo 'Cantidad' no puede ser un número negativo.", "Error", JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -389,10 +391,10 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
             String precio = jTextFieldPrecio.getText().trim();
             int stock = Integer.parseInt(jTextFieldCantidad.getText().trim());
             Float preciocom = Float.valueOf(jTextFieldPreciocom.getText().trim());
-            
+
             Producto product = new Producto(id, nombre, descripcion, Float.parseFloat(precio), p.getId_proveedor(), preciocom);
             Stock s = new Stock(id, stock);
-            
+
             if (new dao.DAO_Producto().updateProducto(product, u, s)) {
                 JOptionPane.showMessageDialog(this, "Se actualizo el Producto");
                 parentFrame.cargaTabla();
@@ -409,22 +411,22 @@ public class dlgUpdateProducto extends javax.swing.JDialog {
     private void jComboBoxProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProveedorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxProveedorActionPerformed
-    
+
     public class LengthLimitDocumentFilter extends DocumentFilter {
-        
+
         private int maxLength;
-        
+
         public LengthLimitDocumentFilter(int maxLength) {
             this.maxLength = maxLength;
         }
-        
+
         @Override
         public void insertString(DocumentFilter.FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
             if ((fb.getDocument().getLength() + string.length()) <= maxLength) {
                 super.insertString(fb, offset, string, attr);
             }
         }
-        
+
         @Override
         public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
             int currentLength = fb.getDocument().getLength();

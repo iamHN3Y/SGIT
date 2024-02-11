@@ -17,39 +17,44 @@ import models.Transaccion;
 import models.Usuario;
 
 public class frmTransaccionesMenu extends javax.swing.JFrame {
-
+    
     Usuario u;
     Transaccion t;
-
+    
     public frmTransaccionesMenu(Usuario u) {
         initComponents();
         this.u = u;
         setLocationRelativeTo(this);
+        if (u.isTipo_admin() == false) {
+            jButton7.setVisible(false);
+            jLabel6.setVisible(false);
+        }
+        
         JButton[] btns = {jButton5, jButton6, jButton7};
         for (JButton btn : btns) {
             btn.setUI(new BasicButtonUI());
             btn.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-
+                    
                 }
-
+                
                 @Override
                 public void mousePressed(MouseEvent e) {
-
+                    
                 }
-
+                
                 @Override
                 public void mouseReleased(MouseEvent e) {
-
+                    
                 }
-
+                
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     btn.setBackground(Color.decode("#F8A63A"));
-
+                    
                 }
-
+                
                 @Override
                 public void mouseExited(MouseEvent e) {
                     btn.setBackground(Color.WHITE);
@@ -58,12 +63,12 @@ public class frmTransaccionesMenu extends javax.swing.JFrame {
         }
         cargaTabla();
     }
-
+    
     void cargaTabla() {
         SwingUtilities.invokeLater(() -> {
             try {
                 jTable1.setModel(new dao.DAO_Transacciones().tablaTransacciones());
-
+                
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex);
             }
@@ -71,14 +76,14 @@ public class frmTransaccionesMenu extends javax.swing.JFrame {
         ListSelectionModel selectionModel = jTable1.getSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
-
+    
     public Transaccion obtenerTransaccionSeleccionada() {
         int filaSeleccionada = jTable1.getSelectedRow();
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-
+        
         if (filaSeleccionada != -1) {
             Transaccion transaccion = new Transaccion();
-
+            
             transaccion.setId((int) modelo.getValueAt(filaSeleccionada, 0));
             transaccion.setProveedor((String) modelo.getValueAt(filaSeleccionada, 1));
             transaccion.setProducto((String) modelo.getValueAt(filaSeleccionada, 2));
@@ -93,7 +98,7 @@ public class frmTransaccionesMenu extends javax.swing.JFrame {
             return null;
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -252,16 +257,16 @@ public class frmTransaccionesMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-
+        
         t = obtenerTransaccionSeleccionada();
         if (t == null) {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione una transaccion de la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             UIManager.put("OptionPane.yesButtonText", "Eliminar");
             UIManager.put("OptionPane.noButtonText", "Cancelar");
-
+            
             int response = JOptionPane.showConfirmDialog(this, "¿Desea eliminar la: " + t + "?", "Confirmación", JOptionPane.YES_NO_OPTION);
-
+            
             if (response == JOptionPane.YES_OPTION) {
                 new dao.DAO_Transacciones().deleteTransaccion(t, u);
                 cargaTabla();

@@ -6,10 +6,14 @@ import gui.proveedor.frmProveedoresMenu;
 import gui.transacciones.frmTransaccionesMenu;
 import gui.ventas.frmVentasMenu;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.plaf.basic.BasicButtonUI;
 import models.Usuario;
 
@@ -24,11 +28,14 @@ public class frmMenu extends javax.swing.JFrame {
 
         if (u.isTipo_admin() == false) {
             jButtonUsuarios.setVisible(false);
+            jLabel3.setVisible(false);
             jButtonProveedor.setVisible(false);
+            jLabel2.setVisible(false);
             jButtonProductos.setVisible(false);
+            jLabel6.setVisible(false);
         }
 
-        JButton[] btns = {jButtonUsuarios, jButtonVentas, jButtonProveedor, jButtonTransacciones, jButtonProductos};
+        JButton[] btns = {jButtonUsuarios, jButtonVentas, jButtonProveedor, jButtonTransacciones, jButtonProductos, jButton1, jButton2, jButton3, jButton4};
 
         for (JButton btn : btns) {
             btn.setUI(new BasicButtonUI());
@@ -60,6 +67,35 @@ public class frmMenu extends javax.swing.JFrame {
                 }
             });
         }
+        //cerrar sesion
+        jButtonLogout.setUI(new BasicButtonUI());
+        jButtonLogout.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jButtonLogout.setBackground(Color.decode("#E23B3E"));
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                jButtonLogout.setBackground(Color.WHITE);
+            }
+        });
 
         jLabel1.setText("Bienvenido " + u.getNombre());
     }
@@ -80,8 +116,15 @@ public class frmMenu extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jButtonUsuarios = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        jButtonLogout = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
         jPanelContenedor = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -105,11 +148,6 @@ public class frmMenu extends javax.swing.JFrame {
         jButtonProductos.setFocusPainted(false);
         jButtonProductos.setFocusable(false);
         jButtonProductos.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButtonProductos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButtonProductosMouseEntered(evt);
-            }
-        });
         jButtonProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonProductosActionPerformed(evt);
@@ -131,11 +169,6 @@ public class frmMenu extends javax.swing.JFrame {
         jButtonProveedor.setFocusPainted(false);
         jButtonProveedor.setFocusable(false);
         jButtonProveedor.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButtonProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButtonProveedorMouseEntered(evt);
-            }
-        });
         jButtonProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonProveedorActionPerformed(evt);
@@ -157,11 +190,6 @@ public class frmMenu extends javax.swing.JFrame {
         jButtonTransacciones.setFocusPainted(false);
         jButtonTransacciones.setFocusable(false);
         jButtonTransacciones.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButtonTransacciones.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButtonTransaccionesMouseEntered(evt);
-            }
-        });
         jButtonTransacciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonTransaccionesActionPerformed(evt);
@@ -183,11 +211,6 @@ public class frmMenu extends javax.swing.JFrame {
         jButtonVentas.setFocusPainted(false);
         jButtonVentas.setFocusable(false);
         jButtonVentas.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButtonVentas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButtonVentasMouseEntered(evt);
-            }
-        });
         jButtonVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonVentasActionPerformed(evt);
@@ -209,11 +232,6 @@ public class frmMenu extends javax.swing.JFrame {
         jButtonUsuarios.setFocusPainted(false);
         jButtonUsuarios.setFocusable(false);
         jButtonUsuarios.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButtonUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButtonUsuariosMouseEntered(evt);
-            }
-        });
         jButtonUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonUsuariosActionPerformed(evt);
@@ -225,6 +243,27 @@ public class frmMenu extends javax.swing.JFrame {
         jLabel6.setText("Usuarios");
         jPanelSide.add(jLabel6);
 
+        jButtonLogout.setBackground(jPanelSide.getBackground());
+        jButtonLogout.setFont(getFont());
+        jButtonLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/icons/salida.png"))); // NOI18N
+        jButtonLogout.setToolTipText("Menu usuarios");
+        jButtonLogout.setBorder(null);
+        jButtonLogout.setBorderPainted(false);
+        jButtonLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButtonLogout.setFocusPainted(false);
+        jButtonLogout.setFocusable(false);
+        jButtonLogout.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLogoutActionPerformed(evt);
+            }
+        });
+        jPanelSide.add(jButtonLogout);
+
+        jLabel8.setFont(jLabel3.getFont());
+        jLabel8.setText("Cerrar sesion");
+        jPanelSide.add(jLabel8);
+
         getContentPane().add(jPanelSide, java.awt.BorderLayout.WEST);
 
         jPanelContenedor.setBackground(getBackground());
@@ -232,21 +271,103 @@ public class frmMenu extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 36)); // NOI18N
         jLabel1.setText("jLabel1");
 
+        jPanel1.setBackground(getBackground());
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 452, Short.MAX_VALUE)
+        );
+
+        jButton1.setBackground(getBackground());
+        jButton1.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jButton1.setText("Productos criticos de stock");
+        jButton1.setBorder(null);
+        jButton1.setFocusPainted(false);
+        jButton1.setFocusable(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setBackground(getBackground());
+        jButton2.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jButton2.setText("Productos proximos a criticos de stock");
+        jButton2.setBorder(null);
+        jButton2.setFocusPainted(false);
+        jButton2.setFocusable(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setBackground(getBackground());
+        jButton3.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jButton3.setText("Producto mas vendido");
+        jButton3.setBorder(null);
+        jButton3.setFocusPainted(false);
+        jButton3.setFocusable(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setBackground(getBackground());
+        jButton4.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 14)); // NOI18N
+        jButton4.setText("Producto menos vendido");
+        jButton4.setBorder(null);
+        jButton4.setFocusPainted(false);
+        jButton4.setFocusable(false);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelContenedorLayout = new javax.swing.GroupLayout(jPanelContenedor);
         jPanelContenedor.setLayout(jPanelContenedorLayout);
         jPanelContenedorLayout.setHorizontalGroup(
             jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelContenedorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(777, Short.MAX_VALUE))
+                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                        .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(jPanelContenedorLayout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton4)))
+                        .addGap(0, 678, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanelContenedorLayout.setVerticalGroup(
             jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelContenedorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(358, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         getContentPane().add(jPanelContenedor, java.awt.BorderLayout.CENTER);
@@ -254,32 +375,12 @@ public class frmMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonProductosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonProductosMouseEntered
-
-    }//GEN-LAST:event_jButtonProductosMouseEntered
-
-    private void jButtonProveedorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonProveedorMouseEntered
-
-    }//GEN-LAST:event_jButtonProveedorMouseEntered
-
     private void jButtonUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUsuariosActionPerformed
 
         frmUsuariosMenu usuario = new frmUsuariosMenu(u);
         usuario.setVisible(true);
         usuario.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }//GEN-LAST:event_jButtonUsuariosActionPerformed
-
-    private void jButtonUsuariosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonUsuariosMouseEntered
-
-    }//GEN-LAST:event_jButtonUsuariosMouseEntered
-
-    private void jButtonTransaccionesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonTransaccionesMouseEntered
-
-    }//GEN-LAST:event_jButtonTransaccionesMouseEntered
-
-    private void jButtonVentasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonVentasMouseEntered
-
-    }//GEN-LAST:event_jButtonVentasMouseEntered
 
     private void jButtonProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProveedorActionPerformed
 
@@ -309,7 +410,110 @@ public class frmMenu extends javax.swing.JFrame {
         ventas.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }//GEN-LAST:event_jButtonVentasActionPerformed
 
+    private void jButtonLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogoutActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        new frmLogin().setVisible(true);
+    }//GEN-LAST:event_jButtonLogoutActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        ArrayList<Object[]> listaProductosCriticos = new dao.DAO_Producto().vista_producto_critico(); // Reemplaza obtenerDatos() con tu lógica
+
+        jPanel1.removeAll();
+        // Configurar el layout del panel
+        jPanel1.setLayout(new GridLayout(listaProductosCriticos.size(), 2, 10, 10));
+
+        // Iterar sobre la lista de productos críticos y agregar etiquetas al panel
+        Font font = new Font("Microsoft YaHei UI", Font.PLAIN, 14);
+
+        for (Object[] producto : listaProductosCriticos) {
+            JLabel prod = new JLabel("Nombre: " + producto[0].toString() + ", Stock: " + producto[1].toString());
+            prod.setFont(font);
+            // Puedes personalizar las propiedades de las etiquetas según tus necesidades
+            jPanel1.add(prod);
+        }
+
+        // Actualizar la interfaz gráfica
+        revalidate();
+        repaint();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        ArrayList<Object[]> listaProductosCriticos = new dao.DAO_Producto().vista_producto_recomendable(); // Reemplaza obtenerDatos() con tu lógica
+
+        jPanel1.removeAll();
+        // Configurar el layout del panel
+        jPanel1.setLayout(new GridLayout(listaProductosCriticos.size(), 2, 10, 10));
+
+        // Iterar sobre la lista de productos críticos y agregar etiquetas al panel
+        Font font = new Font("Microsoft YaHei UI", Font.PLAIN, 14);
+
+        for (Object[] producto : listaProductosCriticos) {
+            JLabel prod = new JLabel("Nombre: " + producto[0].toString() + ", Stock: " + producto[1].toString());
+            prod.setFont(font);
+            // Puedes personalizar las propiedades de las etiquetas según tus necesidades
+            jPanel1.add(prod);
+        }
+
+        // Actualizar la interfaz gráfica
+        revalidate();
+        repaint();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        ArrayList<Object[]> listaProductosCriticos = new dao.DAO_Producto().vista_producto_mas_vendido(); // Reemplaza obtenerDatos() con tu lógica
+
+        jPanel1.removeAll();
+        // Configurar el layout del panel
+        jPanel1.setLayout(new GridLayout(listaProductosCriticos.size(), 2, 10, 10));
+
+        // Iterar sobre la lista de productos críticos y agregar etiquetas al panel
+        Font font = new Font("Microsoft YaHei UI", Font.PLAIN, 14);
+
+        for (Object[] producto : listaProductosCriticos) {
+            JLabel prod = new JLabel("Nombre: " + producto[0].toString() + ", total vendidos: " + producto[1].toString());
+            prod.setFont(font);
+            // Puedes personalizar las propiedades de las etiquetas según tus necesidades
+            jPanel1.add(prod);
+        }
+
+        // Actualizar la interfaz gráfica
+        revalidate();
+        repaint();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        ArrayList<Object[]> listaProductosCriticos = new dao.DAO_Producto().vista_producto_menos_vendido(); // Reemplaza obtenerDatos() con tu lógica
+
+        jPanel1.removeAll();
+        // Configurar el layout del panel
+        jPanel1.setLayout(new GridLayout(listaProductosCriticos.size(), 2, 10, 10));
+
+        // Iterar sobre la lista de productos críticos y agregar etiquetas al panel
+        Font font = new Font("Microsoft YaHei UI", Font.PLAIN, 14);
+
+        for (Object[] producto : listaProductosCriticos) {
+            JLabel prod = new JLabel("Nombre: " + producto[0].toString() + ", total vendidos: " + producto[1].toString());
+            prod.setFont(font);
+            // Puedes personalizar las propiedades de las etiquetas según tus necesidades
+            jPanel1.add(prod);
+        }
+
+        // Actualizar la interfaz gráfica
+        revalidate();
+        repaint();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButtonLogout;
     private javax.swing.JButton jButtonProductos;
     private javax.swing.JButton jButtonProveedor;
     private javax.swing.JButton jButtonTransacciones;
@@ -322,6 +526,8 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelContenedor;
     private javax.swing.JPanel jPanelSide;
     // End of variables declaration//GEN-END:variables
